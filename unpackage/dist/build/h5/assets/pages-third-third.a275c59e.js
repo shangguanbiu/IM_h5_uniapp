@@ -1,0 +1,1 @@
+import{_ as a,o as e,c as r,w as t,g as s,al as u,j as d}from"./index.5cd51b9e.js";var l=a({name:"third",data:()=>({web_url:""}),methods:{},mounted(){},onLoad(a){this.web_url=a.url+"?uid="+a.uid}},[["render",function(a,l,n,o,i,c){const m=u,_=d;return e(),r(_,null,{default:t((()=>[s(m,{"update-title":!0,src:i.web_url},null,8,["src"])])),_:1})}]]);export{l as default};
