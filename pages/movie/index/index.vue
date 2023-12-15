@@ -312,6 +312,8 @@
 					}					
 				}
 			},
+			
+			
 			onClose() {
 				this.show_login = !this.show_login
 			},
@@ -365,14 +367,17 @@
 			uni.removeStorageSync('movice_info')
 			this.pop_notice = false
 			this.show_login = false
-			var had_token = uni.getStorageSync('token')
+			var had_token = uni.getStorageSync('ifLogin')
 			if (had_token !== '') {
 				//this.get_userInfo()
 			}
 		},
 		// 在使用到的页面 添加如下代码
 		mounted() {
-
+				var userInfo = uni.getStorageSync('userInfo')
+				var token = uni.getStorageSync('ifLogin')
+				
+				
 		},
 		
 	}

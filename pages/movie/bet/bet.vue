@@ -15,7 +15,7 @@
 					<view v-if="ifrun">投票中</view>
 					<view v-if="!ifrun">封盘中</view>
 				</view>
-				<view class="time">01:23</view>
+				<view class="time">{{time2+':'+time3}}</view>
 				<view class="bet_line bet_ge">
 					<view style="display: flex;">
 						<view>20231212000002</view>
@@ -30,7 +30,8 @@
 					</view>
 					<view class="history_are" v-show="ifhistory" @tap="ifhistory=false">
 						<view style="padding: 0px 15px">
-							<view style="display: flex; padding: 5px 0;" v-for="(item,narr_k) in Number_arr" :key="narr_k">
+							<view style="display: flex; padding: 5px 0;" v-for="(item,narr_k) in Number_arr"
+								:key="narr_k">
 								<view>20231212000002</view>
 								<view class="color_n1">春</view>
 								<view class="color_n2">秋</view>
@@ -46,7 +47,8 @@
 		</view>
 		<view class="bet_top_ft">
 			<view class="bet_t_ft_m" @tap="pop_notice=true">投票规则</view>
-			<view class="bet_t_ft_m" @click="see_list" style="display: flex; justify-content: center; color:#e6557f ;">我的出票
+			<view class="bet_t_ft_m" @click="see_list" style="display: flex; justify-content: center; color:#e6557f ;">
+				我的出票
 				<view class="cuIcon-right" style="line-height: 40px; margin-left: 2px;"></view>
 			</view>
 
@@ -54,7 +56,8 @@
 		<view class="bet_main">
 			<view class="bet_mainzi" v-for="(nitem,narr_i) in Number_arr" :key="narr_i">
 				<view class="bet_zi" :class="{'bet_zi_get':nitem.ifhad}" @click="get_bet_num(nitem,narr_i)">
-					{{nitem.name}}</view>
+					{{nitem.name}}
+				</view>
 			</view>
 
 
@@ -75,30 +78,32 @@
 				</view>
 				<view class="bet_num_line" style="padding: 15px 0;">
 					<view>投票积分:</view>
-					<view><input class="uni-input inmut_l" v-model="bet_num" @change="change_num(bet_num)" type="number"
+					<view><input class="uni-input inmut_l" v-model="bet_num" @input="change_num(bet_num)" type="number"
 							placeholder="" />
 					</view>
 					<view><button type="default" class="reset_btn" @click="reset">重置</button></view>
 				</view>
-				<button type="default" class="ok_btn" @click="">投票</button>
+				<button type="default" v-if="ifrun" class="ok_btn" @click="">投票</button>
+				<button type="default" v-if="!ifrun" class="ok_btn2">封盘中</button>
 			</view>
 
 		</view>
 		<view v-show="pop_notice">
 			<view class="com_bg"></view>
 			<view class="com_main">
-					<view class="pop_mian">
-						<view class="pop_title">投票规则</view>
-						<view style="padding: 10px 15px; display:flex; justify-content: flex-start; line-height: 25px; flex-wrap: wrap;">
-							游戏投票规则
-						</view>
-						
-						<view class="pop_foot">
-							<view class="pop_ft_btn2" @tap="pop_notice=false">确定</view>
-							
-						</view>
+				<view class="pop_mian">
+					<view class="pop_title">投票规则</view>
+					<view
+						style="padding: 10px 15px; display:flex; justify-content: flex-start; line-height: 25px; flex-wrap: wrap;">
+						游戏投票规则
 					</view>
-			</view>	
+
+					<view class="pop_foot">
+						<view class="pop_ft_btn2" @tap="pop_notice=false">确定</view>
+
+					</view>
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -107,7 +112,7 @@
 	export default {
 		data() {
 			return {
-				pop_notice:false,
+				pop_notice: false,
 				index_ico: '@/static/image/shouye.png', // require(""),
 				index_ico_h: '', // require("@/static/image/shouye_hover.png"),
 				cz_ico: '', // require("@/static/image/chongzhi.png"),
@@ -117,7 +122,7 @@
 				user_ico: '', //require("@/static/image/wode.png"),
 				user_ico_h: '', // require("@/static/image/wode_hover.png"),
 				bet_num: '',
-				max_num: 1000,
+				max_num: 0,
 				qishu: '20231212000001',
 				ifrun: true,
 				ifhistory: false,
@@ -139,20 +144,85 @@
 					value: 4,
 					ifhad: false
 				}],
-				cost_arr: [10, 50, 100, 200, 500, 1000]
+				cost_arr: [10, 50, 100, 200, 500, 1000],
+				userinfo: {},
+				time1: 0,
+				time2: 0,
+				time3: 0,
+				time_build: null,
+				if_over: false,
+
 			}
 		},
 		watch: {
 			bet_num(val) {
-				if (val > this.max_num) {
+				if (Number(val) > this.max_num) {
 					this.bet_num = this.max_num
+					return
 				} else {
 					this.bet_num = val
 				}
 
-			}
+			},
+			time3: function(val) {
+				var _this = this
+				if (this.time1 == 0 && this.time2 == 0 && val < 8) {
+					this.ifrun = false
+				}
+				if (this.time2 == this.time3 && val == 0) {
+					//clearInterval(this.runtime_obj)
+					this.if_over = true
+					this.time1 = 0
+					this.time2 = 0
+					this.time3 = 0
+					this.ifrun = false
+					clearInterval(this.time_build);
+					this.time_build = null;
+					setTimeout(function() {
+						//_this.get_renew()
+					}, 10000)
+
+				}
+				if (this.time3 < 0) {
+					this.time1 = 0
+					this.time2 = 0
+					this.time3 = 0
+					this.ifrun = false
+					clearInterval(this.time_build);
+					this.time_build = null;
+					setTimeout(function() {
+						//_this.get_renew()
+					}, 10000)
+				}
+
+			},
 		},
 		methods: {
+			change_num(val) {
+
+			},
+			showtime(nowdate, endate) {
+				//2023-12-15 14:42:27
+				if (endate !== '') {
+					var nowtime = new Date(), //获取当前时间
+						endtime = new Date(endate); //定义结束时间
+					var lefttime = endtime.getTime() - nowtime.getTime(), //距离结束时间的毫秒数
+						leftd = Math.floor(lefttime / (1000 * 60 * 60 * 24)), //计算天数
+						lefth = Math.floor(lefttime / (1000 * 60 * 60) % 24), //计算小时数
+						leftm = Math.floor(lefttime / (1000 * 60) % 60), //计算分钟数
+						lefts = Math.floor(lefttime / 1000 % 60); //计算秒数
+					//console.log('dddd', lefth + ':' + leftm + ':' + lefts)
+					this.time1 = lefth
+					this.time2 = leftm
+					this.time3 = lefts
+					console.log(leftd + "天" + lefth + ":" + leftm + ":" + lefts)
+					return leftd + "天" + lefth + ":" + leftm + ":" + lefts; //返回倒计时的字符串
+				} else {
+					// clearInterval(this.time_build);
+					// this.time_build = null;
+					// this.if_over = true
+				}
+			},
 			jump(type) {
 				if (type == 1) {
 					uni.navigateTo({
@@ -176,11 +246,11 @@
 					});
 				}
 			},
-			see_list(){
+			see_list() {
 				uni.navigateTo({
 					url: '/pages/movie/bet/list',
 				});
-				
+
 			},
 			get_bet_num(data, index) {
 				if (this.Number_arr[index].ifhad) {
@@ -196,11 +266,50 @@
 			reset() {
 				this.bet_num = ''
 			},
+			async get_userInfo() {
+				var _this = this
+				const res = await this.$myRuquest({
+					url: '/api/front/user/getUserInfo',
+					method: "POST",
+				})
+				if (res.code == 200) {
+					this.userinfo = res.data
+					this.max_num = this.userinfo.balance
+				}
+			},
+			async submit_bet() {
+				var _this = this
+				const res = await this.$myRuquest({
+					url: '/api/front/user/getUserInfo',
+					method: "POST",
+					data: {
+						qihao: '',
+						id: 1,
+						momey: this.bet_num
+					}
+				})
+				if (res.code == 200) {
+					uni.showToast({
+						title: '投票成功！',
+						icon: "success"
+					});
+				}
+			},
+			run_fun() {
+				this.get_userInfo()
+
+				this.time_build = setInterval(() => {
+					this.showtime('', '2023-12-15 15:14:27')
+
+				}, 1000)
+			}
 		},
 		onLoad() {
-			this.pop_notice=false
+			this.pop_notice = false
+
 			var backbutton = document.getElementsByClassName('uni-page-head-hd')[0]
-			if(backbutton) backbutton.style.display = 'none';
+			if (backbutton) backbutton.style.display = 'none';
+
 		}
 	}
 </script>
@@ -228,7 +337,7 @@
 		display: flex;
 		border-radius: 0 0 18px 18px;
 		background: #fff;
-		
+
 	}
 
 	.bet_t_ft_m {
@@ -357,6 +466,16 @@
 		height: 35px;
 		color: #fff;
 		background: #e6557f;
+		width: 80%;
+		text-align: center;
+		line-height: 35px;
+		font-size: 14px;
+	}
+
+	.ok_btn2 {
+		height: 35px;
+		color: #fff;
+		background: #e6e6e6;
 		width: 80%;
 		text-align: center;
 		line-height: 35px;

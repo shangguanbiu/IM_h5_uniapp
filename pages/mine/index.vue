@@ -224,6 +224,8 @@
 					}
 				})
 				uni.removeStorageSync('allContacts')
+				uni.removeStorageSync('ifLogin')
+				
 
 			},
 			about() {

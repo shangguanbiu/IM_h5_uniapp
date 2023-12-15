@@ -19,6 +19,10 @@
 				<view class="text-gray">{{userInfo.account}}</view>
 			</view>
 			<view class="cu-form-group">
+				<view class="title">积分</view>
+				<view class="text-pink">{{balance}}</view>
+			</view>
+			<view class="cu-form-group">
 				<view class="title">{{globalConfig.sysInfo.runMode==1 ? "姓名" : '昵称'}}</view>
 				<view class="text-gray" v-if="globalConfig.sysInfo.runMode==1">{{userInfo.realname}}</view>
 				<input class="uni-input" style="text-align: right;" v-if="globalConfig.sysInfo.runMode==2" v-model="userInfo.realname" focus placeholder="请输入昵称" />
@@ -78,13 +82,26 @@
 						name:'女'
 					},
 				],
-				saved:false
+				saved:false,
+				balance:'0.00'
 			}
 		},
 		mounted() {
+			this.get_userInfo()
 			this.userInfo=JSON.parse(JSON.stringify(loginStore.userInfo));
 		}, 
 		methods: {
+			async get_userInfo() {
+				var _this = this
+				const res = await this.$myRuquest({
+					url: '/api/front/user/getUserInfo',
+					method: "POST",
+				})
+				if (res.code == 200) {
+					
+					this.balance=res.data.balance
+				}
+			},
 			logout(){
 				let client_id=uni.getStorageSync('client_id');
 				this.$api.LoginApi.logout({client_id:client_id}).then(res => {

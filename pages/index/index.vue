@@ -33,7 +33,7 @@
 
 			<movice v-show="tabs==0" ref="child_action"></movice>
 			<opengroup v-if="tabs==1"></opengroup>
-			<bet v-if="tabs==2"></bet>
+			<bet v-show="tabs==2" ref="bet_action"></bet>
 			<nearby v-if="tabs==3"></nearby>
 			<!-- <compass v-if="PageCur=='compass'"></compass> -->
 			<!-- <mine v-if="PageCur=='mine'"></mine> -->
@@ -316,7 +316,9 @@
 			tab_change(index) {
 				this.tabs = index
 				this.PageName = this.tabs_arr[index].name
-
+				if(index==2){
+					this.$refs.bet_action.run_fun();
+				}
 			},
 		}
 	}

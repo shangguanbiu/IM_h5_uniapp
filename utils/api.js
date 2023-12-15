@@ -10,7 +10,7 @@ export const baseurl=()=>{
 export const myRequest = (options) => {
 	return new Promise((resolve, reject) => {
 		if (options.type == undefined) {
-			let token = uni.getStorageSync('token')
+			let token = uni.getStorageSync('ifLogin')
 			let sid = uni.getStorageSync('sid')
 			uni.request({
 				url: BASE_URL + options.url,

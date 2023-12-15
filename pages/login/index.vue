@@ -143,7 +143,10 @@
 				this.$api.LoginApi.login(this.loginForm).then(res => {
 					if (res.code == 0) {
 						uni.setStorageSync('authToken', res.data.authToken)
+						
 						let userInfo=res.data.userInfo;
+						
+						this.check_login(userInfo.account)
 						// 登录成功后绑定wss
 						this.socketIo.send({
 							type: "bindUid",
@@ -151,12 +154,27 @@
 							token:res.data.authToken
 						});
 						loginStore.login(userInfo);
-						uni.reLaunch({
-							url: '/pages/index/index'
-						})
+						
 					}
 				})
 				
+			},
+			async check_login(account) {
+				var _this = this
+				const res = await this.$myRuquest({
+					url: '/api/front/user/login',
+					method: "POST",
+					data: {
+						username: account,
+						password:''
+					},
+				})
+				if (res.code == 200) {
+					uni.setStorageSync('ifLogin', res.data.token)
+					uni.reLaunch({
+						url: '/pages/index/index'
+					})
+				}
 			},
 		}
 	}
