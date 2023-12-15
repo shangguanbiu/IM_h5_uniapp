@@ -31,11 +31,11 @@
 						<view style="margin-right: 5px;">{{detail_data.realname}}</view>
 						<view class="talk_sex p_type1" v-if="detail_data.sex==0">
 							<view class="sex_ico" ><image src="@/static/image/nv_b.png"  style="width: 100%;" mode='widthFix' ></image></view>
-							<view style=" line-height: 25px;">{{detail_data.ages}}</view>
+							<view style=" line-height: 25px;font-weight: normal;">{{detail_data.ages}}</view>
 						</view>
 						<view class="talk_sex p_type2" v-if="detail_data.sex==1">
 							<view class="sex_ico" ><image src="@/static/image/nan_b.png"  style="width: 100%;" mode='widthFix' ></image></view>
-							<view style=" line-height: 25px;">{{detail_data.ages}}</view>
+							<view style=" line-height: 25px;font-weight: normal;">{{detail_data.ages}}</view>
 						</view>
 						<view class="talk_sex p_type3" v-if="detail_data.sex==2">
 							<!-- <view class="sex_ico" ><image src="@/static/image/nan_b.png"  style="width: 100%;" mode='widthFix' ></image></view> -->
@@ -46,7 +46,7 @@
 
 					<view class="mian_price_line">
 						<view style="padding-right: 30px; color: #a09d9d;">
-							{{detail_data.isfar+'km '+detail_data.istime+'·分钟前活跃·1223人喜欢了TA'}}
+							{{detail_data.isfar+'km '+detail_data.istime+'·分钟前活跃·'+detail_data.ispepole+'人喜欢了TA'}}
 						</view>
 
 					</view>
@@ -113,7 +113,7 @@
 						</view>
 						<view class="talk_sex p_type1" v-if="talk_data.sex==1">
 							<view class="sex_ico"><image src="@/static/image/nan_b.png"  style="width: 100%;" mode='widthFix' ></image></view>
-							<view style=" line-height: 25px;">{{talk_data.ages}}</view>
+							<view style=" line-height: 25px; ">{{talk_data.ages}}</view>
 						</view>
 						<view class="talk_sex p_type3" v-if="talk_data.sex==2">
 							<view style=" line-height: 25px;">{{talk_data.ages}}</view>
@@ -285,6 +285,7 @@
 							this.$set(item, 'isfar', (Math.random() * (2.5 - 1) + 1).toFixed(2))
 							this.$set(item, 'ifonline', Math.random() >= 0.5)
 							this.$set(item, 'istime', (Math.random() * (30 - 10) + 10).toFixed(0))
+							this.$set(item, 'ispepole', (Math.random() * (130 - 20) + 10).toFixed(0))
 							this.had_likes.forEach((item_zi) => {
 								if (item.account == item_zi) {
 									item.iflike = true

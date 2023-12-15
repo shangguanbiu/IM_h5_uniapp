@@ -189,6 +189,12 @@
 			
 			
 		},
+		mounted() {
+			window.scrollTo({
+				top:0,
+				behavior:'smooth'
+			})
+		},
 		onShow() {
 			window.scrollTo({
 				top:0,

@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view  :class="{'scroll_ft':scroll_ft}">
 		<!-- <cu-custom bgColor="bg-gradual-pink" :isBack="false">
 			<template #backText></template>
 			<template #content>投票</template>
@@ -8,7 +8,6 @@
 			<view style="padding: 10px  15px">
 				<view class="bet_line bet_ge">
 					<view>当前期数</view>
-
 				</view>
 				<view style="display: flex;" class="bet_ge">
 					<view style="font-weight: bold; font-size: 16px;">{{qishu}}</view>
@@ -17,10 +16,12 @@
 				</view>
 				<view class="time">{{time2+':'+time3}}</view>
 				<view class="bet_line bet_ge">
-					<view style="display: flex;">
-						<view>20231212000002</view>
-						<view class="color_n1">春</view>
-						<view class="color_n2">秋</view>
+					<view style="display: flex;" v-for="(item,narr_k) in Number_laster" :key="narr_k">
+						<view style="margin-right: 10px;">20231212000002</view>
+						<view class="color_n1" v-if="item.value<4 ||item.value==4">春</view>
+						<view class="color_n2" v-if="item.value>5||item.value==5">夏</view>
+						<view class="color_n1" v-if="item.value % 2 === 1">秋</view>
+						<view class="color_n2" v-if="item.value% 2 === 0">冬</view>
 					</view>
 					<view @click="ifhistory=!ifhistory" style="display: flex;">历史出票
 
@@ -29,12 +30,15 @@
 						<view class="cuIcon-fold" style="line-height: 19px;margin-left: 2px;" v-if="ifhistory"></view>
 					</view>
 					<view class="history_are" v-show="ifhistory" @tap="ifhistory=false">
-						<view style="padding: 0px 15px">
+						<view style="padding: 0px 15px" v-if="Number_arr.length !==0">
 							<view style="display: flex; padding: 5px 0;" v-for="(item,narr_k) in Number_arr"
 								:key="narr_k">
-								<view>20231212000002</view>
-								<view class="color_n1">春</view>
-								<view class="color_n2">秋</view>
+								<view style="margin-right: 10px;">20231212000002</view>
+								<view class="color_n1" v-if="item.value<4 ||item.value==4">春</view>
+								<view class="color_n2" v-if="item.value>5||item.value==5">夏</view>
+								<view class="color_n1" v-if="item.value % 2 === 1">秋</view>
+								<view class="color_n2" v-if="item.value% 2 === 0">冬</view>
+
 							</view>
 						</view>
 
@@ -64,7 +68,7 @@
 
 
 		</view>
-		<view class="bet_foot">
+		<view class="bet_foot" v-show="pop_bet">
 			<view class="bet_f_m">
 				<view class="bet_f_mtit">
 					<view>快捷投票</view>
@@ -77,7 +81,7 @@
 
 				</view>
 				<view class="bet_num_line" style="padding: 15px 0;">
-					<view>投票积分:</view>
+					<view style="line-height: 30px;">投票积分:</view>
 					<view><input class="uni-input inmut_l" v-model="bet_num" @input="change_num(bet_num)" type="number"
 							placeholder="" />
 					</view>
@@ -113,6 +117,8 @@
 		data() {
 			return {
 				pop_notice: false,
+				scroll_ft:false,
+				pop_bet: false,
 				index_ico: '@/static/image/shouye.png', // require(""),
 				index_ico_h: '', // require("@/static/image/shouye_hover.png"),
 				cz_ico: '', // require("@/static/image/chongzhi.png"),
@@ -144,6 +150,11 @@
 					value: 4,
 					ifhad: false
 				}],
+				Number_laster: [{
+					name: '冬',
+					value: 4,
+					ifhad: false
+				}],
 				cost_arr: [10, 50, 100, 200, 500, 1000],
 				userinfo: {},
 				time1: 0,
@@ -151,6 +162,7 @@
 				time3: 0,
 				time_build: null,
 				if_over: false,
+				pageHeight:0,
 
 			}
 		},
@@ -183,7 +195,7 @@
 					}, 10000)
 
 				}
-				if (this.time3 < 0) {
+				if (val < 0 || val == NaN || val == 'NaN') {
 					this.time1 = 0
 					this.time2 = 0
 					this.time3 = 0
@@ -259,6 +271,17 @@
 					this.Number_arr[index].ifhad = true
 				}
 
+				const result = this.Number_arr.find(item => item.ifhad == true);
+				if (result !== undefined) {
+					this.pop_bet = true
+				} else {
+					this.pop_bet = false
+				}
+				
+				if(this.pageHeight<820&&this.pop_bet==true){
+					this.scroll_ft=true
+				}
+
 			},
 			get_num(data) {
 				this.bet_num = data
@@ -299,7 +322,7 @@
 				this.get_userInfo()
 
 				this.time_build = setInterval(() => {
-					this.showtime('', '2023-12-15 15:14:27')
+					this.showtime('', '2023-12-20 15:14:27')
 
 				}, 1000)
 			}
@@ -310,6 +333,11 @@
 			var backbutton = document.getElementsByClassName('uni-page-head-hd')[0]
 			if (backbutton) backbutton.style.display = 'none';
 
+		},
+		mounted() {
+			this.pageHeight = document.documentElement.clientHeight;
+			console.log('ddd',this.pageHeight)
+			
 		}
 	}
 </script>
@@ -397,13 +425,14 @@
 	}
 
 	.bet_foot {
-		height: 197px;
+		height: 240px;
 		width: 100%;
 		position: fixed;
 		left: 0;
-		bottom: 60px;
+		bottom: 50px;
 		background: #fff;
 		border-radius: 18px 18px 0 0;
+		z-index: 1027;
 	}
 
 	.bet_f_m {
@@ -431,7 +460,7 @@
 	.bet_num {
 		border: 1px solid #e6557f;
 		padding: 5px;
-		width: 40px;
+		width: 48px;
 		text-align: center;
 		border-radius: 5px;
 		margin: 10px 5px;
@@ -470,6 +499,7 @@
 		text-align: center;
 		line-height: 35px;
 		font-size: 14px;
+		margin: 20px auto;
 	}
 
 	.ok_btn2 {
@@ -487,7 +517,7 @@
 		border-radius: 5px;
 		padding: 0px 5px;
 		background: #EAC477;
-		margin: 0px 10px;
+		margin-right: 10px;
 	}
 
 	.color_n2 {
@@ -505,5 +535,7 @@
 		left: 0px;
 		width: 100%;
 		padding: 10px 0px;
+		z-index: 1029;
 	}
+	.scroll_ft{ padding-bottom: 300px;}
 </style>

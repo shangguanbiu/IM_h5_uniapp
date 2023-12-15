@@ -7,6 +7,9 @@
 		<view style="padding: 10px;max-height: 200px; position: relative;">
 			<image src="@/static/image/vip_top.png" mode='widthFix' style="width: 100%;max-height: 200px;">
 			</image>
+			<view class="item_btn" v-if="userinfo.islevel==0" @tap="to_vip" style="position: absolute;right: 32px; top: 70px;">立即开通</view>
+			<view class="item_btn" v-else  @tap="to_vip" style="position: absolute;right: 32px; top: 70px;">立即升级</view>
+			<!-- <view v-else></view> -->
 			<view  class="vip_are_p">
 				<image :src="userinfo.avatar" mode='widthFix' style="height: 30px; width: 30px; border-radius: 50%; margin-right: 5px;">
 				</image>
@@ -248,7 +251,8 @@
 			return {
 				type_l1: 0,
 				userinfo:{},
-				list:[]
+				list:[],
+				balance:0
 			}
 		},
 		methods: {
@@ -261,14 +265,33 @@
 				this.$api.third_openApi.get_level_list(this.params).then((res) => {
 					if (res.code == 0) {
 						this.list = res.data.data;
-						
-			
 					}
 				})
 			},
+			async get_userInfo() {
+				var _this = this
+				const res = await this.$myRuquest({
+					url: '/api/front/user/getUserInfo',
+					method: "POST",
+				})
+				if (res.code == 200) {
+					
+					this.balance = res.data.balance
+				}
+			},
+			to_vip(){
+				if(this.balance==0||this.balance<this.list[this.type_l1].price){
+					uni.showToast({
+						title: '积分不足！',
+						icon: "none"
+					});
+					return
+				}
+			}
 		},
 		onShow() {
 			this.getList()
+			this.get_userInfo()
 			 this.userinfo=uni.getStorageSync('userInfo')
 			
 		}
@@ -334,5 +357,17 @@
 	.vip_tit_zit{font-weight: bold;font-size: 13px; color: #333; line-height: 30px;}
 	.vip_tit_zi{font-size: 13px; color: #999;}
 	.vip_are_p{font-size: 13px; color: #b67d54;display: flex; position: absolute;left: 35px; bottom: 40px; z-index: 20px; align-items: center; }
+	.item_btn {
+		background: linear-gradient(50deg, #8e3aca, #e6557f);
+		color: #fff;
+		width: 30%;
+		text-align: center;
+		display: inline-block;
+		border-radius: 0.33333rem;
+		margin-right: 0.33333rem;
+		font-size: 12PX;
+		padding: 0.33333rem 1rem;
+		margin-bottom: 0.33333rem;
 	
+	}
 </style>
