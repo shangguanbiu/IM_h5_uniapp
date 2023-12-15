@@ -1,16 +1,16 @@
 {
-	"name": "Raingad-IM",
+	"name": "IM",
 	"version": "3.1.1",
-	"description": "一款基于vue3.0的uniapp即时聊天工具",
+	"description": "聊天工具",
 	"logo": "https://im.file.raingad.com/logo/logo.png",
-	"author": "Raingad",
+	"author": "IM",
 	"main": "main.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://gitee.com/raingad/instant-chat-uniapp.git"
+		"url": ""
 	},
 	"keywords": [],
 	"license": "ISC",

@@ -71,15 +71,15 @@
 		        }
 		    })
 			
-			uni.getPushClientId({
-					success: (res) => {
-						console.log('初始化cid：',res.cid)
-						uni.setStorageSync('cid',res.cid)
-					},
-					fail(err) {
-						console.log(err)
-					}
-				})
+			// uni.getPushClientId({
+			// 		success: (res) => {
+			// 			console.log('初始化cid：',res.cid)
+			// 			uni.setStorageSync('cid',res.cid)
+			// 		},
+			// 		fail(err) {
+			// 			console.log(err)
+			// 		}
+			// 	})
 			// 只有app才有推送权限
 			// #ifdef APP
 			uni.onPushMessage((res) => {
@@ -442,14 +442,41 @@
 	/* #ifndef APP-NVUE */
 	@import '@/static/customicons.css';
 	// 设置整个项目的背景色
+
 	page {
 		background-color: #f5f5f5;
+		max-width: 750px;
 	}
-
+	
 	/* #endif */
 	.example-info {
 		font-size: 14px;
 		color: #333;
 		padding: 10px;
 	}
+	.nav_bar{padding: 10px 0; position: fixed;z-index:80; left:0;bottom:0;background: #251C48; width: 100vw; display: flex;}
+	.nav_zi{ width: 50%; font-size: 12px; text-align: center; color: #6E5C4C;}
+	.nav_hover{ color: #EAC477;}
+	.nav_ge{ padding: 5px 0; padding-bottom: 0;}
+	.com_bg{height: 100vh; width: 100vw; position: fixed;z-index: 1025; background: rgb(0 0 0 / 49%); display: block; left:0; top: 0;}
+	.com_main{height: 100vh; width: 100vw; position: fixed;z-index: 1026; display: block; left:0; top: 0; display: flex; align-items: center;}
+	.pop_mian{width:85%; background: #fff; margin: auto; border-radius: 8px;}
+	.pop_title{text-align: center; padding: 15px 0;  font-size: 15px; color: #333}
+	.pop_foot{display: flex; justify-content: center;padding: 15px 0;}
+	.pop_ft_btn1{color: #999; font-size: 13px; width: 50%; text-align: center; position: relative;}
+	.pop_ft_btn1::after{ content: ''; height: 25px; width: 1px; background: #ccc; position: absolute; bottom: -3px; right: 0;}
+	.pop_ft_btn2{color: #190D30; font-size: 13px;width: 50%; text-align: center;}
+	
+	.talk_mian{height: 300px; width: 100%; position: fixed; left: 0; bottom: 0; z-index: 1025; background: #fff; border-radius: 20px 20px 0 0;}
+	.talk_ico{margin: auto; width: 80px; height: 80px; overflow: hidden; margin-top: -20px; border: 2px solid #fff; border-radius: 50%;}
+	.talk_name{text-align: center; font-size: 15px; font-weight: bold;padding: 10px 0;}
+	.talk_desc{display: flex; justify-content: center;}
+	.talk_sex{display: flex; margin-right: 5px; border-radius: 15px; color: #fff; padding:0 10px;}
+	.talk_form{display: flex; width: 90%; background: #f1f1f1; border-radius: 5px; margin:30px auto; margin-top: 50px; justify-content: space-between;}
+	
+	.p_type1{ background: #e6557f;}
+	.p_type2{ background: #55aaff;}
+	.p_type3{ background: #ccc;}
+	.p_type3{ background: #f37b1d;}
+	.sex_ico{width: 13px; margin-right:5px; padding-top: 5px;}
 </style>

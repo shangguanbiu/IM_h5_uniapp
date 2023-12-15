@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<cu-custom bgColor="bg-gradual-green" :isBack="true">
+		<cu-custom bgColor="bg-gradual-pink" :isBack="true" >
 			<template #backText></template>
 			<template #content>{{title}}</template>
 		</cu-custom>

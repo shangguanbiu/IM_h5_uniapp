@@ -2,7 +2,13 @@
 	"pages": [{
 			"path": "pages/index/index",
 			"style": {
+				
 				"navigationBarTitleText": "首页"
+			}
+		},{
+			"path": "pages/index/mv_index",
+			"style": {
+				"navigationBarTitleText": "消息"
 			}
 		},
 		{
@@ -15,7 +21,8 @@
 		{
 			"path": "pages/contacts/index",
 			"style": {
-				"navigationBarTitleText": "联系人"
+				"navigationStyle": "default",
+				"navigationBarTitleText": "通讯录"
 			}
 		},
 		{
@@ -101,6 +108,12 @@
 			"style": {
 				"navigationBarTitleText": "扫描"
 			}
+		}, {
+			"path": "pages/mine/index",
+			"style": {
+
+				"navigationBarTitleText": "我的"
+			}
 		},
 		{
 			"path": "pages/mine/webview",
@@ -131,38 +144,139 @@
 			"style": {
 				"navigationBarTitleText": "设置"
 			}
-		}
-	    ,{
-            "path" : "pages/third/third",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "发现",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/nearby/nearby",
-			
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "附近的人",
+		}, {
+			"path": "pages/third/third",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/compass/index",
+			"style": {
+				"navigationStyle": "default",
+				"navigationBarTitleText": "探索",
+				"enablePullDownRefresh": false,
+				"titleNView": { //  隐藏当前页面的返回按钮
+					"titleSize": "18px",
+					"autoBackButton": false // 禁用原生导航栏
+				}
+			}
+
+		}, {
+			"path": "pages/nearby/nearby",
+
+			"style": {
+				"navigationBarTitleText": "附近的人",
 				// "navigationStyle":"default",
-				
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/opengroup/opengroup",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "公开的群",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-    ],
+
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/opengroup/opengroup",
+			"style": {
+				"navigationBarTitleText": "公开的群",
+				"enablePullDownRefresh": false
+			}
+
+		},
+		{
+			"path": "pages/movie/bet/bet",
+			"style": {
+				"navigationBarTitleText": "投票",
+				"enablePullDownRefresh": false
+			}
+
+		},{
+			"path": "pages/movie/bet/list",
+			"style": {
+				"navigationBarTitleText": "我的出票",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/movie/index/index",
+			"style": {
+
+				"navigationBarTitleText": "影院",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/movie/list/index",
+			"style": {
+
+				"navigationBarTitleText": "列表",
+				"enablePullDownRefresh": true
+			}
+
+		}, {
+			"path": "pages/movie/list/detial",
+			"style": {
+
+				"navigationBarTitleText": "影院详情",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/movie/notice/notice",
+			"style": {
+				"navigationBarTitleText": "系统通知",
+				"enablePullDownRefresh": true
+			}
+
+		}, {
+			"path": "pages/movie/notice/detail/detail",
+			"style": {
+				"navigationBarTitleText": "通知详情",
+				"enablePullDownRefresh": false
+			}
+
+		},
+		{
+			"path" : "pages/mine/vip/vip",
+			"style" : 
+			{
+				"navigationBarTitleText" : "我的特权",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/movie/kefu/kefu",
+			"style" : 
+			{
+				"navigationBarTitleText" : "客服",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/movie/kefu/detail",
+			"style" : 
+			{
+				"navigationBarTitleText" : "客服",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/mine/like/like_me",
+			"style" : 
+			{
+				"navigationBarTitleText" : "喜欢的TA",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/mine/like/like",
+			"style" : 
+			{
+				"navigationBarTitleText" : "喜欢的TA",
+				"enablePullDownRefresh" : false
+			}
+		}
+
+
+	],
 	"globalStyle": {
 		"navigationStyle": "custom",
 		"navigationBarTextStyle": "black",

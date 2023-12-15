@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<cu-custom bgColor="bg-gradual-green" :isBack="true">
+		<cu-custom bgColor="bg-gradual-pink" :isBack="true">
 			<template #backText></template>
 			<template #content>个人信息</template>
 		</cu-custom>
@@ -26,6 +26,10 @@
 			<view class="cu-form-group">
 				<view class="title">e-mail</view>
 				<input class="uni-input" style="text-align: right;" v-model="userInfo.email" focus placeholder="请输入email地址" />
+			</view>
+			<view class="cu-form-group">
+				<view class="title">年纪</view>
+				<input class="uni-input" style="text-align: right;" v-model="userInfo.ages" focus placeholder="请输入数字" type="number" />
 			</view>
 			<view class="cu-form-group">
 				<view class="title">性别</view>
@@ -110,7 +114,8 @@
 					realname:this.userInfo.realname,
 					email:this.userInfo.email,
 					sex:this.userInfo.sex,
-					motto:this.userInfo.motto
+					motto:this.userInfo.motto,
+					ages:this.userInfo.ages,
 				  }
 				  this.$api.msgApi.updateUserInfo(params).then(res=>{
 					if(res.code == 0){

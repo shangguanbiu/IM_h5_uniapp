@@ -1,32 +1,43 @@
 <template>
 	<view>
-		<cu-custom bgColor="bg-gradual-green" :isBack="true">
+		<!-- <cu-custom bgColor="bg-gradual-pink" :isBack="false">
 			<template #backText></template>
-			<template #content>公开的群</template>
-		</cu-custom>
-		<view>
+			<template #content>福利群</template>
+		</cu-custom> -->
+		<view  style="padding-bottom: 50px;" v-if="list.length !==0">
 			<view class="user_line" v-for="(people,t_index) in list" :key="t_index">
 				<view class="user_l">
-					<image :src="'http://123.56.77.160/'+people.avatar" mode='widthFix' style="width: 100%; border-radius: 8px;"></image>
+					<image :src="'http://123.56.77.160/'+people.avatar" mode='widthFix'
+						style="width: 100%; border-radius: 8px;"></image>
 				</view>
 				<view class="user_r">
 					<view class="item_name">{{people.name}}</view>
-					<view style=" min-height: 90px;">
-						<view style="display: flex;padding: 10px 0;">
-							<view class="item">大福利</view>
-							<view class="item">资源多</view>
-						</view>
+					<view style=" max-height: 90px; font-size: 13px; color: #969696; padding: 10px 0;">
+						{{people.desc_v}}
+						
 					</view>
-					<view class="item_btn">
-						申请进群
+					<view v-if="people.ifin" @tap="openDetails(people)" class="item_btn2" >
+						立即进入
+					</view>
+					<view v-else class="item_btn" @tap="into_droup(people.group_id,t_index)">
+						加入群聊
 					</view>
 				</view>
 			</view>
 		</view>
+		<Empty v-else noDatatext="暂无记录" textcolor="#999" />
 	</view>
 </template>
 
 <script>
+	import {
+		storeToRefs
+	} from 'pinia';
+	import pinia from '@/store/index'
+	import {
+		useMsgStore
+	} from '@/store/message';
+	const msgStore = useMsgStore(pinia)
 	export default {
 		data() {
 			return {
@@ -37,17 +48,61 @@
 					limit: 10,
 					is_mine: 0
 				},
-				list: []
+				list: [],
+				join_id: '',
+				contacts:[]
 			}
 		},
 		methods: {
+			// 打开聊天
+			openDetails(items){
+				console.log('ddddd',items)
+
+				uni.navigateTo({
+					url:"/pages/message/chat?id=" + 'group-'+items.group_id
+				})
+			},
 			getList() {
 				this.$api.third_openApi.opengroup_List(this.params).then((res) => {
 					if (res.code == 0) {
 						this.list = res.data.data;
 						this.total = res.count;
 
+						for (var i = 0; i < this.list.length; i++) {
+							for (var k = 0; k < this.contacts.length; k++) {
+								if (this.list[i].group_id == this.contacts[k].group_id) {
+									this.$set(this.list[i], 'ifin', true)
+								}
+							}
+						}
+
 					}
+				})
+			},
+			into_droup(id,index) {
+				var _this = this
+				this.$api.third_openApi.into_group({
+					group_id: 'group-' + id,
+					inviteUid: [1]
+				}).then((res) => {
+					if (res.code == 0) {
+						uni.showToast({
+							title: '加入成功',
+							icon: "success"
+						});
+						this.initContacts()
+						
+						this.$set(this.list[index],'ifin',true)
+
+					}
+				})
+			},
+			initContacts() {
+				this.modelName = '';
+				this.$api.msgApi.initContacts().then(res => {
+					// 设置消息未读数和系统消息未读数
+					msgStore.sysUnread = res.count;
+					msgStore.initContacts(res.data);
 				})
 			},
 		},
@@ -60,6 +115,10 @@
 			this.paddingB = this.navBarHeight + this.inlineTools;
 			// #endif
 			this.getList()
+			this.contacts = uni.getStorageSync('allContacts');
+			
+
+
 		}
 	}
 </script>
@@ -67,12 +126,13 @@
 <style scoped>
 	.user_line {
 		display: flex;
-		width: 90%;
-		margin: 10px auto;
+		width: 93%;
+		margin: 15px auto;
 	}
 
 	.user_l {
-		width: 150px;
+		width: 130px;
+		height: 130px;
 		border-radius: 8px;
 	}
 
@@ -80,7 +140,11 @@
 		flex: 1;
 		padding-left: 15px;
 	}
-	.item_name{ font-size: 14px;}
+
+	.item_name {
+		font-size: 14px;
+	}
+
 	.item {
 		background: linear-gradient(50deg, #9b54ca, #e6557f);
 		color: #fff;
@@ -91,15 +155,31 @@
 		padding: 0.33333rem 1rem;
 		margin-bottom: 0.33333rem;
 	}
+
 	.item_btn {
 		background: #9b54ca;
 		color: #fff;
-		width: 100%; text-align:center;
+		width: 100%;
+		text-align: center;
 		display: inline-block;
 		border-radius: 0.33333rem;
 		margin-right: 0.33333rem;
 		font-size: 12PX;
 		padding: 0.33333rem 1rem;
 		margin-bottom: 0.33333rem;
+		margin-top: 10px;
+	}
+	.item_btn2 {
+		background: #c191ca;
+		color: #fff;
+		width: 100%;
+		text-align: center;
+		display: inline-block;
+		border-radius: 0.33333rem;
+		margin-right: 0.33333rem;
+		font-size: 12PX;
+		padding: 0.33333rem 1rem;
+		margin-bottom: 0.33333rem;
+		margin-top: 10px;
 	}
 </style>

@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<cu-custom bgColor="bg-white"  :isBack="true">
+		<cu-custom bgColor="bg-white"  :isBack="true" >
 			<template #backText></template>
 			<template #content>个人信息</template>
 		</cu-custom>

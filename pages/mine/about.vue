@@ -1,8 +1,8 @@
 <template>
 	<view>
-		<cu-custom bgColor="bg-gradual-green" :isBack="true">
+		<cu-custom bgColor="bg-gradual-pink" :isBack="true">
 			<template #backText></template>
-			<template #content>关于IM</template>
+			<template #content>关于我们</template>
 		</cu-custom>
 		<view style="height:150rpx;"></view>
 		<view class="padding im-flex im-rows im-justify-content-center mb-10">

@@ -25,7 +25,8 @@
 		</form>
 		<view class='forget'>
 			<view><switch class="switch" :checked="loginForm.rememberMe"  :class="loginForm.rememberMe?'checked':''" @change="switchChange"  style="transform:scale(0.7)" />记住我</view>
-			<view class="text-blue" @tap="forget=!forget">{{forget ? '密码登陆'  : '忘记密码'}}</view>
+			<view class="text-blue" @tap="to_kefu" v-show="!forget">忘记密码？点击联系客服</view>
+			
 		</view>
 		<view class="flex flex-direction im-login-btn">
 			<button class="cu-btn lg bg-blue" @tap="login()">登录</button>
@@ -53,8 +54,8 @@
 		data() {
 			return {
 				loginForm:{
-					account:'13800000015',
-					password:'123456',
+					account:'',
+					password:'',
 					code:'',
 					client_id:'',
 					rememberMe:false
@@ -83,6 +84,11 @@
 			}
 		},
 		methods: {
+			to_kefu(){
+				uni.navigateTo({
+					url: '/pages/movie/kefu/kefu',
+				});
+			},
 			switchChange(e) {
 				this.loginForm.rememberMe=e.detail.value;
 			},

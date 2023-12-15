@@ -3,7 +3,7 @@
 		<scroll-view scroll-y class="indexes" :scroll-into-view="'indexes-'+ listCurID" :style="[{height:'calc(100vh - '+ (CustomBar+inlineTools+StatusBar) + 'px)'}]"
 		 :scroll-with-animation="true" :enable-back-to-top="true" v-if="TabCur==0">
 		 <view style="padding-bottom:30rpx">
-			 <view class="cu-list menu mt-10">
+			 <view class="cu-list menu">
 				<view class="cu-item arrow" @tap="openFriend" v-if="globalConfig.sysInfo.runMode==2&&userinfo.role==1">
 					<view class='cu-avatar mr-15 invite-bg'  :class="appSetting.circleAvatar?'round':'radius'">
 					</view>
@@ -90,6 +90,17 @@
 		<view v-show="!hidden" class="indexToast">
 			{{listCur}}
 		</view>
+		<view class="cu-bar tabbar bg-white shadow foot">
+			<view class="action" @click="NavChange(item)" v-for="(item,index) in navList" :key="index"
+				data-cur="message">
+				<view class='cuIcon-cu-image'>
+					<image :src="'/static/image/tabbar/' + [item.name] + [PageCur==item.name?'-active':''] + '.svg'">
+					</image>
+					<view class="cu-tag badge" v-if="item.notice>0">{{item.notice}}</view>
+				</view>
+				<view :class="PageCur==item.name?'text-mauve':'text-black'">{{item.title}}</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -102,7 +113,9 @@
 	import pinia from '@/store/index'
 	const msgStore = useMsgStore(pinia)
 	const userStore = useloginStore(pinia)
-	const {contacts,sysUnread} = storeToRefs(msgStore);
+	const {unread,contacts,sysUnread} = storeToRefs(msgStore);
+	
+	
 	/**
 	 * 初始的引导页
 	 */
@@ -113,10 +126,35 @@
 		},
 		name  : "contacts",
 		props:{
-			TabCur:{type:Number, default:0}	
+			// TabCur:{type:Number, default:0}	
 		},
 		data() {
 			return {
+				PageCur:'contacts',
+				navList: [{
+						name: 'home',
+						title: '首页',
+						notice: 0
+					},{
+						name: 'message',
+						title: '消息',
+						notice: unread
+					},{
+						name: 'serve',
+						title: '客服',
+						notice: 0
+					},
+					{
+						name: 'contacts',
+						title: '通讯录',
+						notice: sysUnread
+					},{
+						name: 'mine',
+						title: '我的',
+						notice: 0
+					}
+				],
+				TabCur:0,
 				//#ifdef H5
 				tabbarH:50,
 				//#endif
@@ -190,6 +228,30 @@
 			this.userinfo=uni.getStorageSync('userInfo')
 		},
 		methods: {
+			NavChange: function(item) {
+			
+				if (item.name == 'mine') {
+					uni.navigateTo({
+						url: '/pages/mine/index',
+					});
+				}else if (item.name == 'message') {
+					uni.navigateTo({
+						url: '/pages/index/mv_index',
+					});
+				}  else if (item.name == 'compass') {
+					uni.navigateTo({
+						url: '/pages/compass/index',
+					});
+				} else if (item.name == 'home') {
+					uni.switchTab({
+						url: '/pages/index/index',
+					});
+				}else if (item.name == 'serve') {
+					uni.navigateTo({
+						url: '/pages/movie/kefu/kefu',
+					});
+				} 
+			},
 			initContacts(arr){
 				const allContacts=JSON.parse(JSON.stringify(arr));
 				const contacts=allContacts.filter((item)=>{
@@ -292,7 +354,7 @@
 
 <style scoped>
 	page {
-		padding-top: 100upx;
+		/* padding-top: 100upx; */
 	}
 	.indexes {
 		position: relative;

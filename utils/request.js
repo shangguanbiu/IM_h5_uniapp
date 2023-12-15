@@ -135,4 +135,19 @@ export const postJsonRequest = (url, params) => {
 		}
 	});
 };
+export const postJsonRequest_movice = (url, params) => {
+	let token = uni.getStorageSync('token')
+	return axios({
+		method: 'post',
+		url: `${url}`,
+		data: params,
+		header: {
+
+			"XX-Api-Version": 1,
+			"XX-Device-Type":'mobile',
+			"XX-Token":token,
+			'content-type': 'application/json'
+		}
+	});
+};
 export default axios

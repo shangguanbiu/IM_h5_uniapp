@@ -1,6 +1,6 @@
 <template name="im-input">
 	<view id="more-oprate">
-		<view class="im-footer bg-gray" v-if="userinfo.role !==undefined &&userinfo.role==1"
+		<view class="im-footer bg-gray" 
 			:style="[{paddingBottom:paddingB+'px',height:footerHeight+'px',bottom:InputBottom+'px'}]">
 			<view class="im-menus f-28" :class="[recShow ? 'cuIcon-keyboard' : 'cuIcon-sound']" hover-class="tap"
 				@tap="showRec"></view>
@@ -72,12 +72,12 @@
 
 			</view>
 		</view>
-		<view class="im-footer bg-gray" v-else
+		<!-- <view class="im-footer bg-gray" v-else
 			:style="[{paddingBottom:paddingB+'px',height:footerHeight+'px',bottom:InputBottom+'px'}]">
 			<view class="im-menus f-28" :class="[recShow ? 'cuIcon-keyboard' : 'cuIcon-sound']" hover-class="tap">
 			</view>
 			<view class="solid-bottom im-flex1 bg-white im-input" read-only type="text" style="text-align: center; line-height: 30px;" >{{inputMsg}}</view>
-		</view>
+		</view> -->
 		<view class="voice-model c-white radius-10 im-flex im-columns im-align-items-center pd-10"
 			v-show="isUseRecorder">
 			<view class="cuIcon-voicefill mt-15 mb-5 f-28" :class="[isCancel ? 'c-red' : '']"></view>
@@ -162,10 +162,7 @@
 			}
 		},
 		created: function() {
-			this.userinfo = uni.getStorageSync('userInfo')
-			if (this.userinfo.role !== 1) {
-				this.inputMsg = "全体禁言中"
-			}
+			
 			// 监听键盘高度
 			//#ifdef APP-PLUS || MP-WEIXIN || MP-ALIPAY
 

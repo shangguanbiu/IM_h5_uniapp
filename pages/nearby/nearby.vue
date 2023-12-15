@@ -1,25 +1,134 @@
 <template>
 	<view>
-		<cu-custom bgColor="bg-gradual-green" :isBack="true">
-			<template #backText></template>
-			<template #content>附近的人</template>
-		</cu-custom>
-		<view>
-			<view class="user_line" v-for="(people,t_index) in list" :key="t_index">
-				<view class="user_l">
-					<image :src="'http://123.56.77.160/'+people.avatar" mode='widthFix' style="width: 100%; border-radius: 8px;"></image>
+		<view v-if='!if_more'>
+			<!-- <cu-custom bgColor="bg-gradual-pink" :isBack="false">
+				<template #backText></template>
+				<template #content>附近的人</template>
+			</cu-custom> -->
+			<tantan v-if="list.length > 0" :list="list" @="change" @Image="clickImage" @see_more="show_detail" @openpop="open_pop"></tantan>
+		</view>
+		<view v-else>
+			<view>
+
+				<view class="page-section swiper">
+					<view class="cuIcon-back back" @tap="if_more=false"></view>
+					<view style="position: relative;">
+						<swiper :indicator-dots="indicatorDots" :indicator-color="indicatorColor"
+							:indicator-active-color="indicatorActiveColor" :autoplay="autoplay" :interval="interval"
+							:duration="duration" style="height: 450px;">
+							<swiper-item v-for="(banner,indexbn) in bannerdata" :key="'a'+indexbn">
+								<image :src="banner.img" mode='widthFix' style="width: 100%;"></image>
+							</swiper-item>
+
+						</swiper>
+					</view>
 				</view>
-				<view class="user_r">
-					<view class="item_name">{{people.realname}}</view>
-					<view style=" min-height: 90px;">
-						<view style="display: flex;padding: 10px 0;">
-							<view class="item">好看</view>
-							<view class="item">好看</view>
+				<view class="main_i">
+					<view class="main_title">
+					
+						<!-- <view class="p_type p_type1" v-if="detail_data.sex==0">女</view>
+						<view class="p_type p_type2" v-if="detail_data.sex==1">男</view> -->
+						<view style="margin-right: 5px;">{{detail_data.realname}}</view>
+						<view class="talk_sex p_type1" v-if="detail_data.sex==0">
+							<view class="sex_ico" ><image src="@/static/image/nv_b.png"  style="width: 100%;" mode='widthFix' ></image></view>
+							<view style=" line-height: 25px;">{{detail_data.ages}}</view>
+						</view>
+						<view class="talk_sex p_type2" v-if="detail_data.sex==1">
+							<view class="sex_ico" ><image src="@/static/image/nan_b.png"  style="width: 100%;" mode='widthFix' ></image></view>
+							<view style=" line-height: 25px;">{{detail_data.ages}}</view>
+						</view>
+						<view class="talk_sex p_type3" v-if="detail_data.sex==2">
+							<!-- <view class="sex_ico" ><image src="@/static/image/nan_b.png"  style="width: 100%;" mode='widthFix' ></image></view> -->
+							<view style=" line-height: 25px;">{{detail_data.ages}}</view>
+						</view>
+						
+					</view>
+
+					<view class="mian_price_line">
+						<view style="padding-right: 30px; color: #a09d9d;">
+							{{detail_data.isfar+'km '+detail_data.istime+'·分钟前活跃·1223人喜欢了TA'}}
+						</view>
+
+					</view>
+					<view class="main_title" style="margin-top: 10px;color: #2a1468;">关于我</view>
+					<view class="dangan" style="color: #a09d9d;;">
+						{{detail_data.motto}}
+					</view>
+					<view style="display: flex;padding: 10px 0; padding-bottom: 90px;  flex-wrap:wrap" v-if="detail_data.tags">
+						<view :class="'item_'+t_index" v-for="(tagitem,t_index) in detail_data.tags.split(',')"
+							:key="t_index">
+							{{tagitem}}
 						</view>
 					</view>
-					
-					<view class="item_btn">
-						加她为好友
+
+					<view class="ft_zhaohu_line">
+						<view style="margin-right: 5px;" @tap="bet_talk(people)">
+							<view class="ft_zh_zi" style="color:rgb(248, 186, 53)">
+								<view class="cuIcon-commandfill"></view>打招呼
+							</view>
+						</view>
+						<view style="margin-left: 5px;">
+							<view class="ft_zh_zi" style="color:rgb(250, 84, 124) ;">
+								<view class="cuIcon-likefill"></view>喜欢
+							</view>
+						</view>
+
+					</view>
+				</view>
+
+
+
+			</view>
+		</view>
+		
+		<view v-show="pop_notice">
+			<view class="com_bg"></view>
+			<view class="com_main">
+				<view class="pop_mian">
+					<view class="pop_title">提示</view>
+					<view style="padding: 10px 15px;  line-height: 25px; flex-wrap: wrap; text-align: center;">
+						{{notice_content}}
+					</view>
+		
+					<view class="pop_foot">
+						<view class="pop_ft_btn1" v-if="notice_type==1" @tap="pop_notice=false">关闭</view>
+						<view class="pop_ft_btn2" @tap="pop_ok()" v-if="notice_type==1">去升级</view>
+						<view class="pop_ft_btn2" @tap="pop_notice=false" v-if="notice_type==2">确定</view>
+					</view>
+				</view>
+			</view>
+		</view>
+		<view v-show="show_talk">
+			<view class="com_bg" @tap="show_talk=false"></view>
+			<view class="talk_mian">
+				<view style="width:90%; margin: auto;">
+					<view class="talk_ico">
+						<image :src="'http://123.56.77.160/'+talk_data.avatar"   style="width:100%; border-radius: 50%;" mode='widthFix'></image>
+					</view>
+					<view class="talk_name">{{talk_data.realname}}</view>
+					<view class="talk_desc">
+						<view class="talk_sex p_type1" v-if="talk_data.sex==0">
+							<view class="sex_ico" ><image src="@/static/image/nv_b.png"  style="width: 100%;" mode='widthFix' ></image></view>
+							<view style=" line-height: 25px;">{{talk_data.ages}}</view>
+						</view>
+						<view class="talk_sex p_type1" v-if="talk_data.sex==1">
+							<view class="sex_ico"><image src="@/static/image/nan_b.png"  style="width: 100%;" mode='widthFix' ></image></view>
+							<view style=" line-height: 25px;">{{talk_data.ages}}</view>
+						</view>
+						<view class="talk_sex p_type3" v-if="talk_data.sex==2">
+							<view style=" line-height: 25px;">{{talk_data.ages}}</view>
+						</view>
+						<view  class="talk_sex p_type3">
+							<view style=" line-height: 25px;">vip-{{talk_data.islevel}}</view>
+						</view>
+					</view>
+					<view class="talk_form">
+						<view style="padding-left: 10px;">
+							<input placeholder="随意打个招呼吧" style="height: 32px; font-size: 14px;"  maxlength="32" name="input" v-model="send_content"/>
+						</view>
+						<view>
+							<button class='cu-btn bg-blue shadow' @tap="sendMessage(talk_data.user_id)">发送</button>
+						</view>
 					</view>
 				</view>
 			</view>
@@ -28,61 +137,327 @@
 </template>
 
 <script>
+	import tantan from '@/components/dgex-tantan/dgex-tantan.vue'
 	export default {
+		components: {
+			tantan
+		},
 		data() {
 			return {
+				show_talk:false,
+				talk_data:{},
+				if_more: false,
+				pop_notice:false,
+				notice_type: 1,
+				notice_content: "您当前可观看浏览附近的人已达到每日限制，观看更多可开通会员，请联系客服",
+				send_content:'',
+				fromUser:'',
+				detail_data: '',
+				list: [],
 				paddingB: 0,
 				total: 0,
 				params: {
 					page: 1,
 					limit: 10,
-					is_mine: 0
 				},
-				list: []
+				list: [],
+				iflike: false,
+				had_likes: [],
+				scrollW: 0,
+				show_login: false,
+				indicatorDots: true,
+				autoplay: true,
+				interval: 3000,
+				duration: 500,
+				bannerdata: [{
+						img: 'https://pic1.zhimg.com/50/v2-fc82ae5d95b116d105932e8bdf38b920_720w.jpg?source=2c26e567'
+					},
+					{
+						img: "https://picx.zhimg.com/50/v2-2ff9dc184a4fa00fa1e0c493013d8d13_720w.jpg?source=2c26e567"
+					},
+					{
+						img: "https://picx.zhimg.com/50/v2-94d1226578c67f8f25893b5972acaa43_720w.jpg?source=2c26e567"
+					},
+				],
+				indicatorColor: "#292b40",
+				indicatorActiveColor: "#ffffff",
+				tag: ['好看', '大片', '动作片', '青春', '喜剧']
 			}
 		},
+		mounted() {
+			this.getList()
+			this.fromUser = uni.getStorageSync('userInfo')
+			return
+			this.if_more = false
+			// const arr = []
+			// /* 测试数据*/
+			// const tu = [
+			// 	"https://pic1.zhimg.com/50/v2-fc82ae5d95b116d105932e8bdf38b920_720w.jpg?source=2c26e567",
+			// 	"https://picx.zhimg.com/50/v2-2ff9dc184a4fa00fa1e0c493013d8d13_720w.jpg?source=2c26e567",
+			// 	"https://picx.zhimg.com/50/v2-a4b356c00dfc7c92c5b69d533e99aa8f_720w.jpg?source=2c26e567",
+			// 	"https://picx.zhimg.com/50/v2-ad949fa892116bd98fa02968fb517dd5_720w.jpg?source=2c26e567",
+			// 	"https://picx.zhimg.com/50/v2-94d1226578c67f8f25893b5972acaa43_720w.jpg?source=2c26e567"
+			// ]
+			// for (let index = 0; index < 10; index++) {
+			// 	const n = Math.floor(Math.random() * (tu.length - 1))
+			// 	let data = {
+			// 		image: tu[n],
+			// 		title: '你好',
+			// 		desc: n + 500 + 'm ' + '30分钟前活跃',
+			// 		tags: ['射手座']
+			// 	}
+			// 	arr.push(data)
+			// }
+			// this.list = arr
+		},
 		methods: {
+			open_pop(){
+				this.pop_notice=!this.pop_notice
+				this.notice_content='您当前可观看浏览附近的人已达到每日限制，观看更多可开通会员，请联系客服'
+			},
+			bet_talk() {
+				this.show_talk = true
+				
+			},
+			pop_ok(){
+				uni.navigateTo({
+					url: '/pages/movie/kefu/kefu'
+				});
+			},
+			change(data) {
+				// 判断倒数
+				if (data.currentIndex > this.list.length - 5) {
+
+					// 模拟一下最加数据
+					const tu = [
+						'https://nimg.ws.126.net/?url=http%3A%2F%2Fdingyue.ws.126.net%2F2021%2F0704%2Fc7a27a1ej00qvpu700019c000hs00vlc.jpg&thumbnail=660x2147483647&quality=80&type=jpg',
+						'https://nimg.ws.126.net/?url=http%3A%2F%2Fdingyue.ws.126.net%2F2021%2F0704%2F9f81e6aaj00qvpu70001xc000hs00vmc.jpg&thumbnail=660x2147483647&quality=80&type=jpg',
+						'https://nimg.ws.126.net/?url=http%3A%2F%2Fdingyue.ws.126.net%2F2021%2F0704%2F55bf2cb3j00qvpu70002cc000hs012jc.jpg&thumbnail=660x2147483647&quality=80&type=jpg',
+						'https://nimg.ws.126.net/?url=http%3A%2F%2Fdingyue.ws.126.net%2F2021%2F0704%2F2017725bj00qvpu70001jc000hs00zxc.jpg&thumbnail=660x2147483647&quality=80&type=jpg'
+					]
+					let arr = []
+					for (let index = 0; index < 15; index++) {
+						const n = Math.floor(Math.random() * (tu.length - 1))
+						let newdata = {
+							nearby_img: tu[n],
+							name: '你好',
+							desc: n + 500 + 'm ' + '30分钟前活跃',
+							tags: ['射手座']
+						}
+						arr.push(newdata)
+					}
+					this.params.page++
+					this.getList()
+					// 情况一 如果是追加数据，合并数组即可
+					//this.list = this.list.concat(arr)
+					// 情况二 如果是更新数据需要同时重置组件，使用v-if重置组件 重置会闪屏自行处理加个动画
+					// this.list = []
+					// this.$nextTick(() => {
+					// 	this.list = arr
+					// 	this.key = Math.round(new Date() / 1000)
+					// 	uni.showToast({
+					// 		title: `重置组件，更新数据`
+					// 	})
+					// })
+				}
+			},
+			clickImage(data) {
+				console.log(data);
+			},
+			show_detail(data) {
+
+				this.if_more = true
+				this.detail_data = data.currentItem
+				this.talk_data = data.currentItem
+			},
 			getList() {
 				this.$api.third_openApi.near_user_List(this.params).then((res) => {
 					if (res.code == 0) {
-						this.list = res.data.data;
-						this.total = res.count;
+						if (this.list.length == 0) {
+							this.list = res.data.data;
+						} else {
+							this.list = this.list.concat(res.data.data)
+						}
+
+
+						this.list.forEach((item) => {
+							this.$set(item, 'iflike', false)
+							this.$set(item, 'isfar', (Math.random() * (2.5 - 1) + 1).toFixed(2))
+							this.$set(item, 'ifonline', Math.random() >= 0.5)
+							this.$set(item, 'istime', (Math.random() * (30 - 10) + 10).toFixed(0))
+							this.had_likes.forEach((item_zi) => {
+								if (item.account == item_zi) {
+									item.iflike = true
+								}
+
+							})
+						})
 
 					}
 				})
-			},
-		},
-		created() {
-			// #ifdef H5
-			this.paddingB = this.inlineTools;
-			// #endif
 
-			// #ifndef H5
-			this.paddingB = this.navBarHeight + this.inlineTools;
-			// #endif
-			this.getList()
+
+			},
+			setLike(type, user_account, index) {
+				var params = {
+					type: type,
+					user_id: uni.getStorageSync('userInfo').user_id,
+					user_account: user_account
+				}
+				if (type == 1) {
+					this.$api.third_openApi.near_user_like(params).then((res) => {
+						if (res.code == 0) {
+							this.list[index].iflike = true
+						}
+					})
+				}
+
+			},
+			sendMessage(toContactid) {
+			
+				//提前判断每日剩余打招呼的次数
+			
+			
+			
+				let msg = {
+					id: this.$util.getUuid(),
+					is_group: 0,
+					fromUser: this.fromUser,
+					type: 'text',
+					toContactId: toContactid,
+					content: this.send_content,
+					sendTime: new Date().getTime()
+				}
+			
+				this.$api.msgApi.sendMessage(msg)
+					.then((res) => {
+						if (res.code == 0) {
+							//已开启禁言
+							// uni.showToast({
+							// 	title: '成功',
+							// 	icon: "success"
+							// })
+							this.show_talk = false
+							this.notice_content = '已打招呼，等待TA的回应！可在下方栏目-消息中查看'
+							this.pop_notice = true
+							this.notice_type = 2
+			
+						} else {
+							uni.showToast({
+								title: res.msg,
+								icon: "none"
+							})
+						}
+					})
+					.catch((error) => {
+			
+					});
+			}
+			// 
 		}
 	}
 </script>
+<style>
+	/deep/ .uni-swiper {
+		height: 420rpx;
+	}
 
+	/deep/ .uni-swiper-dots-horizontal {
+		bottom: 20rpx;
+	}
+
+	.gongzi /deep/ uni-image>img {
+		width: 100%;
+
+	}
+
+	/deep/ .van-action-sheet__item {
+		background: #fff;
+
+	}
+</style>
 <style scoped>
-	.user_line {
+	
+	.p_type {
+		color: #fff;
+		text-align: center;
+		padding: 0px 5px;
+		width: 30px;
+		border-radius: 5px;
+		margin-left: 5px;
+		font-size: 12px;
+	}
+
+	.p_type1 {
+		background: #e6557f;
+	}
+
+	.p_type2 {
+		background: #55aaff;
+	}
+
+	.back {
+		position: absolute;
+		z-index: 99;
+		font-size: 20px;
+		color: #fff;
+		top: 125px;
+		left: 15px;
+	}
+
+	.main_i {
+		padding: 5px 10px;
+	}
+
+	.main_title {
+		font-size: 16px;
+		font-weight: bold;
+		padding: 10px 0;
 		display: flex;
-		width: 90%;
-		margin: 10px auto;
 	}
 
-	.user_l {
-		width: 150px;
-		border-radius: 8px;
+	.main_No {
+		color: #f2b247;
+		padding-left: 10px;
 	}
 
-	.user_r {
-		flex: 1;
-		padding-left: 15px;
+	.mian_price_line {
+		font-size: 13px;
+		color: #333;
+		display: flex;
 	}
-	.item_name{ font-size: 14px;}
-	.item {
+
+	.mark_price {
+		font-size: 16px;
+		color: #e6557f;
+		font-weight: bold;
+		padding-right: 30px;
+	}
+
+	.mark_price_line {
+		text-decoration: line-through;
+	}
+
+	.dangan {
+		color: #6b22b3;
+		font-size: 13px;
+		margin: 5px 0;
+	}
+
+	.item_btn {
+		background: linear-gradient(50deg, #8e3aca, #e6557f);
+		color: #fff;
+
+		width: 100px;
+		text-align: center;
+		display: inline-block;
+		border-radius: 0.33333rem;
+		font-size: 12PX;
+		padding: 0.33333rem 0;
+		margin-bottom: 0.33333rem;
+	}
+
+	.item_0 {
 		background: linear-gradient(50deg, #9b54ca, #e6557f);
 		color: #fff;
 		display: inline-block;
@@ -91,16 +466,96 @@
 		font-size: 12PX;
 		padding: 0.33333rem 1rem;
 		margin-bottom: 0.33333rem;
+
 	}
-	.item_btn {
-		background: #9b54ca;
+
+	.item_1 {
+		background: linear-gradient(50deg, #832bca, #6937e6);
 		color: #fff;
-		width: 100%; text-align:center;
 		display: inline-block;
 		border-radius: 0.33333rem;
 		margin-right: 0.33333rem;
 		font-size: 12PX;
 		padding: 0.33333rem 1rem;
 		margin-bottom: 0.33333rem;
+
+	}
+
+	.item_2 {
+		background: linear-gradient(50deg, #ca991d, #e67716);
+		color: #fff;
+		display: inline-block;
+		border-radius: 0.33333rem;
+		margin-right: 0.33333rem;
+		font-size: 12PX;
+		padding: 0.33333rem 1rem;
+		margin-bottom: 0.33333rem;
+
+	}
+
+	.item_3 {
+		background: linear-gradient(50deg, #ff007f, #e684c1);
+		color: #fff;
+		display: inline-block;
+		border-radius: 0.33333rem;
+		margin-right: 0.33333rem;
+		font-size: 12PX;
+		padding: 0.33333rem 1rem;
+		margin-bottom: 0.33333rem;
+
+	}
+
+	.item_4 {
+		background: linear-gradient(50deg, #5500ff, #ff87f5);
+		color: #fff;
+		display: inline-block;
+		border-radius: 0.33333rem;
+		margin-right: 0.33333rem;
+		font-size: 12PX;
+		padding: 0.33333rem 1rem;
+		margin-bottom: 0.33333rem;
+
+	}
+
+	.item_desc {
+		color: #969799;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		width: 200px;
+		padding: 10px 0;
+
+	}
+
+	.ft_zhaohu_line {
+		display: flex;
+		color: #333;
+		width: 100vw;
+		position: fixed;
+		left: 0;
+		bottom: 15px;
+		justify-content: center;
+	}
+
+	.ft_zh_zi {
+		/* width: 80px;
+		background: rgb(51 51 51 / 15%);
+		color: #fff;
+		padding: 7px 10px;
+		border-radius: 20px;
+		text-align: center;
+		display: flex;
+		justify-content: center; */
+		height: 3rem;
+		width: 5.625rem;
+		margin: 0 0.5rem;
+		border-radius: 1.5625rem;
+		display: flex;
+		justify-content: center;
+		align-content: center;
+		position: relative;
+		transition: 100ms; 
+    background-color: rgba(158, 158, 158, 0.3);
+	line-height: 3rem;
 	}
 </style>

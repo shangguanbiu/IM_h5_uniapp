@@ -1,7 +1,7 @@
 
 <template>
 	<view>
-		<cu-custom bgColor="bg-gradual-green" :isBack="true">
+		<cu-custom bgColor="bg-gradual-pink" :isBack="true" >
 			<template #backText></template>
 			<template #content>聊天信息</template>
 		</cu-custom>
@@ -44,14 +44,14 @@
 						<view class="text-grey">{{contact.displayName}} <text class="cuIcon-right"></text></view>
 					</view>
 				</view>
-				<view class="cu-item"  @click="openQr" v-if="contact.setting.invite">
+				<!-- <view class="cu-item"  @click="openQr" v-if="contact.setting.invite">
 					<view class="content padding-tb-sm">
 						<view> 群二维码 </view>
 					</view>
 					<view class="action">
 						<view class="text-grey"><text class="cuIcon-qr_code f-18"></text> <text class="cuIcon-right"></text></view>
 					</view>
-				</view>
+				</view> -->
 				<view class="cu-item"  @tap="openModel('notice')">
 					<view class="content padding-tb-sm">
 						<view> 群公告 </view>

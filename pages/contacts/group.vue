@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<cu-custom bgColor="bg-gradual-green" :isBack="true">
+		<cu-custom bgColor="bg-gradual-pink" :isBack="true" >
 			<template #backText></template>
 			<template #content>群聊列表</template>
 			<template #right>
@@ -44,6 +44,7 @@
 		mounted(){
 			this.initContacts(this.msgs);
 		},
+		
 		methods: {
 			initContacts(arr){
 				const allContacts=uni.getStorageSync('allContacts');
@@ -64,6 +65,7 @@
 			},
 			// 打开聊天
 			openDetails(items){
+				
 				uni.navigateTo({
 					url:"/pages/message/chat?id="+items.id
 				})
