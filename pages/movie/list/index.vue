@@ -171,10 +171,13 @@
 				// this.State
 				// Toast.loading();
 				const res = await this.$myRuquest({
-					url: '/api/front/movie/getMoreList?page='+this.page+'&pagesize=10&type_id=' + this.State,
-					header: {
-						Authorization: "Bearer " + uni.getStorageSync('ifLogin'),
-						"content-type": 'application/json'
+					
+					method: 'Post',
+					url: '/api/front/movie/getMoreList',
+					data:{
+						page:this.page,
+						pagesize:10,
+						type_id:this.State
 					}
 				})
 				if (res.code == 200) {
@@ -198,26 +201,27 @@
 				this.page++
 
 				const res = await this.$myRuquest({
-					url: '/api/front/movie/getMoreList?page=' +
-						this.page + '&pagesize=10' +
-						'&type_id=' +
-						this.State,
-					header: {
-						Authorization: "Bearer " + uni.getStorageSync('ifLogin'),
-						"content-type": 'application/json'
-					}
+					
+					method: 'Post',
+					url: '/api/front/movie/getMoreList',
+					data:{
+						page:this.page,
+						pagesize:10,
+						type_id:this.State
+					},
+					
 				})
-				if (res == 200) {
+				if (res.code == 200) {
 
 
 					//this.page++ // 得到数据之后 page+1
-					if (res.rows.length < 1) { // 没有数据
+					if (res.data.list.length < 1) { // 没有数据
 						this.loadingType = 2
 						uni.hideNavigationBarLoading() // 关闭加载动画
 						return
 					}
 					//this.page++ // 每触底一次 page +1
-					this.list = this.list.concat(res.rows) //将数据拼接在一起
+					this.list = this.list.concat(res.data.list) //将数据拼接在一起
 					this.loadingType = 0 // 将loadingType归0重置
 					uni.hideNavigationBarLoading() // 关闭加载动画
 

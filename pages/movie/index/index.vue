@@ -256,10 +256,7 @@
 				const res = await this.$myRuquest({
 					method: 'Post',
 					url: '/api/front/movie/getList',
-					header: {
-						Authorization: "Bearer " + uni.getStorageSync('ifLogin'),
-						"content-type": 'application/json'
-					},
+					
 					data:{
 						page:1,
 						pagesize:size,

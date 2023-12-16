@@ -7,13 +7,15 @@
 		<view style="padding: 10px;max-height: 200px; position: relative;">
 			<image src="@/static/image/vip_top.png" mode='widthFix' style="width: 100%;max-height: 200px;">
 			</image>
-			<view class="item_btn" v-if="userinfo.islevel==0" @tap="to_vip" style="position: absolute;right: 32px; top: 70px;">立即开通</view>
-			<view class="item_btn" v-else  @tap="to_vip" style="position: absolute;right: 32px; top: 70px;">立即升级</view>
+			<view class="item_btn" v-if="userinfo.islevel==0" @tap="to_vip"
+				style="position: absolute;right: 32px; top: 70px;">立即开通</view>
+			<view class="item_btn" v-else @tap="to_vip" style="position: absolute;right: 32px; top: 70px;">立即升级</view>
 			<!-- <view v-else></view> -->
-			<view  class="vip_are_p">
-				<image :src="userinfo.avatar" mode='widthFix' style="height: 30px; width: 30px; border-radius: 50%; margin-right: 5px;">
+			<view class="vip_are_p">
+				<image :src="userinfo.avatar" mode='widthFix'
+					style="height: 30px; width: 30px; border-radius: 50%; margin-right: 5px;">
 				</image>
-				
+
 				<view v-if="userinfo.islevel==0">暂未激活会员</view>
 				<view v-if="userinfo.islevel==21">月卡VIP</view>
 				<view v-if="userinfo.islevel==22">季度卡VIP</view>
@@ -21,14 +23,15 @@
 			</view>
 		</view>
 		<view class="tab_line">
-			<view class="tab_l_zi_are " v-for="(vipitem,t_index) in list" :key="t_index" :class="{'tab_l_zi_hover':type_l1==t_index}" @click="change_tab(t_index)">
+			<view class="tab_l_zi_are " v-for="(vipitem,t_index) in list" :key="t_index"
+				:class="{'tab_l_zi_hover':type_l1==t_index}" @click="change_tab(t_index)">
 				<view class="tab_l_zi">
 					<view class="tab_l_top">{{vipitem.price}}元</view>
 					<view class="tab_l_day">
 						{{vipitem.name}}
 					</view>
 					<view style="text-align: center;">
-						
+
 					</view>
 					<view class="tab_l_ft" v-if="vipitem.istype==0">
 						￥{{vipitem.price}}/月
@@ -41,8 +44,8 @@
 					</view>
 				</view>
 			</view>
-			
-			
+
+
 		</view>
 		<view v-show="type_l1==0" class="vip_ft">
 			<view class="vip_tit">
@@ -123,7 +126,7 @@
 			<view class="vip_tit">
 				VIP特权
 			</view>
-			
+
 			<view style="display: flex;padding: 10px 0;">
 				<view>
 					<image src="@/static/image/vip.jpg" mode='widthFix' style="width:50px;">
@@ -250,16 +253,16 @@
 		data() {
 			return {
 				type_l1: 0,
-				userinfo:{},
-				list:[],
-				balance:0
+				userinfo: {},
+				list: [],
+				balance: 0
 			}
 		},
 		methods: {
 			change_tab(type) {
-				
+
 				this.type_l1 = type
-				
+
 			},
 			getList() {
 				this.$api.third_openApi.get_level_list(this.params).then((res) => {
@@ -275,12 +278,12 @@
 					method: "POST",
 				})
 				if (res.code == 200) {
-					
+
 					this.balance = res.data.balance
 				}
 			},
-			to_vip(){
-				if(this.balance==0||this.balance<this.list[this.type_l1].price){
+			to_vip() {
+				if (this.balance == 0 || this.balance < this.list[this.type_l1].price) {
 					uni.showToast({
 						title: '积分不足！',
 						icon: "none"
@@ -292,8 +295,8 @@
 		onShow() {
 			this.getList()
 			this.get_userInfo()
-			 this.userinfo=uni.getStorageSync('userInfo')
-			
+			this.userinfo = uni.getStorageSync('userInfo')
+
 		}
 	}
 </script>
@@ -352,11 +355,41 @@
 	.tab_l_zi_hover .tab_l_zi {
 		border: 5px solid #dfa061;
 	}
-	.vip_ft{ padding:10px;}
-	.vip_tit{font-weight: bold; font-size: 14px; color: #999999; padding-bottom: 15px;}
-	.vip_tit_zit{font-weight: bold;font-size: 13px; color: #333; line-height: 30px;}
-	.vip_tit_zi{font-size: 13px; color: #999;}
-	.vip_are_p{font-size: 13px; color: #b67d54;display: flex; position: absolute;left: 35px; bottom: 40px; z-index: 20px; align-items: center; }
+
+	.vip_ft {
+		padding: 10px;
+	}
+
+	.vip_tit {
+		font-weight: bold;
+		font-size: 14px;
+		color: #999999;
+		padding-bottom: 15px;
+	}
+
+	.vip_tit_zit {
+		font-weight: bold;
+		font-size: 13px;
+		color: #333;
+		line-height: 30px;
+	}
+
+	.vip_tit_zi {
+		font-size: 13px;
+		color: #999;
+	}
+
+	.vip_are_p {
+		font-size: 13px;
+		color: #b67d54;
+		display: flex;
+		position: absolute;
+		left: 35px;
+		bottom: 40px;
+		z-index: 20px;
+		align-items: center;
+	}
+
 	.item_btn {
 		background: linear-gradient(50deg, #8e3aca, #e6557f);
 		color: #fff;
@@ -368,6 +401,6 @@
 		font-size: 12PX;
 		padding: 0.33333rem 1rem;
 		margin-bottom: 0.33333rem;
-	
+
 	}
 </style>

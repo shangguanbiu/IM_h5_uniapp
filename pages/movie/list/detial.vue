@@ -87,10 +87,7 @@
 				const res = await this.$myRuquest({
 					method: 'Post',
 					url: '/api/front/movie/getList',
-					header: {
-						Authorization: "Bearer " + uni.getStorageSync('ifLogin'),
-						"content-type": 'application/json'
-					},
+
 					data:{
 						page:1,
 						pagesize:6,
@@ -109,10 +106,6 @@
 				const res = await this.$myRuquest({
 					method: 'Post',
 					url: '/api/front/movie/addViewCount',
-					header: {
-						Authorization: "Bearer " + uni.getStorageSync('ifLogin'),
-						"content-type": 'application/json'
-					},
 					data:{
 						id:val_id,
 					}

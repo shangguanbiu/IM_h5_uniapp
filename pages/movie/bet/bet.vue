@@ -87,7 +87,7 @@
 					</view>
 					<view><button type="default" class="reset_btn" @click="reset">重置</button></view>
 				</view>
-				<button type="default" v-if="ifrun" class="ok_btn" @click="">投票</button>
+				<button type="default" v-if="ifrun" class="ok_btn" @tap="submit_bet">投票</button>
 				<button type="default" v-if="!ifrun" class="ok_btn2">封盘中</button>
 			</view>
 
@@ -129,7 +129,8 @@
 				user_ico_h: '', // require("@/static/image/wode_hover.png"),
 				bet_num: '',
 				max_num: 0,
-				qishu: '20231212000001',
+				qishu: '',
+				qishu_id:'',
 				ifrun: true,
 				ifhistory: false,
 				history_list: [],
@@ -191,7 +192,7 @@
 					clearInterval(this.time_build);
 					this.time_build = null;
 					setTimeout(function() {
-						//_this.get_renew()
+						this.getNewOpenData()
 					}, 10000)
 
 				}
@@ -203,7 +204,7 @@
 					clearInterval(this.time_build);
 					this.time_build = null;
 					setTimeout(function() {
-						//_this.get_renew()
+						this.getNewOpenData()
 					}, 10000)
 				}
 
@@ -300,15 +301,72 @@
 					this.max_num = this.userinfo.balance
 				}
 			},
-			async submit_bet() {
+			async getNewOpenData() {
 				var _this = this
 				const res = await this.$myRuquest({
-					url: '/api/front/user/getUserInfo',
+					url: '/api/front/movie/getNewOpenData',
+					method: "POST",
+				})
+				if (res.code == 200) {
+					 this.qishu=res.data.open_no
+					 this.qishu_id=res.data.id
+					 this.time_build = setInterval(() => {
+					 	this.showtime('', res.data.open_time)
+					 }, 1000)
+				}
+			},async getOpenData() {
+				var _this = this
+				const res = await this.$myRuquest({
+					url: '/api/front/movie/getActionDetail',
+					method: "POST",
+				})
+				if (res.code == 200) {
+					 this.qishu=res.data.next_open_data.open_no
+					 //this.qishu_id=res.data.next_open_data.id
+					 this.time_build = setInterval(() => {
+					 	this.showtime('', res.data.next_open_data.open_time)
+					 }, 1000)
+				}
+			},
+			async getHistoryOpenData() {
+				var _this = this
+				const res = await this.$myRuquest({
+					url: '/api/front/movie/getHistoryOpenData',
+					method: "POST",
+					data:{
+						page:1,
+						pagesoze:10
+					}
+				})
+				if (res.code == 200) {
+					// this.Number_laster=res.data.next_open_data.open_no
+					 console.log('ddd',res.data.data)
+				}
+			},
+			async submit_bet() {
+				var _this = this
+				if(this.bet_num>Number(this.balance)){
+					uni.showToast({
+						title: '积分不足！',
+						icon: "none"
+					});
+					return
+				}
+				let ids=new Array()
+				this.Number_arr.forEach((item)=>{
+					if(item.ifhad==true){
+						ids.push(item.value)
+					}
+					
+				})
+
+				const res = await this.$myRuquest({
+					url: '/api/front/order/createOrder',
 					method: "POST",
 					data: {
-						qihao: '',
-						id: 1,
-						momey: this.bet_num
+						next_open_id:this.qishu_id,
+						multiple_id: ids.toString(),
+						amount: this.bet_num
 					}
 				})
 				if (res.code == 200) {
@@ -320,11 +378,9 @@
 			},
 			run_fun() {
 				this.get_userInfo()
-
-				this.time_build = setInterval(() => {
-					this.showtime('', '2023-12-20 15:14:27')
-
-				}, 1000)
+				this.getOpenData()
+				this.getHistoryOpenData()
+				
 			}
 		},
 		onLoad() {

@@ -57,7 +57,7 @@
 				ifpop: false,
 				page: 1,
 				pagesize: 10,
-				notice: "上拉顯示更多",
+				notice: "上拉显示更多",
 				loadingType: 0,
 				loadingText: '加载中...',
 				contentText: {
@@ -103,23 +103,64 @@
 				this.getList()
 			},
 			async getList(callBack) {
-
-
+				this.list = []
+				// this.State
+				// Toast.loading();
 				const res = await this.$myRuquest({
-					url: '/api/front/notice/getList',
-					method: "POST",
-					data: {
-						page: this.page,
-						pagesize: this.pagesize,
-						type: 3
-					},
+					
+					method: 'Post',
+					url: '/api/front/order/getHistoryOrder',
+					data:{
+						page:this.page,
+						pagesize:10
+					}
 				})
 				if (res.code == 200) {
-					this.list = [...this.list, ...res.data.list]
+			
+					this.list = res.data.list
+					// setTimeout(function() {
+					// 	Toast.clear();
+					// }, 1000)
 				}
-
+			
 				callBack && callBack()
-
+			
+			},
+			async getmorelists() {
+			
+				if (this.loadingType !== 0) { //loadingType!=0;直接返回
+					return false
+				}
+				this.loadingType = 1
+				uni.showNavigationBarLoading() //显示加载动画
+				this.page++
+			
+				const res = await this.$myRuquest({
+					
+					method: 'Post',
+					url: '/api/front/order/getHistoryOrder',
+					data:{
+						page:this.page,
+						pagesize:10
+					},
+					
+				})
+				if (res.code == 200) {
+			
+			
+					//this.page++ // 得到数据之后 page+1
+					if (res.data.list.length < 1) { // 没有数据
+						this.loadingType = 2
+						uni.hideNavigationBarLoading() // 关闭加载动画
+						return
+					}
+					//this.page++ // 每触底一次 page +1
+					this.list = this.list.concat(res.data.list) //将数据拼接在一起
+					this.loadingType = 0 // 将loadingType归0重置
+					uni.hideNavigationBarLoading() // 关闭加载动画
+			
+				}
+			
 			},
 			formatNum(value) {
 				if (!value && value !== 0) return 0;
@@ -128,55 +169,14 @@
 					str.indexOf(".") > -1 ? /(\d)(?=(\d{3})+\.)/g : /(\d)(?=(?:\d{3})+$)/g;
 				return str.replace(reg, "$1,");
 			},
-			async getmorelists() {
-				this.notice = '正在加載...'
-				if (this.loadingType !== 0) { //loadingType!=0;直接返回
-					return false
-				}
-				this.loadingType = 1
-				uni.showNavigationBarLoading() //显示加载动画
-				this.page++ // 得到数据之后 page+1
-				const res = await this.$myRuquest({
-					url: '/api/front/notice/getList',
-					method: "POST",
-					data: {
-						type: 3,
-						page: this.page,
-						pagesize: this.pagesize,
-					},
-				})
-				if (res.code == 200) {
-
-
-					if (this.page == Number(res.data.last_page)) { // 没有数据
-						this.loadingType = 2
-						this.notice = '沒有更多數據了'
-						uni.hideNavigationBarLoading() // 关闭加载动画
-						return
-					}
-					this.list = this.list.concat(res.data.list) //将数据拼接在一起
-					this.loadingType = 0 // 将loadingType归0重置
-					uni.hideNavigationBarLoading() // 关闭加载动画
-				}
-
-			}
+			
 
 
 		},
 		onLoad() {
 			this.list = []
-			//this.getList()
-			const b = new Date();
-			this.year = b.getFullYear()
-			this.columns.push(this.year - 1)
-			for (let i = 0; i < 5; i++) {
-				this.columns.push(this.year + i)
-			}
-			// this.columns.forEach((element, index) => {
-			// 	if (element == this.year) {
-			// 		this.data_index = index
-			// 	}
-			// })
+			this.page=1
+			this.getList()
 
 		},
 		onPullDownRefresh() {
