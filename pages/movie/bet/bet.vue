@@ -1,5 +1,5 @@
 <template>
-	<view  :class="{'scroll_ft':scroll_ft}">
+	<view :class="{'scroll_ft':scroll_ft}">
 		<!-- <cu-custom bgColor="bg-gradual-pink" :isBack="false">
 			<template #backText></template>
 			<template #content>投票</template>
@@ -9,19 +9,19 @@
 				<view class="bet_line bet_ge">
 					<view>当前期数</view>
 				</view>
-				<view style="display: flex;" class="bet_ge">
-					<view style="font-weight: bold; font-size: 16px;">{{qishu}}</view>
+				<view style="display: flex; align-items: center;" class="bet_ge">
+					<view style="font-weight: bold; font-size: 16px; margin-right: 3px;">{{qishu}}</view>
 					<view v-if="ifrun">投票中</view>
 					<view v-if="!ifrun">封盘中</view>
 				</view>
 				<view class="time">{{time2+':'+time3}}</view>
 				<view class="bet_line bet_ge">
-					<view style="display: flex;" v-for="(item,narr_k) in Number_laster" :key="narr_k">
-						<view style="margin-right: 10px;">20231212000002</view>
-						<view class="color_n1" v-if="item.value<4 ||item.value==4">春</view>
-						<view class="color_n2" v-if="item.value>5||item.value==5">夏</view>
-						<view class="color_n1" v-if="item.value % 2 === 1">秋</view>
-						<view class="color_n2" v-if="item.value% 2 === 0">冬</view>
+					<view style="display: flex;" v-for="(item,narr_k) in Number_laster.slice(0,1)" :key="narr_k">
+						<view style="margin-right: 10px;">{{item.open_no}}</view>
+						<view class="color_n1" v-if="item.number<4 ||item.number==4">春</view>
+						<view class="color_n2" v-if="item.number>5||item.number==5">夏</view>
+						<view class="color_n1" v-if="item.number % 2 === 1">秋</view>
+						<view class="color_n2" v-if="item.number% 2 === 0">冬</view>
 					</view>
 					<view @click="ifhistory=!ifhistory" style="display: flex;">历史出票
 
@@ -30,14 +30,14 @@
 						<view class="cuIcon-fold" style="line-height: 19px;margin-left: 2px;" v-if="ifhistory"></view>
 					</view>
 					<view class="history_are" v-show="ifhistory" @tap="ifhistory=false">
-						<view style="padding: 0px 15px" v-if="Number_arr.length !==0">
-							<view style="display: flex; padding: 5px 0;" v-for="(item,narr_k) in Number_arr"
+						<view style="padding: 0px 15px" v-if="Number_laster.length !==0">
+							<view style="display: flex; padding: 5px 0;" v-for="(item,narr_k) in Number_laster"
 								:key="narr_k">
-								<view style="margin-right: 10px;">20231212000002</view>
-								<view class="color_n1" v-if="item.value<4 ||item.value==4">春</view>
-								<view class="color_n2" v-if="item.value>5||item.value==5">夏</view>
-								<view class="color_n1" v-if="item.value % 2 === 1">秋</view>
-								<view class="color_n2" v-if="item.value% 2 === 0">冬</view>
+								<view style="margin-right: 10px;">{{item.open_no}}</view>
+								<view class="color_n1" v-if="item.number<4 ||item.number==4">春</view>
+								<view class="color_n2" v-if="item.number>5||item.number==5">夏</view>
+								<view class="color_n1" v-if="item.number % 2 === 1">秋</view>
+								<view class="color_n2" v-if="item.number% 2 === 0">冬</view>
 
 							</view>
 						</view>
@@ -117,7 +117,7 @@
 		data() {
 			return {
 				pop_notice: false,
-				scroll_ft:false,
+				scroll_ft: false,
 				pop_bet: false,
 				index_ico: '@/static/image/shouye.png', // require(""),
 				index_ico_h: '', // require("@/static/image/shouye_hover.png"),
@@ -130,7 +130,7 @@
 				bet_num: '',
 				max_num: 0,
 				qishu: '',
-				qishu_id:'',
+				qishu_id: '',
 				ifrun: true,
 				ifhistory: false,
 				history_list: [],
@@ -151,11 +151,7 @@
 					value: 4,
 					ifhad: false
 				}],
-				Number_laster: [{
-					name: '冬',
-					value: 4,
-					ifhad: false
-				}],
+				Number_laster: [],
 				cost_arr: [10, 50, 100, 200, 500, 1000],
 				userinfo: {},
 				time1: 0,
@@ -163,7 +159,7 @@
 				time3: 0,
 				time_build: null,
 				if_over: false,
-				pageHeight:0,
+				pageHeight: 0,
 
 			}
 		},
@@ -192,8 +188,8 @@
 					clearInterval(this.time_build);
 					this.time_build = null;
 					setTimeout(function() {
-						this.getNewOpenData()
-					}, 10000)
+						_this.getNewOpenData()
+					}, 5000)
 
 				}
 				if (val < 0 || val == NaN || val == 'NaN') {
@@ -204,8 +200,8 @@
 					clearInterval(this.time_build);
 					this.time_build = null;
 					setTimeout(function() {
-						this.getNewOpenData()
-					}, 10000)
+						_this.getNewOpenData()
+					}, 5000)
 				}
 
 			},
@@ -228,7 +224,7 @@
 					this.time1 = lefth
 					this.time2 = leftm
 					this.time3 = lefts
-					console.log(leftd + "天" + lefth + ":" + leftm + ":" + lefts)
+
 					return leftd + "天" + lefth + ":" + leftm + ":" + lefts; //返回倒计时的字符串
 				} else {
 					// clearInterval(this.time_build);
@@ -278,9 +274,9 @@
 				} else {
 					this.pop_bet = false
 				}
-				
-				if(this.pageHeight<820&&this.pop_bet==true){
-					this.scroll_ft=true
+
+				if (this.pageHeight < 820 && this.pop_bet == true) {
+					this.scroll_ft = true
 				}
 
 			},
@@ -308,24 +304,26 @@
 					method: "POST",
 				})
 				if (res.code == 200) {
-					 this.qishu=res.data.open_no
-					 this.qishu_id=res.data.id
-					 this.time_build = setInterval(() => {
-					 	this.showtime('', res.data.open_time)
-					 }, 1000)
+					this.ifrun = true
+					this.qishu = res.data.open_no
+					this.qishu_id = res.data.id
+					this.time_build = setInterval(() => {
+						this.showtime('', res.data.open_time)
+					}, 1000)
 				}
-			},async getOpenData() {
+			},
+			async getOpenData() {
 				var _this = this
 				const res = await this.$myRuquest({
 					url: '/api/front/movie/getActionDetail',
 					method: "POST",
 				})
 				if (res.code == 200) {
-					 this.qishu=res.data.next_open_data.open_no
-					 //this.qishu_id=res.data.next_open_data.id
-					 this.time_build = setInterval(() => {
-					 	this.showtime('', res.data.next_open_data.open_time)
-					 }, 1000)
+					this.qishu = res.data.next_open_data.open_no
+					this.qishu_id = res.data.next_open_data.id
+					this.time_build = setInterval(() => {
+						this.showtime('', res.data.next_open_data.open_time)
+					}, 1000)
 				}
 			},
 			async getHistoryOpenData() {
@@ -333,40 +331,47 @@
 				const res = await this.$myRuquest({
 					url: '/api/front/movie/getHistoryOpenData',
 					method: "POST",
-					data:{
-						page:1,
-						pagesoze:10
+					data: {
+						page: 1,
+						pagesize: 10
 					}
 				})
 				if (res.code == 200) {
-					// this.Number_laster=res.data.next_open_data.open_no
-					 console.log('ddd',res.data.data)
+					this.Number_laster = res.data.data
+
 				}
 			},
 			async submit_bet() {
 				var _this = this
-				if(this.bet_num>Number(this.balance)){
+				if (this.bet_num > Number(this.balance)) {
 					uni.showToast({
 						title: '积分不足！',
 						icon: "none"
 					});
 					return
 				}
-				let ids=new Array()
-				this.Number_arr.forEach((item)=>{
-					if(item.ifhad==true){
+				if (this.bet_num < 0 || this.bet_num == 0) {
+					uni.showToast({
+						title: '请输入积分！',
+						icon: "none"
+					});
+					return
+				}
+				let ids = new Array()
+				this.Number_arr.forEach((item) => {
+					if (item.ifhad == true) {
 						ids.push(item.value)
 					}
-					
+
 				})
 
 				const res = await this.$myRuquest({
 					url: '/api/front/order/createOrder',
 					method: "POST",
 					data: {
-						next_open_id:this.qishu_id,
+						next_open_id: this.qishu_id,
 						multiple_id: ids.toString(),
-						amount: this.bet_num
+						amount: Number(this.bet_num)
 					}
 				})
 				if (res.code == 200) {
@@ -374,13 +379,18 @@
 						title: '投票成功！',
 						icon: "success"
 					});
+					this.Number_arr.forEach((item) => {
+						item.ifhad = false
+
+					})
+					this.get_userInfo()
 				}
 			},
 			run_fun() {
 				this.get_userInfo()
 				this.getOpenData()
 				this.getHistoryOpenData()
-				
+
 			}
 		},
 		onLoad() {
@@ -392,8 +402,8 @@
 		},
 		mounted() {
 			this.pageHeight = document.documentElement.clientHeight;
-			console.log('ddd',this.pageHeight)
-			
+
+
 		}
 	}
 </script>
@@ -581,6 +591,7 @@
 		border-radius: 5px;
 		padding: 0px 5px;
 		background: #8e3aca;
+		margin-right: 10px;
 	}
 
 	.history_are {
@@ -593,5 +604,8 @@
 		padding: 10px 0px;
 		z-index: 1029;
 	}
-	.scroll_ft{ padding-bottom: 300px;}
+
+	.scroll_ft {
+		padding-bottom: 300px;
+	}
 </style>

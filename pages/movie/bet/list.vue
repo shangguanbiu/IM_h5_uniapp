@@ -4,30 +4,32 @@
 			<template #backText></template>
 			<template #content>我的出票</template>
 		</cu-custom>
-		<view class="title_line title_line2">
-			<view class="title_l">期号</view>
-			<view class="title_lc">积分</view>
-			<view class="title_lc">投票</view>
-			<view class="title_l">時間</view>
-		
-		</view>
+	
 		<view v-if="list.length !==0">
-			<view class="title_line" v-for="(qishuitem,indexs) in list" :key="indexs" :class="{'jiange':indexs%2 ==1}">
-				<view class="title_l">
-					<view>{{qishuitem.room_name}}</view>
-					
+			<view class="list_line_are" v-for="(qishuitem,indexs) in list" :key="indexs">
+				<view class="list_line_line">
+					<view class="list_line_zi">期号</view>
+					<view class="list_line_zi">下注积分</view>
 				</view>
-			
-				<view class="title_lc" style="line-height: 50px;">{{qishuitem.amount}}</view>
-				<view class="title_lc">
-					
-					<view v-if="qishuitem.type_id==1">大小單雙</view>
-					<view v-if="qishuitem.type_id==2">數字投注</view>
-					<view v-if="qishuitem.type_id==3">特殊玩法</view>
-					<view>{{qishuitem.multiple_name}}</view>
+				<view class="list_line_line">
+					<view class="list_line_zi">{{qishuitem.open_no}}</view>
+					<view class="list_line_zi">{{qishuitem.amount}}</view>
 				</view>
-				<view class="title_l" style="line-height: 50px;">
-					{{qishuitem.create_time}}
+				<view class="list_line_line">
+					<view class="list_line_zi">下注时间</view>
+					<view class="list_line_zi">下注</view>
+				</view>
+				<view class="list_line_line">
+					<view sclass="list_line_zi" style="flex: 1;">{{qishuitem.create_time}}</view>
+					<view class="list_line_zi">
+					<view style="display: flex;" v-for="(number,inde) in qishuitem.multiple_id.split(',')" :key="'q'+inde">
+							<view class="color_n1"  v-if="number==1">春</view>
+							<view class="color_n2" v-if="number==2">夏</view>
+							<view class="color_n1" v-if="number==3">秋</view>
+							<view class="color_n2" v-if="number==4">冬</view>
+					</view>
+					
+					</view>
 				</view>
 			</view>
 			<view style="text-align: center; line-height: 50px; color: #ccc;">{{notice}}</view>
@@ -117,7 +119,7 @@
 				})
 				if (res.code == 200) {
 			
-					this.list = res.data.list
+					this.list = res.data
 					// setTimeout(function() {
 					// 	Toast.clear();
 					// }, 1000)
@@ -149,13 +151,13 @@
 			
 			
 					//this.page++ // 得到数据之后 page+1
-					if (res.data.list.length < 1) { // 没有数据
+					if (res.data.length < 1) { // 没有数据
 						this.loadingType = 2
 						uni.hideNavigationBarLoading() // 关闭加载动画
 						return
 					}
 					//this.page++ // 每触底一次 page +1
-					this.list = this.list.concat(res.data.list) //将数据拼接在一起
+					this.list = this.list.concat(res.data) //将数据拼接在一起
 					this.loadingType = 0 // 将loadingType归0重置
 					uni.hideNavigationBarLoading() // 关闭加载动画
 			
@@ -210,6 +212,24 @@
 		color: #969799;
 	}
 
+.list_line_are{width: 95%; margin:10px auto; padding: 10px 0; background: #fff; color: #000; border-radius: 10px;}
+.list_line_line{display: flex; padding:5px 10px;}
+.list_line_zi{width: 50%;}
+.color_n1 {
+		color: #fff;
+		border-radius: 5px;
+		padding: 0px 5px;
+		background: #EAC477;
+		margin-right: 10px;
+	}
+
+	.color_n2 {
+		color: #fff;
+		border-radius: 5px;
+		padding: 0px 5px;
+		background: #8e3aca;
+		margin-right: 10px;
+	}
 	.rizi_top {
 		height: 110px;
 		background: #3E3EF7;

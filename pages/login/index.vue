@@ -29,7 +29,7 @@
 			
 		</view>
 		<view class="flex flex-direction im-login-btn">
-			<button class="cu-btn lg bg-blue" @tap="login()">登录</button>
+			<button class="cu-btn lg bg-pink" @tap="login()">登录</button>
 		</view>
 		<view class="flex flex-direction im-reg-btn" v-if="globalConfig && globalConfig.sysInfo.regtype==1">
 			<button class=" cu-btn lg bg-white" @tap="register()">注册</button>

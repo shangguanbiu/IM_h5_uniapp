@@ -1,10 +1,10 @@
 <template>
 	<view>
-		<cu-custom bgColor="bg-gradual-blue" :isBack="true">
+		<cu-custom bgColor="bg-gradual-pink" :isBack="true">
 			<template #backText></template>
 			<template #content>新邀请</template>
 			<template #right>
-				<view class="f-20 ml-10 mr-10" @tap="searchFriend()">
+				<view class="f-20 ml-10 mr-10" @tap="searchFriend()" >
 					<text class="cuIcon-add"></text>
 				</view>
 			</template>
@@ -33,12 +33,12 @@
 				</view>
 				<view class="content" @tap='openDetails(x.user_id_info.user_id)'>
 					<view class="text-grey">
-						请求添加<text class="text-blue"> {{x.user_id_info.realname}} </text> 为好友
+						和<text class="text-blue"> {{x.user_id_info.realname}} </text> 打了招呼
 					</view>
 				</view>
 				<view class="action ml-10">
 					<text class="text-red" v-if="x.status==0">已拒绝</text>
-					<text class="text-blue" v-if="x.status==1"  @tap="sendMsg(x.user_id_info.user_id)">发消息</text>
+					<text class="text-blue" v-if="x.status==1"  @tap="sendMsg(x.user_id_info.user_id)">再打招呼</text>
 					<text  class="text-orange" v-if="x.status==2">待同意</text>
 				</view>
 			</view>
@@ -72,13 +72,15 @@
 				params: {
 					page: 1,
 					limit: 10,
-					is_mine:0
+					is_mine:0,
+					userinfo:{}
 				}
 			};
 		},
 		created() {
 		},
 		mounted(){
+			this.userinfo=uni.getStorageSync('userInfo')
 			this.getList();
 		},
 		methods: {
@@ -111,9 +113,18 @@
 				})
 			},
 			searchFriend(){
-				uni.navigateTo({
-					url:"/pages/contacts/search"
-				})
+				if(this.userinfo.role==1){
+					uni.navigateTo({
+						url:"/pages/contacts/search"
+					})
+				}else{
+					uni.showToast({
+						title: '可去附近的人打招呼',
+						icon: "none"
+					});
+					return
+				}
+				
 			},
 			optApply(x){
 				uni.showModal({

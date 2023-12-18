@@ -4,19 +4,19 @@
 			<template #backText></template>
 			<template #content>福利群</template>
 		</cu-custom> -->
-		<view  style="padding-bottom: 50px;" v-if="list.length !==0">
+		<view style="padding-bottom: 50px;" v-if="list.length !==0">
 			<view class="user_line" v-for="(people,t_index) in list" :key="t_index">
+				
 				<view class="user_l">
-					<image :src="'http://123.56.77.160/'+people.avatar" mode='widthFix'
-						style="width: 100%; border-radius: 8px;"></image>
+					<image :src="host+people.avatar" mode='widthFix' style="width: 100%; border-radius: 8px;"></image>
 				</view>
 				<view class="user_r">
 					<view class="item_name">{{people.name}}</view>
 					<view style=" max-height: 90px; font-size: 13px; color: #969696; padding: 10px 0;">
 						{{people.desc_v}}
-						
+
 					</view>
-					<view v-if="people.ifin" @tap="openDetails(people)" class="item_btn2" >
+					<view v-if="people.ifin" @tap="openDetails(people)" class="item_btn2">
 						立即进入
 					</view>
 					<view v-else class="item_btn" @tap="into_droup(people.group_id,t_index)">
@@ -38,6 +38,8 @@
 		useMsgStore
 	} from '@/store/message';
 	const msgStore = useMsgStore(pinia)
+	
+
 	export default {
 		data() {
 			return {
@@ -50,16 +52,17 @@
 				},
 				list: [],
 				join_id: '',
-				contacts:[]
+				contacts: [],
+				host:'',
 			}
 		},
 		methods: {
 			// 打开聊天
-			openDetails(items){
-				console.log('ddddd',items)
+			openDetails(items) {
+				console.log('ddddd', items)
 
 				uni.navigateTo({
-					url:"/pages/message/chat?id=" + 'group-'+items.group_id
+					url: "/pages/message/chat?id=" + 'group-' + items.group_id
 				})
 			},
 			getList() {
@@ -79,7 +82,7 @@
 					}
 				})
 			},
-			into_droup(id,index) {
+			into_droup(id, index) {
 				var _this = this
 				this.$api.third_openApi.into_group({
 					group_id: 'group-' + id,
@@ -91,8 +94,8 @@
 							icon: "success"
 						});
 						this.initContacts()
-						
-						this.$set(this.list[index],'ifin',true)
+
+						this.$set(this.list[index], 'ifin', true)
 
 					}
 				})
@@ -116,8 +119,7 @@
 			// #endif
 			this.getList()
 			this.contacts = uni.getStorageSync('allContacts');
-			
-
+			this.host=this.$imgurl()
 
 		}
 	}
@@ -131,8 +133,8 @@
 	}
 
 	.user_l {
-		width: 130px;
-		height: 130px;
+		width: 100px;
+		height: 100px;
 		border-radius: 8px;
 	}
 
@@ -169,6 +171,7 @@
 		margin-bottom: 0.33333rem;
 		margin-top: 10px;
 	}
+
 	.item_btn2 {
 		background: #c191ca;
 		color: #fff;

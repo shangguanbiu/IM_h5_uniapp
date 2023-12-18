@@ -7,7 +7,7 @@
 		</cu-custom>
 		<view>
 			<view class="bg-white">
-				<view class="user-list im-flex im-justify-content-start im-align-items-center im-a im-wrap">
+				<view v-if="is_group==1" class="user-list im-flex im-justify-content-start im-align-items-center im-a im-wrap">
 					<view class="user-info mt-20" v-for="(item,index) in userList" :key="index" align="center">
 						<image class="user-avatar" :src="item.userInfo.avatar" @tap="openChatDetail(item.userInfo)"></image>
 						<view class="text-center user-name text-overflow">{{item.userInfo.displayName}}</view>
@@ -25,7 +25,7 @@
 						<view class="f-11 mt-5">移除成员</view>
 					</view>
 				</view>
-				<navigator v-if="is_group==1 " class="mt-10" :url="`/pages/message/group/groupUser?group_id=${contact_id}`">
+				<navigator v-if="is_group==1" class="mt-10" :url="`/pages/message/group/groupUser?group_id=${contact_id}`">
 					<view class="text-center pb-15 pt-15 im-flex im-justify-content-center im-align-items-center">
 						<text class="gui-list-title-text gui-list-one-line gui-primary-color">查看全部群成员</text>
 						<text class="gui-list-title-desc gui-color-gray">{{allUser.length}}人</text>

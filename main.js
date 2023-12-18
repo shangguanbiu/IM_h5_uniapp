@@ -31,7 +31,7 @@ import api from '@/api/index.js';
 import socketIO from '@/common/socket.js';
 import Empty from "@/components/Empty.vue" //通用空状态
 import Tags from "@/components/Tags.vue" //通用标签
-import { myRequest,baseurl } from '@/utils/api.js'
+import { myRequest,baseurl,imgurl } from '@/utils/api.js'
 
 
 export function createApp() {
@@ -42,6 +42,7 @@ export function createApp() {
   
   app.config.globalProperties.$myRuquest = myRequest
   app.config.globalProperties.$baseurl = baseurl
+    app.config.globalProperties.$imgurl = imgurl
   
    app.config.globalProperties.$store = store;
    app.config.globalProperties.socketIo = new socketIO()

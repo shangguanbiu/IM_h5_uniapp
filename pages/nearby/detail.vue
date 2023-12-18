@@ -7,7 +7,7 @@
 		<view>
 			<view class="user_line" v-for="(people,t_index) in list" :key="t_index">
 				<view class="user_l">
-					<image :src="'http://123.56.77.160/'+people.avatar"
+					<image :src="people.avatar"
 						style="width: 80px; height: 80px; border-radius: 50%;"></image>
 					<view class="item_like">
 

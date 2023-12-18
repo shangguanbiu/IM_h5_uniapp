@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<cu-custom bgColor="bg-gradual-blue" :isBack="true">
+		<cu-custom bgColor="bg-gradual-pink" :isBack="true">
 			<template #backText></template>
 			<template #content>账号注册</template>
 		</cu-custom>
@@ -36,7 +36,7 @@
 			</view>
 		</form>
 		<view class="flex flex-direction im-login-btn">
-			<button class="cu-btn lg bg-blue" @tap="login()">注册</button>
+			<button class="cu-btn lg bg-pink" @tap="login()">注册</button>
 		</view>
 		<view class="footer-version c-999">
 			{{globalConfig.sysInfo.name ?? packData.name}} for {{packData.version}}

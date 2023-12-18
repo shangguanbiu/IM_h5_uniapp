@@ -1,11 +1,14 @@
 
 // const BASE_URL2 = 'https://test.net:9005'
 
-const BASE_URL = 'http://123.56.77.160:8081'
+const BASE_URL = 'https://imapi.91biu.top'
 
 // BASE_URL = 'https://'+window.location.host
 export const baseurl=()=>{
 	return BASE_URL
+}
+export const imgurl=()=>{
+	return 'https://imweb.91biu.top'
 }
 export const myRequest = (options) => {
 	return new Promise((resolve, reject) => {
@@ -25,13 +28,13 @@ export const myRequest = (options) => {
 				},
 				success: (res) => {
 					if (res.data.code == 9999) {
-						 uni.showToast({
-							title: '登錄已失效請重新登錄'
-						})
+						//  uni.showToast({
+						// 	title: '登录已失效请重新登录'
+						// })
 						
 						setTimeout(function() {
 							uni.navigateTo({
-								url: '/pages/login/login',
+								url: '/pages/login/index',
 							})
 						}, 1500)
 						return

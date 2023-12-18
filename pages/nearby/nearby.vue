@@ -17,7 +17,7 @@
 							:indicator-active-color="indicatorActiveColor" :autoplay="autoplay" :interval="interval"
 							:duration="duration" style="height: 450px;">
 							<swiper-item v-for="(banner,indexbn) in bannerdata" :key="'a'+indexbn">
-								<image :src="banner.img" mode='widthFix' style="width: 100%;"></image>
+								<image :src="banner" mode='widthFix' style="width: 100%;"></image>
 							</swiper-item>
 
 						</swiper>
@@ -103,7 +103,7 @@
 			<view class="talk_mian">
 				<view style="width:90%; margin: auto;">
 					<view class="talk_ico">
-						<image :src="'http://123.56.77.160/'+talk_data.avatar"   style="width:100%; border-radius: 50%;" mode='widthFix'></image>
+						<image :src="talk_data.avatar"   style="width:100%; border-radius: 50%;" mode='widthFix'></image>
 					</view>
 					<view class="talk_name">{{talk_data.realname}}</view>
 					<view class="talk_desc">
@@ -127,7 +127,7 @@
 							<input placeholder="随意打个招呼吧" style="height: 32px; font-size: 14px;"  maxlength="32" name="input" v-model="send_content"/>
 						</view>
 						<view>
-							<button class='cu-btn bg-blue shadow' @tap="sendMessage(talk_data.user_id)">发送</button>
+							<button class='cu-btn bg-blue shadow' @tap="check_if_friend(talk_data.user_id)">发送</button>
 						</view>
 					</view>
 				</view>
@@ -169,16 +169,7 @@
 				autoplay: true,
 				interval: 3000,
 				duration: 500,
-				bannerdata: [{
-						img: 'https://pic1.zhimg.com/50/v2-fc82ae5d95b116d105932e8bdf38b920_720w.jpg?source=2c26e567'
-					},
-					{
-						img: "https://picx.zhimg.com/50/v2-2ff9dc184a4fa00fa1e0c493013d8d13_720w.jpg?source=2c26e567"
-					},
-					{
-						img: "https://picx.zhimg.com/50/v2-94d1226578c67f8f25893b5972acaa43_720w.jpg?source=2c26e567"
-					},
-				],
+				bannerdata: [],
 				indicatorColor: "#292b40",
 				indicatorActiveColor: "#ffffff",
 				tag: ['好看', '大片', '动作片', '青春', '喜剧']
@@ -265,10 +256,13 @@
 				console.log(data);
 			},
 			show_detail(data) {
-
+				this.bannerdata=[]
 				this.if_more = true
 				this.detail_data = data.currentItem
 				this.talk_data = data.currentItem
+
+				this.bannerdata=this.talk_data.nearby_arr.split(',')
+
 			},
 			getList() {
 				this.$api.third_openApi.near_user_List(this.params).then((res) => {
@@ -313,6 +307,23 @@
 					})
 				}
 
+			},
+			async check_if_friend(invite_after){
+				var user_arr=new Array()
+				user_arr.push(this.fromUser.user_id)
+				user_arr.push(invite_after)
+				var _this = this
+				const res = await this.$myRuquest({
+					url: '/api/front/index/saveImUser',
+					method: "POST",
+					data:{
+						users:user_arr.toString()
+					}
+				})
+				if (res.code == 200) {
+					this.sendMessage(invite_after)
+					
+				}
 			},
 			sendMessage(toContactid) {
 			

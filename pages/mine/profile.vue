@@ -25,15 +25,15 @@
 			<view class="cu-form-group">
 				<view class="title">{{globalConfig.sysInfo.runMode==1 ? "姓名" : '昵称'}}</view>
 				<view class="text-gray" v-if="globalConfig.sysInfo.runMode==1">{{userInfo.realname}}</view>
-				<input class="uni-input" style="text-align: right;" v-if="globalConfig.sysInfo.runMode==2" v-model="userInfo.realname" focus placeholder="请输入昵称" />
+				<input class="uni-input" style="text-align: right;" v-if="globalConfig.sysInfo.runMode==2" v-model="userInfo.realname"  placeholder="请输入昵称" />
 			</view>
 			<view class="cu-form-group">
 				<view class="title">e-mail</view>
-				<input class="uni-input" style="text-align: right;" v-model="userInfo.email" focus placeholder="请输入email地址" />
+				<input class="uni-input" style="text-align: right;" v-model="userInfo.email"  placeholder="请输入email地址" />
 			</view>
 			<view class="cu-form-group">
 				<view class="title">年纪</view>
-				<input class="uni-input" style="text-align: right;" v-model="userInfo.ages" focus placeholder="请输入数字" type="number" />
+				<input class="uni-input" style="text-align: right;" v-model="userInfo.ages"  placeholder="请输入数字" type="number" />
 			</view>
 			<view class="cu-form-group">
 				<view class="title">性别</view>

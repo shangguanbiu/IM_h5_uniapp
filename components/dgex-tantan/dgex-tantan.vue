@@ -326,6 +326,7 @@
 		justify-content: center;
 		align-items: center;
 		overflow: hidden;
+		border-radius: 1.25rem
 	}
 
 	.tantan-slide-box {
@@ -336,6 +337,7 @@
 		perspective-origin: 50% -30%;
 		transform-style: preserve-3d;
 		margin: auto;
+		 
 	}
 
 	.tantan-slide-box-item {
@@ -483,5 +485,6 @@
 	.tantan-slide-direction {
 		width: 100%;
 		height: 90%;
+		
 	}
 </style>

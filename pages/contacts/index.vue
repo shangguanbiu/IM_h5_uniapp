@@ -4,7 +4,8 @@
 		 :scroll-with-animation="true" :enable-back-to-top="true" v-if="TabCur==0">
 		 <view style="padding-bottom:30rpx">
 			 <view class="cu-list menu">
-				<view class="cu-item arrow" @tap="openFriend" v-if="globalConfig.sysInfo.runMode==2&&userinfo.role==1">
+				<view class="cu-item arrow" @tap="openFriend" >
+					<!-- v-if="globalConfig.sysInfo.runMode==2&&userinfo.role==1" -->
 					<view class='cu-avatar mr-15 invite-bg'  :class="appSetting.circleAvatar?'round':'radius'">
 					</view>
 					<view class="content">
@@ -226,6 +227,7 @@
 		mounted(){
 			this.initContacts(this.msgs);
 			this.userinfo=uni.getStorageSync('userInfo')
+			
 		},
 		methods: {
 			NavChange: function(item) {

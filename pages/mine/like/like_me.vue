@@ -7,7 +7,7 @@
 		<view v-if="list.length !==0">
 			<view class="user_line" v-for="(people,t_index) in list" :key="t_index" v-show="t_index<4">
 				<view class="user_l">
-					<image :src="'http://123.56.77.160/'+people.avatar"
+					<image :src="people.avatar"
 						style="width: 80px; height: 80px; border-radius: 50%;"></image>
 					<view class="item_like">
 
@@ -53,7 +53,7 @@
 			<view class="talk_mian">
 				<view style="width:90%; margin: auto;">
 					<view class="talk_ico">
-						<image :src="'http://123.56.77.160/'+talk_data.avatar"
+						<image :src="talk_data.avatar"
 							style="width: 100%;border-radius: 50%; height: 80px;" mode='widthFix'></image>
 					</view>
 					<view class="talk_name">{{talk_data.realname}}</view>
@@ -83,7 +83,7 @@
 								name="input" v-model="send_content" />
 						</view>
 						<view>
-							<button class='cu-btn bg-blue shadow' @tap="sendMessage(talk_data.user_id)">发送</button>
+							<button class='cu-btn bg-blue shadow' @tap="check_if_friend(talk_data.user_id)">发送</button>
 						</view>
 					</view>
 				</view>
@@ -130,6 +130,7 @@
 				show_talk: false,
 				talk_data: {},
 				fromUserid: '',
+				fromUser:'',
 				send_content: "",
 			}
 		},
@@ -183,6 +184,23 @@
 					})
 				}
 
+			},
+			async check_if_friend(invite_after){
+				var user_arr=new Array()
+				user_arr.push(this.fromUser.user_id)
+				user_arr.push(invite_after)
+				var _this = this
+				const res = await this.$myRuquest({
+					url: '/api/front/index/saveImUser',
+					method: "POST",
+					data:{
+						users:user_arr.toString()
+					}
+				})
+				if (res.code == 200) {
+					this.sendMessage(invite_after)
+					
+				}
 			},
 			sendMessage(toContactid) {
 

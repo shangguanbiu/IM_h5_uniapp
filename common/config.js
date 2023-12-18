@@ -1,17 +1,17 @@
-let host = '123.56.77.160';
+let host = 'imweb.91biu.top';
 // #ifdef  MP-WEIXIN
 let env = wx.getAccountInfoSync()
 if (env.miniProgram.envVersion == 'develop') {
-	host = '123.56.77.160';
+	host = 'imweb.91biu.top';
 }
 // #endif
 //  #ifdef APP-PLUS || H5
 if (process.env.NODE_ENV === 'development') {
-	host = '123.56.77.160';
+	host = 'imweb.91biu.top';
 }
 // #endif
-const apiUrl = 'http://' + host;
-const wssUrl = 'ws://' + host + '/wss';
+const apiUrl = 'https://' + host;
+const wssUrl = 'wss://' + host + '/wss';
 const now = Date.now || function() {
 	return new Date().getTime();
 };
