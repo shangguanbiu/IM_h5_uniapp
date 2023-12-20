@@ -116,8 +116,6 @@
 			},
 			see_detail(data) {
 				
-				
-				
 				if(this.fromUser.isview ==0){					
 					this.pop_notice=true					
 					return;
@@ -177,6 +175,23 @@
 				}	
 				
 				this.getList()
+			},
+			async get_userinfo(){
+				let userInfo = JSON.parse(JSON.stringify(loginStore.userInfo))
+				const res = await this.$myRuquest({
+					url: '/api/front/index/getImUserInfo',
+					method: "POST",
+					data: {
+						user_id: userInfo.user_id
+					},
+				})
+				if (res.code == 200) {
+					
+					this.fromUser =res.data
+					let data=JSON.parse(JSON.stringify(res.data))
+					loginStore.login(data)
+				
+				}
 			},
 			async getList(callBack) {
 				this.list = []
@@ -257,6 +272,7 @@
 			if (backbutton) backbutton.style.display = 'none';
 		},
 		onShow() {
+			this.get_userinfo()
 			this.fromUser = uni.getStorageSync('userInfo')
 			window.scrollTo({
 				top:0,

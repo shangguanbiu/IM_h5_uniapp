@@ -10,10 +10,12 @@
 					<view style="display: flex;">
 						<view class="sex_ico" v-if="people.sex==0"><image src="@/static/image/nv.png"  style="width: 100%;" mode='widthFix' ></image></view>
 						<view class="sex_ico" v-if="people.sex==1"><image src="@/static/image/nan.png"  style="width: 100%;" mode='widthFix' ></image></view>
-						{{people.realname}}
+						<image :src="host+people.avatar" v-if="people.avatar !==null"
+							style="width: 80px; height: 80px; border-radius: 50%;"></image>
+						<image src="@/static/image/common.png" v-else
+								style="width: 80px; height: 80px; border-radius: 50%;"></image>
 					</view>
 					<view class="item_like">
-						
 						<view class="cuIcon-title" v-if="people.ifonline" @tap="setLike(2,people.account,t_index)"></view>
 					</view>
 				</view>
@@ -26,7 +28,7 @@
 						<view class="p_type p_type1" v-if="people.sex==0">女</view>
 						<view class="p_type p_type2" v-if="people.sex==1">男</view>
 					</view>
-					<view v-if="people.motto !==null" class="motto">签名：{{people.motto}}</view>
+					<view v-if="people.motto !==''" class="motto">签名：{{people.motto}}</view>
 					<!-- <view style=" max-height: 84px;">
 						<view style="display: flex;padding: 10px 0; flex-wrap: wrap;" v-if="people.tags !==null && people.tags !==''">
 							<view :class="'item_'+t_tag"  v-for="(tagitem,t_tag) in people.tags.split(',')" :key="t_tag">{{tagitem}}</view>
@@ -57,6 +59,7 @@
 				iflike:false,
 				had_likes:[],
 				likes_arr:[],
+				host:'',
 			}
 		},
 		methods: {
@@ -112,7 +115,8 @@
 			this.getList()
 			var userinfo=uni.getStorageSync('userInfo')
 			this.had_likes=userinfo.islikes.split(',')
-			
+			this.host=this.$imgurl()
+			console.log('host1',this.host)
 		}
 	}
 </script>

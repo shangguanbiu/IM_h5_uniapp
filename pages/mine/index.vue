@@ -168,8 +168,28 @@
 			})
 			var backbutton = document.getElementsByClassName('uni-page-head-hd')[0]
 			if (backbutton) backbutton.style.display = 'none';
+			console.log('ffff',loginStore.userInfo)
+			this.get_userinfo()
+			
+			
 		},
 		methods: {
+			async get_userinfo(){
+				let userInfo = JSON.parse(JSON.stringify(loginStore.userInfo))
+				const res = await this.$myRuquest({
+					url: '/api/front/index/getImUserInfo',
+					method: "POST",
+					data: {
+						user_id: userInfo.user_id
+					},
+				})
+				if (res.code == 200) {
+					
+					let data=JSON.parse(JSON.stringify(res.data))
+					loginStore.login(data)
+				
+				}
+			},
 			to_like(type){
 				if(type==1){
 					uni.navigateTo({
@@ -225,6 +245,7 @@
 				})
 				uni.removeStorageSync('allContacts')
 				uni.removeStorageSync('ifLogin')
+				uni.removeStorageSync('iffirst')
 				
 
 			},
@@ -270,6 +291,8 @@
 					url: "/pages/mine/vip/vip"
 				})
 			},
+			 
+			
 		}
 	}
 </script>

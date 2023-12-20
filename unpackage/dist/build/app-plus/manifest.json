@@ -78,7 +78,13 @@
         }
       },
       "splashscreen": {
-        "useOriginalMsgbox": false
+        "useOriginalMsgbox": false,
+        "androidStyle": "default",
+        "android": {
+          "hdpi": "static/image/480.png",
+          "xhdpi": "static/image/720.png",
+          "xxhdpi": "static/image/1080.png"
+        }
       },
       "google": {
         "permissions": [

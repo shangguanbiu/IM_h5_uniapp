@@ -72,7 +72,7 @@
 							})
 						})
 						
-						console.log('fffff',this.list)
+					
 
 					}
 				})

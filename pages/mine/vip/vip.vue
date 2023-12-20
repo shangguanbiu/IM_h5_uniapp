@@ -86,7 +86,7 @@
 				</view>
 				<view style="margin-left: 10px;">
 					<view class="vip_tit_zit">
-						{{list.length!==0?list[type_l1].islike:0}}次右滑
+						{{list.length!==0?list[type_l1].iszan:0}}次右滑
 					</view>
 					<view class="vip_tit_zi">
 						突破每天右滑上限，不错过每个机会
@@ -148,7 +148,7 @@
 				</view>
 				<view style="margin-left: 10px;">
 					<view class="vip_tit_zit">
-						{{list.length!==0?list[type_l1].islike:0}}次右滑
+						{{list.length!==0?list[type_l1].iszan:0}}次右滑
 					</view>
 					<view class="vip_tit_zi">
 						突破每天右滑上限，不错过每个机会
@@ -209,7 +209,7 @@
 				</view>
 				<view style="margin-left: 10px;" v-if="list.length!==0">
 					<view class="vip_tit_zit">
-						{{list[type_l1].islike>999?'无限':list[type_l1].islike}}次右滑
+						{{list[type_l1].iszan>999?'无限':list[type_l1].iszan}}次右滑
 					</view>
 					<view class="vip_tit_zi">
 						突破每天右滑上限，不错过每个机会
@@ -274,6 +274,22 @@
 					}
 				})
 			},
+			async get_userinfo_im(){
+				let userInfo = JSON.parse(JSON.stringify(loginStore.userInfo))
+				const res = await this.$myRuquest({
+					url: '/api/front/index/getImUserInfo',
+					method: "POST",
+					data: {
+						user_id: userInfo.user_id
+					},
+				})
+				if (res.code == 200) {
+					this.userinfo =res.data
+					let data=JSON.parse(JSON.stringify(res.data))
+					loginStore.login(data)
+				
+				}
+			},
 			async get_userInfo() {
 				var _this = this
 				const res = await this.$myRuquest({
@@ -331,8 +347,9 @@
 		onShow() {
 			this.getList()
 			this.get_userInfo()
-			this.userinfo = JSON.parse(JSON.stringify(loginStore.userInfo))
-			console.log('ffff',this.userinfo)
+			this.get_userinfo_im()
+			// this.userinfo = JSON.parse(JSON.stringify(loginStore.userInfo))
+			// console.log('ffff',this.userinfo)
 		}
 	}
 </script>

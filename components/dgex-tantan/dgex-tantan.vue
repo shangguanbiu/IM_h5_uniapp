@@ -140,7 +140,7 @@
 			this.winWidth = res.windowWidth
 			this.winHeigh = res.windowHeight-110
 			this.fromUser=uni.getStorageSync('userInfo')
-			console.log('ff',this.fromUser)
+			
 		},
 		methods: {
 			see_more() {
@@ -207,6 +207,23 @@
 					
 				}
 			},
+			async get_userinfo(){
+				let userInfo = JSON.parse(JSON.stringify(loginStore.userInfo))
+				const res = await this.$myRuquest({
+					url: '/api/front/index/getImUserInfo',
+					method: "POST",
+					data: {
+						user_id: userInfo.user_id
+					},
+				})
+				if (res.code == 200) {
+					
+					this.fromUser =res.data
+					let data=JSON.parse(JSON.stringify(res.data))
+					loginStore.login(data)
+				
+				}
+			},
 			async count_number(type){
 				const res = await this.$myRuquest({
 					url: '/api/front/index/changeImUserData',
@@ -218,9 +235,7 @@
 				})
 				if (res.code == 200) {
 					
-					let data=JSON.parse(JSON.stringify(this.fromUser))
-					loginStore.login(data)
-					console.log('xxxxxxxx',this.fromUser)
+					this.get_userinfo()
 					
 				
 				}
@@ -229,8 +244,8 @@
 			touchEnd(index) {
 				console.log('end的',this.if_like)
 				if(this.if_like==true){
-					this.fromUser.iszan=this.fromUser.iszan-1
-					if(this.fromUser.iszan<0){
+					
+					if(this.fromUser.iszan==0){
 						this.ifover=true
 						this.$emit('openpop')
 						return;

@@ -211,7 +211,7 @@
 		},
 		mounted() {
 			this.getList()
-			this.fromUser = uni.getStorageSync('userInfo')
+			this.get_userinfo()
 			return
 			this.if_more = false
 			// const arr = []
@@ -236,6 +236,22 @@
 			// this.list = arr
 		},
 		methods: {
+			async get_userinfo(){
+				let userInfo = JSON.parse(JSON.stringify(loginStore.userInfo))
+				const res = await this.$myRuquest({
+					url: '/api/front/index/getImUserInfo',
+					method: "POST",
+					data: {
+						user_id: userInfo.user_id
+					},
+				})
+				if (res.code == 200) {
+					this.fromUser =res.data
+					let data=JSON.parse(JSON.stringify(res.data))
+					loginStore.login(data)
+				
+				}
+			},
 			open_pop() {
 				this.pop_notice = !this.pop_notice
 				this.notice_content = '您当前浏览附近的人已达到喜欢的每日限制，观看更多可开通会员，请联系客服'
@@ -391,7 +407,10 @@
 					// 	title: 'ok',
 					// 	icon: "none"
 					// })
-					this.count_number('iszan')
+					if(item ==undefined){
+						this.count_number('iszan')
+					}
+					
 					this.iflike=true
 				}
 			},
@@ -406,20 +425,7 @@
 					},
 				})
 				if (res.code == 200) {
-					
-					if(type == 'istalk'){
-						console.log('1111111')
-						this.fromUser.istalk=this.fromUser.istalk-1	
-					}else if(type == 'iszan'){
-						console.log('222222')
-						this.fromUser.iszan=this.fromUser.iszan-1	
-					}
-					
-					let data=JSON.parse(JSON.stringify(this.fromUser))
-					loginStore.login(data)
-					
-					console.log('aaaaaaaaa',this.fromUser)
-				
+					this.get_userinfo()
 				}
 			},
 			async check_if_friend(invite_after) {

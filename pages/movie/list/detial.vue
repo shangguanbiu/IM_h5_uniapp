@@ -149,10 +149,7 @@
 				})
 				if (res.code == 200) {
 					
-					this.fromUser.isview=this.fromUser.isview-1	
-					let data=JSON.parse(JSON.stringify(this.fromUser))
-					loginStore.login(data)
-				console.log('ddddddd1',this.fromUser)
+					//console.log('ddddddd1',this.fromUser)
 				}
 			},
 			jump(type) {
@@ -219,27 +216,41 @@
 				});
 			
 			},
+			async get_userinfo(){
+				let userInfo = JSON.parse(JSON.stringify(loginStore.userInfo))
+				const res = await this.$myRuquest({
+					url: '/api/front/index/getImUserInfo',
+					method: "POST",
+					data: {
+						user_id: userInfo.user_id
+					},
+				})
+				if (res.code == 200) {
+					
+					this.fromUser =res.data
+					let data=JSON.parse(JSON.stringify(res.data))
+					loginStore.login(data)
+				
+				}
+			},
 		},
 		onLoad(option) {
-			
 			uni.setStorageSync('iffirst',false)
 			this.detail=uni.getStorageSync('movice_info')
 			this.top_title=this.detail.name
-			
 			this.getList(option.id)
 			this.add_view(option.id)
 			
-			
-			
 		},
 		mounted() {
-			this.fromUser = uni.getStorageSync('userInfo')
+			
 			window.scrollTo({
 				top:0,
 				behavior:'smooth'
 			})
 		},
 		onShow() {
+			this.get_userinfo()
 			window.scrollTo({
 				top:0,
 				behavior:'smooth'

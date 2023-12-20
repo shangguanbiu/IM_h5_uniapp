@@ -7,7 +7,7 @@
 		<view v-if="list.length !==0">
 			<view class="user_line" v-for="(people,t_index) in list" :key="t_index" v-show="t_index<4">
 				<view class="user_l">
-					<image :src="people.avatar" v-if="people.avatar !==null"
+					<image :src="host+people.avatar" v-if="people.avatar !==null"
 						style="width: 80px; height: 80px; border-radius: 50%;"></image>
 					<image src="@/static/image/common.png" v-else
 							style="width: 80px; height: 80px; border-radius: 50%;"></image>
@@ -37,7 +37,7 @@
 					<view style="margin: 5px 0; text-align: right;">
 						<view class="item_btn" @tap="bet_talk(people)">打招呼</view>
 					</view>
-					<view v-if="people.motto !==null" class="motto">签名：{{people.motto}}</view>
+					<view v-if="people.motto !==''" class="motto">签名：{{people.motto}}</view>
 					<!-- <view style=" max-height: 84px;">
 						<view style="display: flex;padding: 10px 0; flex-wrap: wrap;" v-if="people.tags !==null && people.tags !==''">
 							<view :class="'item_'+t_tag"  v-for="(tagitem,t_tag) in people.tags.split(',')" :key="t_tag">{{tagitem}}</view>
@@ -285,6 +285,7 @@
 			this.had_likes = userinfo.islikes.split(',')
 			this.fromUser = userinfo
 			this.host=this.$imgurl()
+			console.log('host',this.host)
 			
 
 		}

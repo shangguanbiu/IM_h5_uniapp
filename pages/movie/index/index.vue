@@ -114,6 +114,11 @@
 </template>
 
 <script>
+	import {
+		useloginStore
+	} from '@/store/login'
+	import pinia from '@/store/index'
+	const loginStore = useloginStore(pinia)
 	export default {
 		data() {
 			return {
@@ -160,6 +165,17 @@
 
 			}
 		},
+		props: ['run'],
+		watch: {
+			$route(val) {
+				
+				if (val.fullPath == '/') {
+					this.get_notice(2);
+					this.getList(1, 6, 1);
+					this.getList(2, 10, 2);
+				}
+			}
+		},
 		methods: {
 			// function 调用uniapp的 方法
 			pop_ok() {
@@ -172,20 +188,26 @@
 					url: '/pages/index/index',
 				});
 			},
-			async get_userInfo() {
+			async get_userinfo() {
+				let userInfo = JSON.parse(JSON.stringify(loginStore.userInfo))
 				const res = await this.$myRuquest({
-					url: '/api/front/user/getUserInfo',
+					url: '/api/front/index/getImUserInfo',
 					method: "POST",
+					data: {
+						user_id: userInfo.user_id
+					},
 				})
 				if (res.code == 200) {
+					
 					this.userinfo = res.data
+					let data = JSON.parse(JSON.stringify(res.data))
+					loginStore.login(data)
 
 				}
-
 			},
 
 			on_func_notice(data) {
-				 
+
 				if (this.userinfo.isview == 0) {
 					this.pop_notice = true
 					return;
@@ -246,7 +268,9 @@
 				}
 			},
 			async getList(type, size, val) {
-				this.userinfo = uni.getStorageSync('userInfo')
+				if (type == 1) {
+					this.get_userinfo()
+				}
 				this.list = []
 				// this.State
 				// Toast.loading();
@@ -288,7 +312,7 @@
 				}
 			},
 			async get_notice(type_id) {
-				
+
 				var _this = this
 				const res = await this.$myRuquest({
 					url: '/api/front/notice/getList',
@@ -368,7 +392,7 @@
 		},
 		// 在使用到的页面 添加如下代码
 		mounted() {
-			
+
 			var token = uni.getStorageSync('ifLogin')
 
 		},

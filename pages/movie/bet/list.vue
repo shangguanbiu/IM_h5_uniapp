@@ -23,12 +23,10 @@
 					<view sclass="list_line_zi" style="flex: 1;">{{qishuitem.create_time}}</view>
 					<view class="list_line_zi">
 					<view style="display: flex; justify-items: flex-start;" >
-						<view v-for="(number,inde) in qishuitem.multiple_id.split(',')" :key="'q'+inde">
-							<view class="color_n1"  v-if="number==1">春</view>
-							<view class="color_n2" v-if="number==2">夏</view>
-							<view class="color_n1" v-if="number==3">秋</view>
-							<view class="color_n2" v-if="number==4">冬</view>
-						</view>
+						<view class="color_n1"  v-if="qishuitem.multiple_id==1">春</view>
+						<view class="color_n2" v-if="qishuitem.multiple_id==2">夏</view>
+						<view class="color_n1" v-if="qishuitem.multiple_id==3">秋</view>
+						<view class="color_n2" v-if="qishuitem.multiple_id==4">冬</view>
 					</view>
 					
 					</view>
@@ -116,12 +114,12 @@
 					url: '/api/front/order/getHistoryOrder',
 					data:{
 						page:this.page,
-						pagesize:10
+						pagesize:5
 					}
 				})
 				if (res.code == 200) {
 			
-					this.list = res.data
+					this.list = res.data.data
 					// setTimeout(function() {
 					// 	Toast.clear();
 					// }, 1000)
@@ -145,7 +143,7 @@
 					url: '/api/front/order/getHistoryOrder',
 					data:{
 						page:this.page,
-						pagesize:10
+						pagesize:5
 					},
 					
 				})
@@ -153,13 +151,13 @@
 			
 			
 					//this.page++ // 得到数据之后 page+1
-					if (res.data.length < 1) { // 没有数据
+					if (res.data.data.length < 1) { // 没有数据
 						this.loadingType = 2
 						uni.hideNavigationBarLoading() // 关闭加载动画
 						return
 					}
 					//this.page++ // 每触底一次 page +1
-					this.list = this.list.concat(res.data) //将数据拼接在一起
+					this.list = this.list.concat(res.data.data) //将数据拼接在一起
 					this.loadingType = 0 // 将loadingType归0重置
 					uni.hideNavigationBarLoading() // 关闭加载动画
 			
@@ -189,7 +187,7 @@
 			this.getList().then(res => wx.stopPullDownRefresh())
 		},
 		onReachBottom() {
-			//this.getmorelists()
+			this.getmorelists()
 
 		}
 	}

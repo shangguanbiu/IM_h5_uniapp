@@ -164,6 +164,12 @@
 			}
 		},
 		watch: {
+			watch: {
+				$route(val) {
+					if (val.fullPath == '/') {
+					}
+				}
+			},
 			bet_num(val) {
 				if (Number(val) > this.max_num) {
 					this.bet_num = this.max_num

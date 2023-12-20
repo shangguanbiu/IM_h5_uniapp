@@ -31,7 +31,7 @@
 		</view>
 		<view>
 
-			<movice v-if="tabs==0" ref="child_action"></movice>
+			<movice v-show="tabs==0" :run="run_fun" ref="child_action"></movice>
 			<opengroup v-if="tabs==1"></opengroup>
 			<bet v-show="tabs==2" ref="bet_action"></bet>
 			<nearby v-if="tabs==3"></nearby>
@@ -132,6 +132,14 @@
 			bet,
 			nearby
 		},
+		watch:{
+			tabs(val){
+				
+				if(val==0){
+					this.run_child()
+				}
+			}
+		},
 		data() {
 			let navList = [{
 					name: 'message',
@@ -191,6 +199,7 @@
 				],
 				userinfo: {},
 				tabs: 0,
+				run_fun:true,
 				tabs_arr: [{
 					id: 1,
 					name: '影院',
@@ -210,11 +219,16 @@
 				}, ]
 			}
 		},
+		
 		onShow() {
-			this.run_child()
+			//this.run_child()
+			this.run_fun=true
+			
 		},
 		onLoad() {},
 		mounted() {
+			 
+			
 			this.$refs.child_action.get_banner(1);
 			this.$refs.child_action.get_notice(2);
 			this.$refs.child_action.getList(1, 6, 1);
@@ -242,8 +256,9 @@
 		},
 		methods: {
 			run_child() {
-
-				if (uni.getStorageSync('iffirst') == false && uni.getStorageSync('iffirst') !== '') {
+				console.log('ddddddd',uni.getStorageSync('iffirst'))
+				if (uni.getStorageSync('iffirst') !== '') {
+					this.$refs.child_action.get_banner(1);
 					this.$refs.child_action.getList(1, 6, 1);
 					this.$refs.child_action.getList(2, 10, 2);
 					uni.setStorageSync('iffirst', true)
@@ -316,6 +331,11 @@
 			tab_change(index) {
 				this.tabs = index
 				this.PageName = this.tabs_arr[index].name
+				this.run_fun=false
+				if(index==0){
+					this.run_fun=true
+					this.$refs.child_action.get_userinfo();
+				}
 				if(index==2){
 					this.$refs.bet_action.run_fun();
 				}
