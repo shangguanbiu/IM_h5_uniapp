@@ -8,12 +8,18 @@
 			<view @click="to_kefu(1)" class="kf_item">
 				<view class="kf_itemico">
 					<image src="@/static/image/online_i1.png" style="width:100%; " mode='widthFix' />
+					<view style="position: absolute; left: 0; bottom: 64px; width: 100%;">
+						<view style="text-align: center; color: #fff; font-size: 18px;">在线客服</view>
+					</view>
 				</view>
 
 			</view>
 			<view @click="to_kefu(2)" class="kf_item">
 				<view class="kf_itemico">
 					<image src="@/static/image/online_i2.png" style="width:100%; " mode='widthFix' />
+					<view style="position: absolute; left: 0; bottom: 64px; width: 100%;">
+						<view style="text-align: center; color: #fff; font-size: 18px;">WhatsApp</view>
+					</view>
 				</view>
 
 			</view>
@@ -96,7 +102,7 @@
 	}
 
 	.kf_itemico {
-		padding: 5px 10px;
+		padding: 5px 10px;position: relative;
 	}
 
 	page {

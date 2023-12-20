@@ -9,24 +9,26 @@
 			<view class="list_line_are" v-for="(qishuitem,indexs) in list" :key="indexs">
 				<view class="list_line_line">
 					<view class="list_line_zi">期号</view>
-					<view class="list_line_zi">下注积分</view>
+					<view class="list_line_zi">投票积分</view>
 				</view>
 				<view class="list_line_line">
 					<view class="list_line_zi">{{qishuitem.open_no}}</view>
 					<view class="list_line_zi">{{qishuitem.amount}}</view>
 				</view>
 				<view class="list_line_line">
-					<view class="list_line_zi">下注时间</view>
-					<view class="list_line_zi">下注</view>
+					<view class="list_line_zi">投票时间</view>
+					<view class="list_line_zi">投票</view>
 				</view>
 				<view class="list_line_line">
 					<view sclass="list_line_zi" style="flex: 1;">{{qishuitem.create_time}}</view>
 					<view class="list_line_zi">
-					<view style="display: flex;" v-for="(number,inde) in qishuitem.multiple_id.split(',')" :key="'q'+inde">
+					<view style="display: flex; justify-items: flex-start;" >
+						<view v-for="(number,inde) in qishuitem.multiple_id.split(',')" :key="'q'+inde">
 							<view class="color_n1"  v-if="number==1">春</view>
 							<view class="color_n2" v-if="number==2">夏</view>
 							<view class="color_n1" v-if="number==3">秋</view>
 							<view class="color_n2" v-if="number==4">冬</view>
+						</view>
 					</view>
 					
 					</view>
@@ -59,7 +61,7 @@
 				ifpop: false,
 				page: 1,
 				pagesize: 10,
-				notice: "上拉显示更多",
+				notice: "下拉刷新",
 				loadingType: 0,
 				loadingText: '加载中...',
 				contentText: {
@@ -187,7 +189,7 @@
 			this.getList().then(res => wx.stopPullDownRefresh())
 		},
 		onReachBottom() {
-			this.getmorelists()
+			//this.getmorelists()
 
 		}
 	}

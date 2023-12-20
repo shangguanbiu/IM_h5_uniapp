@@ -185,7 +185,8 @@
 					id: 4,
 					name: '附近的人',
 					ifshow: false
-				}, ]
+				}, ],
+				
 			}
 		},
 		onShow() {
@@ -193,6 +194,7 @@
 		},
 
 		mounted() {
+			 
 			// #ifndef MP
 			uni.hideTabBar();
 			// #endif	

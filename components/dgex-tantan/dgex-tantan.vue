@@ -91,6 +91,9 @@
 </template>
 
 <script>
+	import { useloginStore } from '@/store/login'
+	import pinia from '@/store/index'
+	const loginStore = useloginStore(pinia)
 	export default {
 		name: "slide",
 		props: {
@@ -128,15 +131,16 @@
 				if_like:false,
 				userinfo:{},
 				ifover:false,
-				have_num:3
+				have_num:3,
+				fromUser: '',
 			}
 		},
 		mounted() {
 			const res = uni.getSystemInfoSync()
 			this.winWidth = res.windowWidth
 			this.winHeigh = res.windowHeight-110
-			this.userinfo=uni.getStorageSync('userInfo')
-			console.log('ff',this.userinfo)
+			this.fromUser=uni.getStorageSync('userInfo')
+			console.log('ff',this.fromUser)
 		},
 		methods: {
 			see_more() {
@@ -177,7 +181,7 @@
 			},
 			touchMove(e, index) {
 				
-				if(this.userinfo.sex==0){
+				if(this.fromUser.sex==0){
 					this.ifover=true
 					return;
 				}
@@ -203,24 +207,44 @@
 					
 				}
 			},
+			async count_number(type){
+				const res = await this.$myRuquest({
+					url: '/api/front/index/changeImUserData',
+					method: "POST",
+					data: {
+						user_id: this.fromUser.user_id,
+						column:type
+					},
+				})
+				if (res.code == 200) {
+					
+					let data=JSON.parse(JSON.stringify(this.fromUser))
+					loginStore.login(data)
+					console.log('xxxxxxxx',this.fromUser)
+					
+				
+				}
+			},
+			
 			touchEnd(index) {
-				console.log('end的')
-				if(this.if_like){
-					this.have_num=this.have_num-1
+				console.log('end的',this.if_like)
+				if(this.if_like==true){
+					this.fromUser.iszan=this.fromUser.iszan-1
+					if(this.fromUser.iszan<0){
+						this.ifover=true
+						this.$emit('openpop')
+						return;
+					}
+					this.count_number('iszan')
+					this.$emit('bet_like',this.list[index])
 				}
-				
-				if(this.have_num<0){
-					this.ifover=true
-					this.$emit('openpop')
-					return;
-				}
-				
+
 				//获取当天滑动的次数
 				
 				//滑动次数为0情况执行
 				//
 				
-				console.log('end的',this.have_num)
+				console.log('end的',this.fromUser.iszan)
 				if (this.slideing) return
 				this.swipering = false;
 				if (this.list.length == index + 1) {
@@ -337,6 +361,7 @@
 		perspective-origin: 50% -30%;
 		transform-style: preserve-3d;
 		margin: auto;
+		padding-top: 20px;
 		 
 	}
 

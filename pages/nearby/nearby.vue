@@ -5,7 +5,8 @@
 				<template #backText></template>
 				<template #content>附近的人</template>
 			</cu-custom> -->
-			<tantan v-if="list.length > 0" :list="list" @="change" @Image="clickImage" @see_more="show_detail" @openpop="open_pop"></tantan>
+			<tantan v-if="list.length > 0" :list="list" @="change" @Image="clickImage" @see_more="show_detail"
+				@openpop="open_pop" @bet_like="bet_like"></tantan>
 		</view>
 		<view v-else>
 			<view>
@@ -25,23 +26,27 @@
 				</view>
 				<view class="main_i">
 					<view class="main_title">
-					
+
 						<!-- <view class="p_type p_type1" v-if="detail_data.sex==0">女</view>
 						<view class="p_type p_type2" v-if="detail_data.sex==1">男</view> -->
 						<view style="margin-right: 5px;">{{detail_data.realname}}</view>
 						<view class="talk_sex p_type1" v-if="detail_data.sex==0">
-							<view class="sex_ico" ><image src="@/static/image/nv_b.png"  style="width: 100%;" mode='widthFix' ></image></view>
+							<view class="sex_ico">
+								<image src="@/static/image/nv_b.png" style="width: 100%;" mode='widthFix'></image>
+							</view>
 							<view style=" line-height: 25px;font-weight: normal;">{{detail_data.ages}}</view>
 						</view>
 						<view class="talk_sex p_type2" v-if="detail_data.sex==1">
-							<view class="sex_ico" ><image src="@/static/image/nan_b.png"  style="width: 100%;" mode='widthFix' ></image></view>
+							<view class="sex_ico">
+								<image src="@/static/image/nan_b.png" style="width: 100%;" mode='widthFix'></image>
+							</view>
 							<view style=" line-height: 25px;font-weight: normal;">{{detail_data.ages}}</view>
 						</view>
 						<view class="talk_sex p_type3" v-if="detail_data.sex==2">
 							<!-- <view class="sex_ico" ><image src="@/static/image/nan_b.png"  style="width: 100%;" mode='widthFix' ></image></view> -->
 							<view style=" line-height: 25px;">{{detail_data.ages}}</view>
 						</view>
-						
+
 					</view>
 
 					<view class="mian_price_line">
@@ -54,7 +59,8 @@
 					<view class="dangan" style="color: #a09d9d;;">
 						{{detail_data.motto}}
 					</view>
-					<view style="display: flex;padding: 10px 0; padding-bottom: 90px;  flex-wrap:wrap" v-if="detail_data.tags">
+					<view style="display: flex;padding: 10px 0; padding-bottom: 90px;  flex-wrap:wrap"
+						v-if="detail_data.tags">
 						<view :class="'item_'+t_index" v-for="(tagitem,t_index) in detail_data.tags.split(',')"
 							:key="t_index">
 							{{tagitem}}
@@ -62,17 +68,24 @@
 					</view>
 
 					<view class="ft_zhaohu_line">
-						<view style="margin-right: 5px;" @tap="bet_talk(people)">
+						<view style="margin-right: 5px;" @tap="bet_talk()">
 							<view class="ft_zh_zi" style="color:rgb(248, 186, 53)">
-								<view class="cuIcon-commandfill"></view>打招呼
+								<view class="cuIcon-commandfill" style=" margin-right: 5px; font-size: 17px;"></view>打招呼
 							</view>
 						</view>
-						<view style="margin-left: 5px;">
+						<view style="margin-left: 5px;" v-show="iflike ==true" >
 							<view class="ft_zh_zi" style="color:rgb(250, 84, 124) ;">
-								<view class="cuIcon-likefill"></view>喜欢
+								<view class="cuIcon-likefill" style=" margin-right: 5px; font-size: 17px;"></view>
+								
+								喜欢
 							</view>
 						</view>
-
+						<view style="margin-left: 5px;"  v-show="iflike ==false" @tap="bet_like()">
+							<view class="ft_zh_zi" style="color:rgb(250, 84, 124) ;">
+								<view class="cuIcon-like" style=" margin-right: 5px; font-size: 17px;"></view>
+								喜欢
+							</view>
+						</view>
 					</view>
 				</view>
 
@@ -80,7 +93,7 @@
 
 			</view>
 		</view>
-		
+
 		<view v-show="pop_notice">
 			<view class="com_bg"></view>
 			<view class="com_main">
@@ -89,7 +102,7 @@
 					<view style="padding: 10px 15px;  line-height: 25px; flex-wrap: wrap; text-align: center;">
 						{{notice_content}}
 					</view>
-		
+
 					<view class="pop_foot">
 						<view class="pop_ft_btn1" v-if="notice_type==1" @tap="pop_notice=false">关闭</view>
 						<view class="pop_ft_btn2" @tap="pop_ok()" v-if="notice_type==1">去升级</view>
@@ -103,28 +116,46 @@
 			<view class="talk_mian">
 				<view style="width:90%; margin: auto;">
 					<view class="talk_ico">
-						<image :src="talk_data.avatar"   style="width:100%; border-radius: 50%;" mode='widthFix'></image>
+
+						<image :src="talk_data.avatar" v-if="talk_data.avatar !==null"
+							style="width: 100%;border-radius: 50%;" mode='widthFix'></image>
+						<image src="@/static/image/common.png" v-else style="width: 100%;border-radius: 50%; "
+							mode='widthFix'></image>
 					</view>
 					<view class="talk_name">{{talk_data.realname}}</view>
 					<view class="talk_desc">
 						<view class="talk_sex p_type1" v-if="talk_data.sex==0">
-							<view class="sex_ico" ><image src="@/static/image/nv_b.png"  style="width: 100%;" mode='widthFix' ></image></view>
-							<view style=" line-height: 25px;">{{talk_data.ages}}</view>
+							<view class="sex_ico">
+								<image src="@/static/image/nv_b.png" style="width: 100%;" mode='widthFix'></image>
+							</view>
+							<view style=" line-height: 25px;" v-if="talk_data.ages !==0&&talk_data.ages !==null">
+								{{talk_data.ages}}
+							</view>
 						</view>
 						<view class="talk_sex p_type1" v-if="talk_data.sex==1">
-							<view class="sex_ico"><image src="@/static/image/nan_b.png"  style="width: 100%;" mode='widthFix' ></image></view>
-							<view style=" line-height: 25px; ">{{talk_data.ages}}</view>
+							<view class="sex_ico">
+								<image src="@/static/image/nan_b.png" style="width: 100%;" mode='widthFix'></image>
+							</view>
+							<view style=" line-height: 25px; " v-if="talk_data.ages !==0&&talk_data.ages !==null">
+								{{talk_data.ages}}
+							</view>
 						</view>
-						<view class="talk_sex p_type3" v-if="talk_data.sex==2">
-							<view style=" line-height: 25px;">{{talk_data.ages}}</view>
+						<view class="talk_sex p_type3"
+							v-if="talk_data.sex==2&&talk_data.ages !==0 &&talk_data.ages !==null">
+							<view style=" line-height: 25px;">
+								{{talk_data.ages}}
+							</view>
 						</view>
-						<view  class="talk_sex p_type3">
-							<view style=" line-height: 25px;">vip-{{talk_data.islevel}}</view>
+						<view class="talk_sex p_type3">
+							<view style=" line-height: 25px;" v-if="talk_data.islevel ==21">VIP</view>
+							<view style=" line-height: 25px;" v-if="talk_data.islevel ==22">SVIP</view>
+							<view style=" line-height: 25px;" v-if="talk_data.islevel ==23">BVIP</view>
 						</view>
 					</view>
 					<view class="talk_form">
 						<view style="padding-left: 10px;">
-							<input placeholder="随意打个招呼吧" style="height: 32px; font-size: 14px;"  maxlength="32" name="input" v-model="send_content"/>
+							<input placeholder="随意打个招呼吧" style="height: 32px; font-size: 14px;" maxlength="32"
+								name="input" v-model="send_content" />
 						</view>
 						<view>
 							<button class='cu-btn bg-blue shadow' @tap="check_if_friend(talk_data.user_id)">发送</button>
@@ -138,20 +169,23 @@
 
 <script>
 	import tantan from '@/components/dgex-tantan/dgex-tantan.vue'
+	import { useloginStore } from '@/store/login'
+	import pinia from '@/store/index'
+	const loginStore = useloginStore(pinia)
 	export default {
 		components: {
 			tantan
 		},
 		data() {
 			return {
-				show_talk:false,
-				talk_data:{},
+				show_talk: false,
+				talk_data: {},
 				if_more: false,
-				pop_notice:false,
+				pop_notice: false,
 				notice_type: 1,
 				notice_content: "您当前可观看浏览附近的人已达到每日限制，观看更多可开通会员，请联系客服",
-				send_content:'',
-				fromUser:'',
+				send_content: '',
+				fromUser: '',
 				detail_data: '',
 				list: [],
 				paddingB: 0,
@@ -202,15 +236,24 @@
 			// this.list = arr
 		},
 		methods: {
-			open_pop(){
-				this.pop_notice=!this.pop_notice
-				this.notice_content='您当前可观看浏览附近的人已达到每日限制，观看更多可开通会员，请联系客服'
+			open_pop() {
+				this.pop_notice = !this.pop_notice
+				this.notice_content = '您当前浏览附近的人已达到喜欢的每日限制，观看更多可开通会员，请联系客服'
 			},
 			bet_talk() {
-				this.show_talk = true
 				
+				if(this.fromUser.istalk ==0){
+					this.pop_notice=true
+					this.notice_type=1
+					this.notice_content = '您当前可打招呼次数已达到每日限制，更多权限可升级会员，请联系客服'
+					return;
+					
+				}
+				
+				this.show_talk = true
+
 			},
-			pop_ok(){
+			pop_ok() {
 				uni.navigateTo({
 					url: '/pages/movie/kefu/kefu'
 				});
@@ -256,12 +299,27 @@
 				console.log(data);
 			},
 			show_detail(data) {
-				this.bannerdata=[]
+				this.iflike=false
+				this.bannerdata = []
 				this.if_more = true
 				this.detail_data = data.currentItem
 				this.talk_data = data.currentItem
 
-				this.bannerdata=this.talk_data.nearby_arr.split(',')
+				this.bannerdata = this.talk_data.nearby_arr.split(',')
+				
+				let likes_arr=this.fromUser.islikes.split(',')
+				if(likes_arr.length !==0){
+					const result = likes_arr.find(item => item == this.talk_data.account);
+					if (result !== undefined) {
+						this.iflike = true
+					} else {
+						this.iflike = false
+					}
+				}else{
+					this.iflike = false
+				}
+				
+				
 
 			},
 			getList() {
@@ -308,29 +366,83 @@
 				}
 
 			},
-			async check_if_friend(invite_after){
-				var user_arr=new Array()
+			async bet_like(item) {
+				if(item !==undefined){
+					this.talk_data=item
+				}
+				
+				if(this.fromUser.iszan ==0){
+					this.notice_type=1
+					this.pop_notice=true
+					this.notice_content = '您当前可点击喜欢TA的次数已达到每日限制，更多权限可升级会员，请联系客服'
+					return;
+				}
+				var _this = this
+				const res = await this.$myRuquest({
+					url: '/api/front/index/imIsLikes',
+					method: "POST",
+					data: {
+						user_id: this.fromUser.user_id,
+						account: this.talk_data.account,
+					}
+				})
+				if (res.code == 200) {
+					// uni.showToast({
+					// 	title: 'ok',
+					// 	icon: "none"
+					// })
+					this.count_number('iszan')
+					this.iflike=true
+				}
+			},
+			
+			async count_number(type){
+				const res = await this.$myRuquest({
+					url: '/api/front/index/changeImUserData',
+					method: "POST",
+					data: {
+						user_id: this.fromUser.user_id,
+						column:type
+					},
+				})
+				if (res.code == 200) {
+					
+					if(type == 'istalk'){
+						console.log('1111111')
+						this.fromUser.istalk=this.fromUser.istalk-1	
+					}else if(type == 'iszan'){
+						console.log('222222')
+						this.fromUser.iszan=this.fromUser.iszan-1	
+					}
+					
+					let data=JSON.parse(JSON.stringify(this.fromUser))
+					loginStore.login(data)
+					
+					console.log('aaaaaaaaa',this.fromUser)
+				
+				}
+			},
+			async check_if_friend(invite_after) {
+				
+				var user_arr = new Array()
 				user_arr.push(this.fromUser.user_id)
 				user_arr.push(invite_after)
 				var _this = this
 				const res = await this.$myRuquest({
 					url: '/api/front/index/saveImUser',
 					method: "POST",
-					data:{
-						users:user_arr.toString()
+					data: {
+						users: user_arr.toString()
 					}
 				})
 				if (res.code == 200) {
 					this.sendMessage(invite_after)
-					
+
 				}
 			},
 			sendMessage(toContactid) {
-			
 				//提前判断每日剩余打招呼的次数
-			
-			
-			
+
 				let msg = {
 					id: this.$util.getUuid(),
 					is_group: 0,
@@ -340,7 +452,7 @@
 					content: this.send_content,
 					sendTime: new Date().getTime()
 				}
-			
+
 				this.$api.msgApi.sendMessage(msg)
 					.then((res) => {
 						if (res.code == 0) {
@@ -350,10 +462,12 @@
 							// 	icon: "success"
 							// })
 							this.show_talk = false
-							this.notice_content = '已打招呼，等待TA的回应！可在下方栏目-消息中查看'
+							this.notice_content = '已打招呼，等待TA的回应！可在栏目-消息中查看'
 							this.pop_notice = true
 							this.notice_type = 2
-			
+							
+							this.count_number('istalk')
+
 						} else {
 							uni.showToast({
 								title: res.msg,
@@ -362,7 +476,7 @@
 						}
 					})
 					.catch((error) => {
-			
+
 					});
 			}
 			// 
@@ -389,7 +503,6 @@
 	}
 </style>
 <style scoped>
-	
 	.p_type {
 		color: #fff;
 		text-align: center;
@@ -566,8 +679,8 @@
 		justify-content: center;
 		align-content: center;
 		position: relative;
-		transition: 100ms; 
-    background-color: rgba(158, 158, 158, 0.3);
-	line-height: 3rem;
+		transition: 100ms;
+		background-color: rgba(158, 158, 158, 0.3);
+		line-height: 3rem;
 	}
 </style>

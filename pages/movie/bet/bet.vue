@@ -178,30 +178,31 @@
 				if (this.time1 == 0 && this.time2 == 0 && val < 8) {
 					this.ifrun = false
 				}
-				if (this.time2 == this.time3 && val == 0) {
+				if (this.time2 == val && val == 0) {
 					//clearInterval(this.runtime_obj)
 					this.if_over = true
-					this.time1 = 0
-					this.time2 = 0
-					this.time3 = 0
+					// this.time1 = 0
+					// this.time2 = 0
+					// this.time3 = 0
 					this.ifrun = false
 					clearInterval(this.time_build);
 					this.time_build = null;
 					setTimeout(function() {
 						_this.getNewOpenData()
-					}, 5000)
+					}, 3000)
+					return;
 
 				}
 				if (val < 0 || val == NaN || val == 'NaN') {
-					this.time1 = 0
-					this.time2 = 0
-					this.time3 = 0
+					// this.time1 = 0
+					// this.time2 = 0
+					// this.time3 = 0
 					this.ifrun = false
 					clearInterval(this.time_build);
 					this.time_build = null;
 					setTimeout(function() {
 						_this.getNewOpenData()
-					}, 5000)
+					}, 3000)
 				}
 
 			},
@@ -304,12 +305,13 @@
 					method: "POST",
 				})
 				if (res.code == 200) {
-					this.ifrun = true
+					
 					this.qishu = res.data.open_no
 					this.qishu_id = res.data.id
 					this.time_build = setInterval(() => {
 						this.showtime('', res.data.open_time)
 					}, 1000)
+					this.ifrun = true
 				}
 			},
 			async getOpenData() {
@@ -323,6 +325,7 @@
 					this.qishu_id = res.data.next_open_data.id
 					this.time_build = setInterval(() => {
 						this.showtime('', res.data.next_open_data.open_time)
+						//this.showtime('', '2023-12-19 10:27:17')
 					}, 1000)
 				}
 			},
@@ -343,14 +346,16 @@
 			},
 			async submit_bet() {
 				var _this = this
-				if (this.bet_num > Number(this.balance)) {
+				
+				
+				if (Number(this.bet_num) > Number(this.max_num)) {
 					uni.showToast({
 						title: '积分不足！',
 						icon: "none"
 					});
 					return
 				}
-				if (this.bet_num < 0 || this.bet_num == 0) {
+				if (Number(this.bet_num) < 0 || Number(this.bet_num) == 0) {
 					uni.showToast({
 						title: '请输入积分！',
 						icon: "none"
@@ -364,6 +369,13 @@
 					}
 
 				})
+				if(ids.length==0){
+					uni.showToast({
+						title: '请选择投票对象！',
+						icon: "none"
+					});
+					return
+				}
 
 				const res = await this.$myRuquest({
 					url: '/api/front/order/createOrder',

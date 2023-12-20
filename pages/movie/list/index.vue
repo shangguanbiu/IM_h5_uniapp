@@ -63,6 +63,9 @@
 </template>
 
 <script>
+	import { useloginStore } from '@/store/login'
+	import pinia from '@/store/index'
+	const loginStore = useloginStore(pinia)
 	export default {
 		data() {
 			return {
@@ -78,7 +81,8 @@
 				list: [],
 				type_list: [],
 				State: '',
-				index_get:99
+				index_get:99,
+				fromUser: '',
 			}
 		},
 		methods: {
@@ -111,13 +115,21 @@
 				}
 			},
 			see_detail(data) {
+				
+				
+				
+				if(this.fromUser.isview ==0){					
+					this.pop_notice=true					
+					return;
+				}
+								
 				uni.setStorageSync('movice_info', data)
 				uni.navigateTo({
-					url: '/pages/movie/list/detial',
+					url: '/pages/movie/list/detial?id='+data.id,
 				});
 
 			},
-
+			
 			async get_type_list() {
 				const res = await this.$myRuquest({
 					url: '/api/front/movie/getTypes',
@@ -232,7 +244,11 @@
 
 
 		},
+		mounted() {
+			
+		},
 		onLoad(option) {
+			
 			this.get_type_list()
 			this.getList()
 			uni.removeStorageSync('movice_info')
@@ -241,6 +257,7 @@
 			if (backbutton) backbutton.style.display = 'none';
 		},
 		onShow() {
+			this.fromUser = uni.getStorageSync('userInfo')
 			window.scrollTo({
 				top:0,
 				behavior:'smooth'

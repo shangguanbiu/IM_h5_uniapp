@@ -273,6 +273,14 @@
 				"navigationBarTitleText" : "喜欢的TA",
 				"enablePullDownRefresh" : false
 			}
+		},
+		{
+			"path" : "pages/mine/run_img",
+			"style" : 
+			{
+				"navigationBarTitleText" : "图片设置",
+				"enablePullDownRefresh" : false
+			}
 		}
 
 

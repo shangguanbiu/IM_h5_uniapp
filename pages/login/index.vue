@@ -153,7 +153,9 @@
 							user_id: userInfo.user_id,
 							token:res.data.authToken
 						});
+
 						loginStore.login(userInfo);
+						
 						
 					}
 				})

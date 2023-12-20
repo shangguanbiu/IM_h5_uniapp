@@ -14,6 +14,10 @@
 					   </avatar>
 					<text class="cuIcon-right ml-10 f-18 text-grey"></text></view>
 			</view>
+			<view class="cu-form-group" @tap="to_fengmian">
+				<view class="title">封面图</view>
+				<view class="text-gray"><text class="cuIcon-right ml-10 f-18 text-grey"></text></view>
+			</view>
 			<view class="cu-form-group">
 				<view class="title">账号</view>
 				<view class="text-gray">{{userInfo.account}}</view>
@@ -55,9 +59,9 @@
 </template>
 
 <script>
+	import avatar from "@/components/yq-avatar/yq-avatar.vue";
 	import { useloginStore } from '@/store/login'
 	import pinia from '@/store/index'
-	import avatar from "@/components/yq-avatar/yq-avatar.vue";
 	const loginStore = useloginStore(pinia)
 	export default {
 		components: {
@@ -91,6 +95,11 @@
 			this.userInfo=JSON.parse(JSON.stringify(loginStore.userInfo));
 		}, 
 		methods: {
+			to_fengmian(){
+				uni.navigateTo({
+					url: '/pages/mine/run_img'
+				})
+			},
 			async get_userInfo() {
 				var _this = this
 				const res = await this.$myRuquest({

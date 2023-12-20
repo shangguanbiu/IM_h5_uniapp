@@ -31,7 +31,7 @@
 		</view>
 		<view>
 
-			<movice v-show="tabs==0" ref="child_action"></movice>
+			<movice v-if="tabs==0" ref="child_action"></movice>
 			<opengroup v-if="tabs==1"></opengroup>
 			<bet v-show="tabs==2" ref="bet_action"></bet>
 			<nearby v-if="tabs==3"></nearby>

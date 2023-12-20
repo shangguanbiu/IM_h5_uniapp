@@ -23,8 +23,8 @@
 			</view>
 		</view>
 		<view class="tab_line">
-			<view class="tab_l_zi_are " v-for="(vipitem,t_index) in list" :key="t_index"
-				:class="{'tab_l_zi_hover':type_l1==t_index}" @click="change_tab(t_index)">
+			<view class="tab_l_zi_are "  v-for="(vipitem,t_index) in list" :key="t_index"
+				:class="{'tab_l_zi_hover':type_l1==t_index}" @click="change_tab(t_index)" >
 				<view class="tab_l_zi">
 					<view class="tab_l_top">{{vipitem.price}}元</view>
 					<view class="tab_l_day">
@@ -249,6 +249,9 @@
 </template>
 
 <script>
+	import { useloginStore } from '@/store/login'
+	import pinia from '@/store/index'
+	const loginStore = useloginStore(pinia)
 	export default {
 		data() {
 			return {
@@ -282,7 +285,7 @@
 					this.balance = res.data.balance
 				}
 			},
-			to_vip() {
+			async to_vip() {
 				if (this.balance == 0 || this.balance < this.list[this.type_l1].price) {
 					uni.showToast({
 						title: '积分不足！',
@@ -290,13 +293,46 @@
 					});
 					return
 				}
+				if(this.userinfo.islevel==this.list[this.type_l1].id){
+					uni.showToast({
+						title: '您已经是该等级了',
+						icon: "none"
+					})
+					return
+				}
+				if(this.userinfo.islevel>this.list[this.type_l1].id){
+					uni.showToast({
+						title: '当前等级不能降级！',
+						icon: "none"
+					})
+					return
+				}
+				const res = await this.$myRuquest({
+					url: '/api/front/index/changeImUserData',
+					method: "POST",
+					data: {
+						user_id: this.userinfo.user_id,
+						islevel: this.list[this.type_l1].id
+					},
+				})
+				if (res.code == 200) {
+					uni.showToast({
+						title: '开通成功',
+						icon: "none"
+					})
+					this.userinfo.islevel=this.list[this.type_l1].id
+					let data=JSON.parse(JSON.stringify(this.userinfo))
+					loginStore.login(data)
+				
+				}
+
 			}
 		},
 		onShow() {
 			this.getList()
 			this.get_userInfo()
-			this.userinfo = uni.getStorageSync('userInfo')
-
+			this.userinfo = JSON.parse(JSON.stringify(loginStore.userInfo))
+			console.log('ffff',this.userinfo)
 		}
 	}
 </script>

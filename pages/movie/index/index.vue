@@ -156,7 +156,8 @@
 				hot_list: [],
 				run_txt: [],
 				run_text_string: '',
-				userinfo: {}
+				userinfo: {},
+
 			}
 		},
 		methods: {
@@ -183,18 +184,13 @@
 
 			},
 
-			see_detail(data) {
-				// var had_token = uni.getStorageSync('token')
-				// if (had_token == '') {
-				// 	this.show_login = !this.show_login
-				// 	return
-				// }
-				uni.navigateTo({
-					url: '/pages/movie/list/detial?id=' + data.id,
-				});
-
-			},
 			on_func_notice(data) {
+				 
+				if (this.userinfo.isview == 0) {
+					this.pop_notice = true
+					return;
+				}
+
 				uni.setStorageSync('movice_info', data)
 				uni.navigateTo({
 					url: '/pages/movie/list/detial?id=' + data.id,
@@ -250,17 +246,18 @@
 				}
 			},
 			async getList(type, size, val) {
+				this.userinfo = uni.getStorageSync('userInfo')
 				this.list = []
 				// this.State
 				// Toast.loading();
 				const res = await this.$myRuquest({
 					method: 'Post',
 					url: '/api/front/movie/getList',
-					
-					data:{
-						page:1,
-						pagesize:size,
-						tag:val
+
+					data: {
+						page: 1,
+						pagesize: size,
+						tag: val
 					}
 				})
 				if (res.code == 200) {
@@ -302,15 +299,15 @@
 				})
 				if (res.code == 200) {
 					_this.run_txt = res.data.list
-					if(_this.run_txt.length !==0){
+					if (_this.run_txt.length !== 0) {
 						_this.run_txt.forEach((item) => {
 							this.run_text_string += item.title
 						})
-					}					
+					}
 				}
 			},
-			
-			
+
+
 			onClose() {
 				this.show_login = !this.show_login
 			},
@@ -357,10 +354,10 @@
 
 		},
 		onLoad() {
-			
+
 		},
 		onShow() {
-			
+
 			uni.removeStorageSync('movice_info')
 			this.pop_notice = false
 			this.show_login = false
@@ -371,12 +368,11 @@
 		},
 		// 在使用到的页面 添加如下代码
 		mounted() {
-				var userInfo = uni.getStorageSync('userInfo')
-				var token = uni.getStorageSync('ifLogin')
-				
-				
+			
+			var token = uni.getStorageSync('ifLogin')
+
 		},
-		
+
 	}
 </script>
 <style>

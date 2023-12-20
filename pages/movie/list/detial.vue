@@ -50,7 +50,23 @@
 		<!-- <van-action-sheet :show="select_compay" :actions="compay_list" :round="false" @cancel="onClose" @select="onSelect" 
 			cancel-text="取消">
 		</van-action-sheet> -->
+<view v-show="pop_notice">
+			<view class="com_bg"></view>
+			<view class="com_main">
+				<view class="pop_mian">
+					<view class="pop_title">提示</view>
+					<view
+						style="padding: 10px 15px; display:flex; justify-content: flex-start; line-height: 25px; flex-wrap: wrap;">
+						您当前可观看浏览视频数量已达到每日限制，观看更多可开通会员，请联系客服
+					</view>
 
+					<view class="pop_foot">
+						<view class="pop_ft_btn1" @tap="pop_notice=false">关闭</view>
+						<view class="pop_ft_btn2" @tap="pop_ok()">去升级</view>
+					</view>
+				</view>
+			</view>
+		</view>
 		
 
 
@@ -58,11 +74,14 @@
 </template>
 
 <script>
-	
+	import { useloginStore } from '@/store/login'
+	import pinia from '@/store/index'
+	const loginStore = useloginStore(pinia)
 	export default {
 		data() {
 			return {
 				top_title:'详情',
+				pop_notice:false,
 				scrollW: 0,
 				show_login: false,
 				indicatorDots: true,
@@ -74,12 +93,17 @@
 				indicatorActiveColor: "#ffffff",
 				tag: ['好看', '大片', '动作片', '青春', '喜剧'],
 				detail:{},
-				guess_arr:[]
+				guess_arr:[],
+				fromUser:''
 			}
 		},
 		methods: {
 
-
+			pop_ok() {
+				uni.navigateTo({
+					url: '/pages/movie/kefu/kefu'
+				});
+			},
 			async getList(id) {
 				this.list = []
 				// this.State
@@ -110,6 +134,26 @@
 						id:val_id,
 					}
 				})
+				if(res.code==200){
+					this.count_number('isview')
+				}
+			},
+			async count_number(type){
+				const res = await this.$myRuquest({
+					url: '/api/front/index/changeImUserData',
+					method: "POST",
+					data: {
+						user_id: this.fromUser.user_id,
+						column:type
+					},
+				})
+				if (res.code == 200) {
+					
+					this.fromUser.isview=this.fromUser.isview-1	
+					let data=JSON.parse(JSON.stringify(this.fromUser))
+					loginStore.login(data)
+				console.log('ddddddd1',this.fromUser)
+				}
 			},
 			jump(type) {
 				if (type == 1) {
@@ -164,6 +208,11 @@
 			},
 
 			see_detail(data) {
+				if (this.fromUser.isview == 0) {
+					this.pop_notice = true
+					return;
+				}
+				
 				uni.setStorageSync('movice_info', data)
 				uni.navigateTo({
 					url: '/pages/movie/list/detial?id=' + data.id,
@@ -172,6 +221,7 @@
 			},
 		},
 		onLoad(option) {
+			
 			uni.setStorageSync('iffirst',false)
 			this.detail=uni.getStorageSync('movice_info')
 			this.top_title=this.detail.name
@@ -183,6 +233,7 @@
 			
 		},
 		mounted() {
+			this.fromUser = uni.getStorageSync('userInfo')
 			window.scrollTo({
 				top:0,
 				behavior:'smooth'

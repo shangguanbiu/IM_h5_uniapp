@@ -7,8 +7,10 @@
 		<view v-if="list.length !==0">
 			<view class="user_line" v-for="(people,t_index) in list" :key="t_index" v-show="t_index<4">
 				<view class="user_l">
-					<image :src="people.avatar"
+					<image :src="people.avatar" v-if="people.avatar !==null"
 						style="width: 80px; height: 80px; border-radius: 50%;"></image>
+					<image src="@/static/image/common.png" v-else
+							style="width: 80px; height: 80px; border-radius: 50%;"></image>
 					<view class="item_like">
 
 						<view class="cuIcon-title" v-if="people.ifonline" @tap="setLike(2,people.account,t_index)">
@@ -53,8 +55,10 @@
 			<view class="talk_mian">
 				<view style="width:90%; margin: auto;">
 					<view class="talk_ico">
-						<image :src="talk_data.avatar"
+						<image :src="talk_data.avatar" v-if="talk_data.avatar !==null"
 							style="width: 100%;border-radius: 50%; height: 80px;" mode='widthFix'></image>
+						<image src="@/static/image/common.png" v-else
+								style="width: 100%;border-radius: 50%; height: 80px;" mode='widthFix'></image>	
 					</view>
 					<view class="talk_name">{{talk_data.realname}}</view>
 					<view class="talk_desc">
@@ -118,6 +122,7 @@
 				notice_content: "您当前可打招呼次数已达到每日限制，联更多的TA可开通会员，请联系客服",
 				paddingB: 0,
 				total: 0,
+				 
 				params: {
 					page: 1,
 					limit: 10,
@@ -132,6 +137,7 @@
 				fromUserid: '',
 				fromUser:'',
 				send_content: "",
+				host:""
 			}
 		},
 		methods: {
@@ -186,6 +192,13 @@
 
 			},
 			async check_if_friend(invite_after){
+				//提前判断每日剩余打招呼的次数
+				if(this.fromUser.istalk ==0){
+					this.pop_notice=true
+					this.notice_type=1
+					return;
+					
+				}
 				var user_arr=new Array()
 				user_arr.push(this.fromUser.user_id)
 				user_arr.push(invite_after)
@@ -203,9 +216,6 @@
 				}
 			},
 			sendMessage(toContactid) {
-
-				//提前判断每日剩余打招呼的次数
-
 
 
 				let msg = {
@@ -230,6 +240,8 @@
 							this.notice_content = '已打招呼，等待TA的回应！可在下方栏目-消息中查看'
 							this.pop_notice = true
 							this.notice_type = 2
+							
+							this.count_number()
 
 						} else {
 							uni.showToast({
@@ -241,7 +253,24 @@
 					.catch((error) => {
 
 					});
-			}
+			},
+			async count_number(){
+				const res = await this.$myRuquest({
+					url: '/api/front/index/changeImUserData',
+					method: "POST",
+					data: {
+						user_id: this.fromUser.user_id,
+						column:'istalk'
+					},
+				})
+				if (res.code == 200) {
+					
+					this.userinfo.istalk=this.userinfo.istalk-1
+					let data=JSON.parse(JSON.stringify(this.userinfo))
+					loginStore.login(data)
+				
+				}
+			},
 		},
 		created() {
 			// #ifdef H5
@@ -255,6 +284,7 @@
 			var userinfo = uni.getStorageSync('userInfo')
 			this.had_likes = userinfo.islikes.split(',')
 			this.fromUser = userinfo
+			this.host=this.$imgurl()
 			
 
 		}
