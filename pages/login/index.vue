@@ -145,7 +145,7 @@
 						uni.setStorageSync('authToken', res.data.authToken)
 						
 						let userInfo=res.data.userInfo;
-						console.log('login',userInfo)
+						
 						
 						this.check_login(userInfo.account)
 						// 登录成功后绑定wss

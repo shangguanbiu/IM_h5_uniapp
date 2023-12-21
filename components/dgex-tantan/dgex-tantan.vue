@@ -45,18 +45,24 @@
 								<view class="tantan-slide-box-info">
 									<view class="title" v-if="item.realname" v-text="item.realname"></view>
 									<view class="desc" @tap="see_more">
-										
+
 										<view class="talk_sex p_type1" style="margin-right: 2px;" v-if="item.sex==0">
-											<view class="sex_ico" ><image src="@/static/image/nv_b.png"  style="width: 100%;" mode='widthFix' ></image></view>
+											<view class="sex_ico">
+												<image src="@/static/image/nv_b.png" style="width: 100%;"
+													mode='widthFix'></image>
+											</view>
 											<view style=" line-height: 25px;">{{item.ages}}</view>
 										</view>
 										<view class="talk_sex p_type2" style="margin-right: 2px;" v-if="item.sex==1">
-											<view class="sex_ico" ><image src="@/static/image/nan_b.png"  style="width: 100%;" mode='widthFix' ></image></view>
+											<view class="sex_ico">
+												<image src="@/static/image/nan_b.png" style="width: 100%;"
+													mode='widthFix'></image>
+											</view>
 											<view style=" line-height: 25px;">{{item.ages}}</view>
 										</view>
-										
+
 										<view>{{item.isfar+'km·'+item.istime+'分钟前活跃'}}</view>
-										<view class="about_more" >查看详情 <view class="cuIcon-unfold"></view>
+										<view class="about_more">查看详情 <view class="cuIcon-unfold"></view>
 										</view>
 									</view>
 
@@ -91,7 +97,9 @@
 </template>
 
 <script>
-	import { useloginStore } from '@/store/login'
+	import {
+		useloginStore
+	} from '@/store/login'
 	import pinia from '@/store/index'
 	const loginStore = useloginStore(pinia)
 	export default {
@@ -128,19 +136,19 @@
 				dislike: 0,
 				direction: '',
 				animationData: {},
-				if_like:false,
-				userinfo:{},
-				ifover:false,
-				have_num:3,
+				if_like: false,
+				userinfo: {},
+				ifover: false,
+				have_num: 3,
 				fromUser: '',
 			}
 		},
 		mounted() {
 			const res = uni.getSystemInfoSync()
 			this.winWidth = res.windowWidth
-			this.winHeigh = res.windowHeight-110
-			this.fromUser=uni.getStorageSync('userInfo')
-			
+			this.winHeigh = res.windowHeight - 110
+			this.fromUser = uni.getStorageSync('userInfo')
+
 		},
 		methods: {
 			see_more() {
@@ -169,7 +177,7 @@
 			},
 			touchStart(e, index) {
 
-				
+
 				if (this.slideing) return;
 				if (typeof this.list[index].x === 'undefined' && typeof this.list[index].y === 'undefined') {
 					this.$set(this.list[index], 'y', 0)
@@ -180,13 +188,13 @@
 				this.y.start = e.touches[0].pageY;
 			},
 			touchMove(e, index) {
-				
-				if(this.fromUser.sex==0){
-					this.ifover=true
+
+				if (this.fromUser.sex == 0) {
+					this.ifover = true
 					return;
 				}
-				
-			
+
+
 				if (this.slideing) return
 				// 滑动状态/最后一个就不滑动
 				if (this.list.length == index + 1) {
@@ -199,15 +207,15 @@
 				this.list[index].y = this.y.move - this.y.start
 				if (Number.parseInt(this.list[index].x) > 0) {
 					this.love = Number.parseInt(this.list[index].x) / (100 * 2)
-					this.if_like=true
-	
+					this.if_like = true
+
 				} else {
 					this.dislike = Math.abs(Number.parseInt(this.list[index].x) / (100 * 2))
-					this.if_like=false
-					
+					this.if_like = false
+
 				}
 			},
-			async get_userinfo(){
+			async get_userinfo() {
 				let userInfo = JSON.parse(JSON.stringify(loginStore.userInfo))
 				const res = await this.$myRuquest({
 					url: '/api/front/index/getImUserInfo',
@@ -217,49 +225,48 @@
 					},
 				})
 				if (res.code == 200) {
-					
-					this.fromUser =res.data
-					let data=JSON.parse(JSON.stringify(res.data))
+
+					this.fromUser = res.data
+					let data = JSON.parse(JSON.stringify(res.data))
 					loginStore.login(data)
-				
+
 				}
 			},
-			async count_number(type){
+			async count_number(type) {
+				let userInfo = JSON.parse(JSON.stringify(loginStore.userInfo))
 				const res = await this.$myRuquest({
 					url: '/api/front/index/changeImUserData',
 					method: "POST",
 					data: {
-						user_id: this.fromUser.user_id,
-						column:type
+						user_id: userInfo.user_id,
+						column: type
 					},
 				})
 				if (res.code == 200) {
-					
+
 					this.get_userinfo()
-					
-				
+
+
 				}
 			},
-			
+
 			touchEnd(index) {
-				console.log('end的',this.if_like)
-				if(this.if_like==true){
-					
-					if(this.fromUser.iszan==0){
-						this.ifover=true
+
+				if (this.if_like == true) {
+					if (this.fromUser.iszan == 0) {
+						this.ifover = true
 						this.$emit('openpop')
 						return;
 					}
 					this.count_number('iszan')
-					this.$emit('bet_like',this.list[index])
+					this.$emit('bet_like', this.list[index])
 				}
 
 				//获取当天滑动的次数
-				
+
 				//滑动次数为0情况执行
 				//
-				
-				console.log('end的',this.fromUser.iszan)
+
 				if (this.slideing) return
 				this.swipering = false;
 				if (this.list.length == index + 1) {
@@ -282,8 +289,7 @@
 					this.love = 0;
 					this.dislike = 0;
 				}
-				
-				console.log('之后的执行',this.if_like)
+
 			},
 			touchEndNext(index) {
 				this.slideing = true;
@@ -357,7 +363,14 @@
 	};
 </script>
 <style>
-	.about_more{display: flex; font-size: 13px; background: rgb(160 157 157 / 31%); padding: 3px 5px; border-radius: 5px;}
+	.about_more {
+		display: flex;
+		font-size: 13px;
+		background: rgb(160 157 157 / 31%);
+		padding: 3px 5px;
+		border-radius: 5px;
+	}
+
 	.tantan-slide {
 		width: 100%;
 		height: 100%;
@@ -371,13 +384,13 @@
 	.tantan-slide-box {
 		position: relative;
 		width: 95%;
-		height:110%;
+		height: 110%;
 		perspective: 2100rpx;
 		perspective-origin: 50% -30%;
 		transform-style: preserve-3d;
 		margin: auto;
 		padding-top: 20px;
-		 
+
 	}
 
 	.tantan-slide-box-item {
@@ -398,8 +411,8 @@
 	}
 
 	.tantan-slide-box-item-bg {
-		height: 380rpx;
-		background-image: linear-gradient(to bottom, transparent, #000000 70%);
+		height: 480rpx;
+		background-image: linear-gradient(to bottom, transparent, #000000 65%);
 		position: absolute;
 		left: 0;
 		right: 0;
@@ -525,6 +538,6 @@
 	.tantan-slide-direction {
 		width: 100%;
 		height: 90%;
-		
+
 	}
 </style>

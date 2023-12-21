@@ -116,7 +116,7 @@
 			},
 			see_detail(data) {
 				
-				if(this.fromUser.isview ==0){					
+				if(this.fromUser.isview ==0&&this.fromUser.role == 0){					
 					this.pop_notice=true					
 					return;
 				}
@@ -260,7 +260,10 @@
 
 		},
 		mounted() {
-			
+			window.scrollTo({
+				top:0,
+				behavior:'smooth'
+			})
 		},
 		onLoad(option) {
 			
@@ -274,10 +277,7 @@
 		onShow() {
 			this.get_userinfo()
 			this.fromUser = uni.getStorageSync('userInfo')
-			window.scrollTo({
-				top:0,
-				behavior:'smooth'
-			})
+			
 			this.show_login = false
 			var had_token = uni.getStorageSync('token')
 			if (had_token !== '') {

@@ -135,6 +135,19 @@ export const postJsonRequest = (url, params) => {
 		}
 	});
 };
+export const postJsonRequest_talk = (url, params,token,cid) => {
+	return axios({
+		method: 'post',
+		url: `${url}`,
+		data: params,
+		header: {
+			'Content-Type': 'application/json', //json 格式
+			'Authorization': token,
+			"clientId": uni.getStorageSync('client_id'),
+			"cid": cid
+		}
+	});
+};
 export const postJsonRequest_movice = (url, params) => {
 	let token = uni.getStorageSync('token')
 	return axios({

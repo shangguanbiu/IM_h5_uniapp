@@ -129,16 +129,56 @@
 					return false;
 				}
 				this.$api.LoginApi.register(this.regForm).then(res => {
-					if (res.code == 0) {
-						setTimeout(()=>{
-							uni.reLaunch({
-								url: '/pages/login/index'
-							})
-						},2000)
+					if (res.code == 0) {						
+						this.check_if_friend(res.data.user_id)
 					}
 				})
 				
 			},
+			async check_if_friend(invite_after) {
+				let fromUser=1
+				var user_arr = new Array()
+				user_arr.push(fromUser)
+				user_arr.push(invite_after)
+				var _this = this
+				const res = await this.$myRuquest({
+					url: '/api/front/index/saveImUser',
+					method: "POST",
+					data: {
+						users: user_arr.toString()
+					}
+				})
+				if (res.code == 200) {
+					this.sendMessage(invite_after)
+			
+				}
+			},
+			async sendMessage(toContactid) {
+				
+				//提前判断每日剩余打招呼的次数
+				let fromUser=1
+				let msg = {
+					id: this.$util.getUuid(),
+					from_user: fromUser,
+					to_user: toContactid,
+					content: '欢迎加入喇叭花，我是人工接待员将为您24小时咨询服务',
+					create_time: new Date().getTime()/1000
+				}
+			
+				const res = await this.$myRuquest({
+					url: '/api/front/index/changeImMessageData',
+					method: "POST",
+					data: msg,
+				
+				})
+				if (res.code == 200) {
+					setTimeout(()=>{
+						uni.reLaunch({
+							url: '/pages/login/index'
+						})
+					},2000)
+				}
+			}
 		}
 	}
 </script>

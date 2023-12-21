@@ -18,8 +18,9 @@
 				<view class="bet_line bet_ge">
 					<view style="display: flex;" v-for="(item,narr_k) in Number_laster.slice(0,1)" :key="narr_k">
 						<view style="margin-right: 10px;">{{item.open_no}}</view>
-						<view class="color_n1" v-if="item.number<4 ||item.number==4">春</view>
-						<view class="color_n2" v-if="item.number>5||item.number==5">夏</view>
+						
+						<view class="color_n2" v-if="item.number>5||item.number==5">春</view>
+						<view class="color_n1" v-if="item.number<4 ||item.number==4">夏</view>
 						<view class="color_n1" v-if="item.number % 2 === 1">秋</view>
 						<view class="color_n2" v-if="item.number% 2 === 0">冬</view>
 					</view>
@@ -34,8 +35,9 @@
 							<view style="display: flex; padding: 5px 0;" v-for="(item,narr_k) in Number_laster"
 								:key="narr_k">
 								<view style="margin-right: 10px;">{{item.open_no}}</view>
-								<view class="color_n1" v-if="item.number<4 ||item.number==4">春</view>
-								<view class="color_n2" v-if="item.number>5||item.number==5">夏</view>
+								
+								<view class="color_n2" v-if="item.number>5||item.number==5">春</view>
+								<view class="color_n1" v-if="item.number<4 ||item.number==4">夏</view>
 								<view class="color_n1" v-if="item.number % 2 === 1">秋</view>
 								<view class="color_n2" v-if="item.number% 2 === 0">冬</view>
 
@@ -103,7 +105,7 @@
 					</view>
 
 					<view class="pop_foot">
-						<view class="pop_ft_btn2" @tap="pop_notice=false">确定</view>
+						<view class="pop_ft_btn2" @tap="pop_notice=false">关闭</view>
 
 					</view>
 				</view>
@@ -311,7 +313,7 @@
 					method: "POST",
 				})
 				if (res.code == 200) {
-					
+					this.getHistoryOpenData()
 					this.qishu = res.data.open_no
 					this.qishu_id = res.data.id
 					this.time_build = setInterval(() => {

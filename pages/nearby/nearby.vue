@@ -258,7 +258,7 @@
 			},
 			bet_talk() {
 				
-				if(this.fromUser.istalk ==0){
+				if(this.fromUser.istalk ==0&&this.fromUser.role == 0){
 					this.pop_notice=true
 					this.notice_type=1
 					this.notice_content = '您当前可打招呼次数已达到每日限制，更多权限可升级会员，请联系客服'
@@ -387,7 +387,7 @@
 					this.talk_data=item
 				}
 				
-				if(this.fromUser.iszan ==0){
+				if(this.fromUser.iszan ==0&&this.fromUser.role == 0){
 					this.notice_type=1
 					this.pop_notice=true
 					this.notice_content = '您当前可点击喜欢TA的次数已达到每日限制，更多权限可升级会员，请联系客服'
@@ -416,11 +416,12 @@
 			},
 			
 			async count_number(type){
+				let userInfo = JSON.parse(JSON.stringify(loginStore.userInfo))
 				const res = await this.$myRuquest({
 					url: '/api/front/index/changeImUserData',
 					method: "POST",
 					data: {
-						user_id: this.fromUser.user_id,
+						user_id: userInfo.user_id,
 						column:type
 					},
 				})

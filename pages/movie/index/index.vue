@@ -42,7 +42,6 @@
 
 				</view>
 			</view>
-
 			<view class="main_i">
 
 				<view class="title_line">今日推荐<view class="type_more" @tap="to_more">更多</view>
@@ -162,17 +161,21 @@
 				run_txt: [],
 				run_text_string: '',
 				userinfo: {},
+				back:false,
 
 			}
 		},
 		props: ['run'],
 		watch: {
 			$route(val) {
-				
 				if (val.fullPath == '/') {
+					
+					//this.get_banner(1);待确定
+					this.back=true
 					this.get_notice(2);
 					this.getList(1, 6, 1);
 					this.getList(2, 10, 2);
+					
 				}
 			}
 		},
@@ -198,7 +201,7 @@
 					},
 				})
 				if (res.code == 200) {
-					
+
 					this.userinfo = res.data
 					let data = JSON.parse(JSON.stringify(res.data))
 					loginStore.login(data)
@@ -208,7 +211,7 @@
 
 			on_func_notice(data) {
 
-				if (this.userinfo.isview == 0) {
+				if (this.userinfo.isview == 0 && this.userinfo.role == 0) {
 					this.pop_notice = true
 					return;
 				}
@@ -294,6 +297,7 @@
 				}
 			},
 			async get_banner(type_id) {
+				this.bannerdata = []
 				window.scrollTo({
 					top: 0,
 					behavior: 'smooth'
@@ -322,6 +326,11 @@
 					},
 				})
 				if (res.code == 200) {
+					
+					if(!this.back){
+						this.get_banner(1);
+					}
+					
 					_this.run_txt = res.data.list
 					if (_this.run_txt.length !== 0) {
 						_this.run_txt.forEach((item) => {
@@ -394,7 +403,7 @@
 		mounted() {
 
 			var token = uni.getStorageSync('ifLogin')
-
+			
 		},
 
 	}

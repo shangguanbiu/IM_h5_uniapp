@@ -139,17 +139,21 @@
 				}
 			},
 			async count_number(type){
+				let userInfo = JSON.parse(JSON.stringify(loginStore.userInfo))
 				const res = await this.$myRuquest({
 					url: '/api/front/index/changeImUserData',
 					method: "POST",
 					data: {
-						user_id: this.fromUser.user_id,
+						user_id: userInfo.user_id,
 						column:type
 					},
 				})
 				if (res.code == 200) {
+						// uni.showToast({
+						// 	title: 'ok',
+						// 	icon: "none"
+						// });
 					
-					//console.log('ddddddd1',this.fromUser)
 				}
 			},
 			jump(type) {
@@ -205,7 +209,7 @@
 			},
 
 			see_detail(data) {
-				if (this.fromUser.isview == 0) {
+				if (this.fromUser.isview == 0&&this.fromUser.role == 0) {
 					this.pop_notice = true
 					return;
 				}
@@ -238,6 +242,7 @@
 			uni.setStorageSync('iffirst',false)
 			this.detail=uni.getStorageSync('movice_info')
 			this.top_title=this.detail.name
+			
 			this.getList(option.id)
 			this.add_view(option.id)
 			
@@ -250,7 +255,7 @@
 			})
 		},
 		onShow() {
-			this.get_userinfo()
+			
 			window.scrollTo({
 				top:0,
 				behavior:'smooth'

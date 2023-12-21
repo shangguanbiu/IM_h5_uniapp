@@ -133,12 +133,7 @@
 			nearby
 		},
 		watch:{
-			tabs(val){
-				
-				if(val==0){
-					this.run_child()
-				}
-			}
+			 
 		},
 		data() {
 			let navList = [{
@@ -221,14 +216,16 @@
 		},
 		
 		onShow() {
+			
+			
+			// #ifndef MP
 			//this.run_child()
-			this.run_fun=true
+			// #endif
 			
 		},
 		onLoad() {},
 		mounted() {
 			 
-			
 			this.$refs.child_action.get_banner(1);
 			this.$refs.child_action.get_notice(2);
 			this.$refs.child_action.getList(1, 6, 1);
@@ -256,7 +253,7 @@
 		},
 		methods: {
 			run_child() {
-				console.log('ddddddd',uni.getStorageSync('iffirst'))
+				
 				if (uni.getStorageSync('iffirst') !== '') {
 					this.$refs.child_action.get_banner(1);
 					this.$refs.child_action.getList(1, 6, 1);

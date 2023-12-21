@@ -50,6 +50,9 @@ msgApi.delChatAPI = (params) => {
 msgApi.sendMessage = (params) => {
 	return postJsonRequest('/enterprise/im/sendMessage', params)
 }
+msgApi.sendMessage_talk = (params,token,cid) => {
+	return postJsonRequest_talk('/enterprise/im/sendMessage', params,token,cid)
+}
 
 /**
  * @desc 转发聊天消息

@@ -28,7 +28,7 @@
 						<view class="p_type p_type1" v-if="people.sex==0">女</view>
 						<view class="p_type p_type2" v-if="people.sex==1">男</view>
 					</view>
-					<view v-if="people.motto !==''" class="motto">签名：{{people.motto}}</view>
+					<view v-if="people.motto !==''&&people.motto !==null" class="motto">签名：{{people.motto}}</view>
 					<!-- <view style=" max-height: 84px;">
 						<view style="display: flex;padding: 10px 0; flex-wrap: wrap;" v-if="people.tags !==null && people.tags !==''">
 							<view :class="'item_'+t_tag"  v-for="(tagitem,t_tag) in people.tags.split(',')" :key="t_tag">{{tagitem}}</view>
@@ -45,6 +45,9 @@
 </template>
 
 <script>
+	import { useloginStore } from '@/store/login'
+	import pinia from '@/store/index'
+	const loginStore = useloginStore(pinia)
 	export default {
 		data() {
 			return {
@@ -64,11 +67,12 @@
 		},
 		methods: {
 			getList() {
+				let userInfo = JSON.parse(JSON.stringify(loginStore.userInfo))
 				this.$api.third_openApi.near_user_List(this.params).then((res) => {
 					if (res.code == 0) {
-						this.list = res.data.data;
+						let list_arr = res.data.data;
 						this.total = res.count;
-						this.list.forEach((item) => {
+						 list_arr.forEach((item) => {
 							this.$set(item, 'iflike', false)
 							this.$set(item, 'isfar', (Math.random()*(2.5-1)+1).toFixed(2))
 							 this.$set(item, 'ifonline', Math.random() >= 0.5)
@@ -84,6 +88,12 @@
 							 }
 							
 						})
+						
+						if(userInfo.islevel==0){
+							this.list=list_arr.slice(0,5)
+						}else{
+							this.list=list_arr
+						}
 						
 					}
 				})
@@ -116,7 +126,7 @@
 			var userinfo=uni.getStorageSync('userInfo')
 			this.had_likes=userinfo.islikes.split(',')
 			this.host=this.$imgurl()
-			console.log('host1',this.host)
+			
 		}
 	}
 </script>

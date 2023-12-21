@@ -59,8 +59,7 @@
 		methods: {
 			// 打开聊天
 			openDetails(items) {
-				console.log('ddddd', items)
-
+				
 				uni.navigateTo({
 					url: "/pages/message/chat?id=" + 'group-' + items.group_id
 				})

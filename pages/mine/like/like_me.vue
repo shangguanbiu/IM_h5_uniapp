@@ -37,7 +37,7 @@
 					<view style="margin: 5px 0; text-align: right;">
 						<view class="item_btn" @tap="bet_talk(people)">打招呼</view>
 					</view>
-					<view v-if="people.motto !==''" class="motto">签名：{{people.motto}}</view>
+					<view v-if="people.motto !==''&&people.motto !==null" class="motto">签名：{{people.motto}}</view>
 					<!-- <view style=" max-height: 84px;">
 						<view style="display: flex;padding: 10px 0; flex-wrap: wrap;" v-if="people.tags !==null && people.tags !==''">
 							<view :class="'item_'+t_tag"  v-for="(tagitem,t_tag) in people.tags.split(',')" :key="t_tag">{{tagitem}}</view>
@@ -114,6 +114,9 @@
 </template>
 
 <script>
+	import { useloginStore } from '@/store/login'
+	import pinia from '@/store/index'
+	const loginStore = useloginStore(pinia)
 	export default {
 		data() {
 			return {
@@ -154,9 +157,9 @@
 			getList() {
 				this.$api.third_openApi.like_me_index(this.params).then((res) => {
 					if (res.code == 0) {
-						this.list = res.data.data;
+						let list_arr = res.data.data;
 						this.total = res.count;
-						this.list.forEach((item) => {
+						list_arr.forEach((item) => {
 							this.$set(item, 'iflike', false)
 							this.$set(item, 'isfar', (Math.random() * (2.5 - 1) + 1).toFixed(2))
 							this.$set(item, 'ifonline', Math.random() >= 0.5)
@@ -168,6 +171,12 @@
 
 							})
 						})
+						
+						if(this.fromUser.islevel<22){
+							this.list=list_arr.slice(0,5)
+						}else{
+							this.list=list_arr
+						}
 
 
 
@@ -193,7 +202,7 @@
 			},
 			async check_if_friend(invite_after){
 				//提前判断每日剩余打招呼的次数
-				if(this.fromUser.istalk ==0){
+				if(this.fromUser.istalk ==0&& this.fromUser.role == 0){
 					this.pop_notice=true
 					this.notice_type=1
 					return;
@@ -255,18 +264,33 @@
 					});
 			},
 			async count_number(){
+				let userInfo = JSON.parse(JSON.stringify(loginStore.userInfo))
 				const res = await this.$myRuquest({
 					url: '/api/front/index/changeImUserData',
 					method: "POST",
 					data: {
-						user_id: this.fromUser.user_id,
+						user_id: userInfo.user_id,
 						column:'istalk'
 					},
 				})
 				if (res.code == 200) {
+					this.get_userinfo()
 					
-					this.userinfo.istalk=this.userinfo.istalk-1
-					let data=JSON.parse(JSON.stringify(this.userinfo))
+				
+				}
+			},
+			async get_userinfo(){
+				let userInfo = JSON.parse(JSON.stringify(loginStore.userInfo))
+				const res = await this.$myRuquest({
+					url: '/api/front/index/getImUserInfo',
+					method: "POST",
+					data: {
+						user_id: userInfo.user_id
+					},
+				})
+				if (res.code == 200) {
+					this.fromUser =res.data
+					let data=JSON.parse(JSON.stringify(res.data))
 					loginStore.login(data)
 				
 				}
@@ -283,9 +307,9 @@
 			this.getList()
 			var userinfo = uni.getStorageSync('userInfo')
 			this.had_likes = userinfo.islikes.split(',')
-			this.fromUser = userinfo
+			this.fromUser = uni.getStorageSync('userInfo')
 			this.host=this.$imgurl()
-			console.log('host',this.host)
+			
 			
 
 		}

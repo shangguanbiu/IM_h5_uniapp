@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<cu-custom bgColor="bg-gradual-pink" :isBack="false" >
+		<cu-custom bgColor="bg-gradual-pink" :isBack="false">
 
 			<template #content>我的</template>
 		</cu-custom>
@@ -98,6 +98,23 @@
 				<view :class="PageCur==item.name?'text-mauve':'text-black'">{{item.title}}</view>
 			</view>
 		</view>
+		<view v-show="pop_notice">
+			<view class="com_bg"></view>
+			<view class="com_main">
+				<view class="pop_mian">
+					<view class="pop_title">提示</view>
+					<view
+						style="padding: 10px 15px; display:flex; justify-content: flex-start; line-height: 25px; flex-wrap: wrap;">
+						您当前为普通用户暂无权限查看喜欢我的TA，查看更多可开通会员，请联系客服
+					</view>
+
+					<view class="pop_foot">
+						<view class="pop_ft_btn1" @tap="pop_notice=false">关闭</view>
+						<view class="pop_ft_btn2" @tap="pop_ok()">去升级</view>
+					</view>
+				</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -122,6 +139,7 @@
 	export default {
 		data() {
 			return {
+				pop_notice: false,
 				loginStore: loginStore,
 				globalConfig: loginStore.globalConfig,
 				appSetting: loginStore.appSetting,
@@ -130,11 +148,11 @@
 						name: 'home',
 						title: '首页',
 						notice: 0
-					},{
+					}, {
 						name: 'message',
 						title: '消息',
 						notice: unread
-					},{
+					}, {
 						name: 'serve',
 						title: '客服',
 						notice: 0
@@ -143,7 +161,7 @@
 						name: 'contacts',
 						title: '通讯录',
 						notice: sysUnread
-					},{
+					}, {
 						name: 'mine',
 						title: '我的',
 						notice: 0
@@ -168,13 +186,13 @@
 			})
 			var backbutton = document.getElementsByClassName('uni-page-head-hd')[0]
 			if (backbutton) backbutton.style.display = 'none';
-			console.log('ffff',loginStore.userInfo)
+
 			this.get_userinfo()
-			
-			
+
+
 		},
 		methods: {
-			async get_userinfo(){
+			async get_userinfo() {
 				let userInfo = JSON.parse(JSON.stringify(loginStore.userInfo))
 				const res = await this.$myRuquest({
 					url: '/api/front/index/getImUserInfo',
@@ -184,18 +202,24 @@
 					},
 				})
 				if (res.code == 200) {
-					
-					let data=JSON.parse(JSON.stringify(res.data))
+
+					let data = JSON.parse(JSON.stringify(res.data))
 					loginStore.login(data)
-				
+
 				}
 			},
-			to_like(type){
-				if(type==1){
+			to_like(type) {
+				let userInfo = JSON.parse(JSON.stringify(loginStore.userInfo))
+				
+				if (type == 1) {
+					if (userInfo.islevel == 0 && userInfo.role == 0) {
+						this.pop_notice = true
+						return
+					}
 					uni.navigateTo({
 						url: '/pages/mine/like/like_me',
 					});
-				}else{
+				} else {
 					uni.navigateTo({
 						url: '/pages/mine/like/like',
 					});
@@ -219,11 +243,11 @@
 					uni.switchTab({
 						url: '/pages/index/index',
 					});
-				}else if (item.name == 'serve') {
+				} else if (item.name == 'serve') {
 					uni.navigateTo({
 						url: '/pages/movie/kefu/kefu',
 					});
-				} 
+				}
 
 			},
 			initContacts() {
@@ -246,7 +270,7 @@
 				uni.removeStorageSync('allContacts')
 				uni.removeStorageSync('ifLogin')
 				uni.removeStorageSync('iffirst')
-				
+
 
 			},
 			about() {
@@ -262,7 +286,7 @@
 				}
 
 			},
-			
+
 			showSetting() {
 				uni.navigateTo({
 					url: "/pages/mine/setting"
@@ -286,20 +310,40 @@
 					url: "/pages/index/qrcode"
 				})
 			},
-			to_vip(){
+			to_vip() {
 				uni.navigateTo({
 					url: "/pages/mine/vip/vip"
 				})
 			},
-			 
-			
+
+
 		}
 	}
 </script>
 
 <style scoped>
-.vip_are_P{padding: 10px;max-height: 100px; position: relative;}
-.vip_are_m{position: absolute; z-index: 10;left:31px; top: 20px;}
-.vip_are_tit{font-size: 14px; font-weight: bold; color: #a66941; line-height: 30px;}
-.vip_are_p{font-size: 13px; color: #b67d54;}
+	.vip_are_P {
+		padding: 10px;
+		max-height: 100px;
+		position: relative;
+	}
+
+	.vip_are_m {
+		position: absolute;
+		z-index: 10;
+		left: 31px;
+		top: 20px;
+	}
+
+	.vip_are_tit {
+		font-size: 14px;
+		font-weight: bold;
+		color: #a66941;
+		line-height: 30px;
+	}
+
+	.vip_are_p {
+		font-size: 13px;
+		color: #b67d54;
+	}
 </style>

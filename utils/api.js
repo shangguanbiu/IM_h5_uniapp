@@ -32,11 +32,11 @@ export const myRequest = (options) => {
 						// 	title: '登录已失效请重新登录'
 						// })
 						
-						setTimeout(function() {
-							uni.navigateTo({
-								url: '/pages/login/index',
-							})
-						}, 1500)
+						// setTimeout(function() {
+						// 	uni.navigateTo({
+						// 		url: '/pages/login/index',
+						// 	})
+						// }, 1500)
 						return
 					}
 					resolve(res.data)
