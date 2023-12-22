@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="scroll">
 		<view v-if='!if_more'>
 			<!-- <cu-custom bgColor="bg-gradual-pink" :isBack="false">
 				<template #backText></template>
@@ -10,7 +10,6 @@
 		</view>
 		<view v-else>
 			<view>
-
 				<view class="page-section swiper">
 					<view class="cuIcon-back back" @tap="if_more=false"></view>
 					<view style="position: relative;">
@@ -30,21 +29,21 @@
 						<!-- <view class="p_type p_type1" v-if="detail_data.sex==0">女</view>
 						<view class="p_type p_type2" v-if="detail_data.sex==1">男</view> -->
 						<view style="margin-right: 5px;">{{detail_data.realname}}</view>
-						<view class="talk_sex p_type1" v-if="detail_data.sex==0">
+						<view class="talk_sex p_type1" style=" height: 18px;" v-if="detail_data.sex==0">
 							<view class="sex_ico">
 								<image src="@/static/image/nv_b.png" style="width: 100%;" mode='widthFix'></image>
 							</view>
-							<view style=" line-height: 25px;font-weight: normal;">{{detail_data.ages}}</view>
+							<view style="font-weight: normal; font-size: 13px;">{{detail_data.ages}}</view>
 						</view>
-						<view class="talk_sex p_type2" v-if="detail_data.sex==1">
+						<view class="talk_sex p_type2" style=" height: 18px;" v-if="detail_data.sex==1">
 							<view class="sex_ico">
 								<image src="@/static/image/nan_b.png" style="width: 100%;" mode='widthFix'></image>
 							</view>
-							<view style=" line-height: 25px;font-weight: normal;">{{detail_data.ages}}</view>
+							<view style="font-weight: normal; font-size: 13px;">{{detail_data.ages}}</view>
 						</view>
-						<view class="talk_sex p_type3" v-if="detail_data.sex==2">
+						<view class="talk_sex p_type3" style=" height: 18px;" v-if="detail_data.sex==2">
 							<!-- <view class="sex_ico" ><image src="@/static/image/nan_b.png"  style="width: 100%;" mode='widthFix' ></image></view> -->
-							<view style=" line-height: 25px;">{{detail_data.ages}}</view>
+							<view style=" font-size: 13px;">{{detail_data.ages}}</view>
 						</view>
 
 					</view>
@@ -56,31 +55,32 @@
 
 					</view>
 					<view class="main_title" style="margin-top: 10px;color: #2a1468;">关于我</view>
-					<view class="dangan" style="color: #a09d9d;;">
-						{{detail_data.motto}}
-					</view>
-					<view style="display: flex;padding: 10px 0; padding-bottom: 90px;  flex-wrap:wrap"
-						v-if="detail_data.tags">
-						<view :class="'item_'+t_index" v-for="(tagitem,t_index) in detail_data.tags.split(',')"
-							:key="t_index">
-							{{tagitem}}
+					<view style="padding-bottom: 55px;">
+						<view class="dangan" style="color: #a09d9d;;">
+							{{detail_data.motto}}
+						</view>
+						<view style="display: flex;padding: 10px 0;flex-wrap:wrap"
+							v-if="detail_data.tags">
+							<view :class="'item_'+t_index" v-for="(tagitem,t_index) in detail_data.tags.split(',')"
+								:key="t_index">
+								{{tagitem}}
+							</view>
 						</view>
 					</view>
-
 					<view class="ft_zhaohu_line">
 						<view style="margin-right: 5px;" @tap="bet_talk()">
 							<view class="ft_zh_zi" style="color:rgb(248, 186, 53)">
 								<view class="cuIcon-commandfill" style=" margin-right: 5px; font-size: 17px;"></view>打招呼
 							</view>
 						</view>
-						<view style="margin-left: 5px;" v-show="iflike ==true" >
+						<view style="margin-left: 5px;" v-show="iflike ==true">
 							<view class="ft_zh_zi" style="color:rgb(250, 84, 124) ;">
 								<view class="cuIcon-likefill" style=" margin-right: 5px; font-size: 17px;"></view>
-								
+
 								喜欢
 							</view>
 						</view>
-						<view style="margin-left: 5px;"  v-show="iflike ==false" @tap="bet_like()">
+						<view style="margin-left: 5px;" v-show="iflike ==false" @tap="bet_like()">
 							<view class="ft_zh_zi" style="color:rgb(250, 84, 124) ;">
 								<view class="cuIcon-like" style=" margin-right: 5px; font-size: 17px;"></view>
 								喜欢
@@ -124,32 +124,34 @@
 					</view>
 					<view class="talk_name">{{talk_data.realname}}</view>
 					<view class="talk_desc">
-						<view class="talk_sex p_type1" v-if="talk_data.sex==0">
+						<view class="talk_sex p_type1" style="height: 20px;" v-if="talk_data.sex==0">
 							<view class="sex_ico">
 								<image src="@/static/image/nv_b.png" style="width: 100%;" mode='widthFix'></image>
 							</view>
-							<view style=" line-height: 25px;" v-if="talk_data.ages !==0&&talk_data.ages !==null">
+							<view style="font-weight: normal; font-size: 13px;"
+								v-if="talk_data.ages !==0&&talk_data.ages !==null">
 								{{talk_data.ages}}
 							</view>
 						</view>
-						<view class="talk_sex p_type1" v-if="talk_data.sex==1">
+						<view class="talk_sex p_type1" style="height: 20px;" v-if="talk_data.sex==1">
 							<view class="sex_ico">
 								<image src="@/static/image/nan_b.png" style="width: 100%;" mode='widthFix'></image>
 							</view>
-							<view style=" line-height: 25px; " v-if="talk_data.ages !==0&&talk_data.ages !==null">
+							<view style="font-weight: normal; font-size: 13px; "
+								v-if="talk_data.ages !==0&&talk_data.ages !==null">
 								{{talk_data.ages}}
 							</view>
 						</view>
-						<view class="talk_sex p_type3"
+						<view class="talk_sex p_type3" style="height: 20px;"
 							v-if="talk_data.sex==2&&talk_data.ages !==0 &&talk_data.ages !==null">
-							<view style=" line-height: 25px;">
+							<view style=" font-weight: normal; font-size: 13px;">
 								{{talk_data.ages}}
 							</view>
 						</view>
-						<view class="talk_sex p_type3">
-							<view style=" line-height: 25px;" v-if="talk_data.islevel ==21">VIP</view>
-							<view style=" line-height: 25px;" v-if="talk_data.islevel ==22">SVIP</view>
-							<view style=" line-height: 25px;" v-if="talk_data.islevel ==23">BVIP</view>
+						<view class="talk_sex p_type3" style="height: 20px;">
+							<view style=" font-weight: normal;" v-if="talk_data.islevel ==21">VIP</view>
+							<view style=" font-weight: normal;" v-if="talk_data.islevel ==22">SVIP</view>
+							<view style=" font-weight: normal;" v-if="talk_data.islevel ==23">BVIP</view>
 						</view>
 					</view>
 					<view class="talk_form">
@@ -169,7 +171,9 @@
 
 <script>
 	import tantan from '@/components/dgex-tantan/dgex-tantan.vue'
-	import { useloginStore } from '@/store/login'
+	import {
+		useloginStore
+	} from '@/store/login'
 	import pinia from '@/store/index'
 	const loginStore = useloginStore(pinia)
 	export default {
@@ -210,6 +214,8 @@
 			}
 		},
 		mounted() {
+
+
 			this.getList()
 			this.get_userinfo()
 			return
@@ -236,7 +242,7 @@
 			// this.list = arr
 		},
 		methods: {
-			async get_userinfo(){
+			async get_userinfo() {
 				let userInfo = JSON.parse(JSON.stringify(loginStore.userInfo))
 				const res = await this.$myRuquest({
 					url: '/api/front/index/getImUserInfo',
@@ -246,10 +252,10 @@
 					},
 				})
 				if (res.code == 200) {
-					this.fromUser =res.data
-					let data=JSON.parse(JSON.stringify(res.data))
+					this.fromUser = res.data
+					let data = JSON.parse(JSON.stringify(res.data))
 					loginStore.login(data)
-				
+
 				}
 			},
 			open_pop() {
@@ -257,15 +263,15 @@
 				this.notice_content = '您当前浏览附近的人已达到喜欢的每日限制，观看更多可开通会员，请联系客服'
 			},
 			bet_talk() {
-				
-				if(this.fromUser.istalk ==0&&this.fromUser.role == 0){
-					this.pop_notice=true
-					this.notice_type=1
+
+				if (this.fromUser.istalk == 0 && this.fromUser.role == 0) {
+					this.pop_notice = true
+					this.notice_type = 1
 					this.notice_content = '您当前可打招呼次数已达到每日限制，更多权限可升级会员，请联系客服'
 					return;
-					
+
 				}
-				
+
 				this.show_talk = true
 
 			},
@@ -314,28 +320,33 @@
 			clickImage(data) {
 				console.log(data);
 			},
+			
 			show_detail(data) {
-				this.iflike=false
+
+
+				this.iflike = false
 				this.bannerdata = []
 				this.if_more = true
 				this.detail_data = data.currentItem
 				this.talk_data = data.currentItem
 
 				this.bannerdata = this.talk_data.nearby_arr.split(',')
-				
-				let likes_arr=this.fromUser.islikes.split(',')
-				if(likes_arr.length !==0){
+
+				let likes_arr = this.fromUser.islikes.split(',')
+				if (likes_arr.length !== 0) {
 					const result = likes_arr.find(item => item == this.talk_data.account);
 					if (result !== undefined) {
 						this.iflike = true
 					} else {
 						this.iflike = false
 					}
-				}else{
+				} else {
 					this.iflike = false
 				}
-				
-				
+
+				this.$emit('to_bottom')
+
+
 
 			},
 			getList() {
@@ -383,13 +394,13 @@
 
 			},
 			async bet_like(item) {
-				if(item !==undefined){
-					this.talk_data=item
+				if (item !== undefined) {
+					this.talk_data = item
 				}
-				
-				if(this.fromUser.iszan ==0&&this.fromUser.role == 0){
-					this.notice_type=1
-					this.pop_notice=true
+
+				if (this.fromUser.iszan == 0 && this.fromUser.role == 0) {
+					this.notice_type = 1
+					this.pop_notice = true
 					this.notice_content = '您当前可点击喜欢TA的次数已达到每日限制，更多权限可升级会员，请联系客服'
 					return;
 				}
@@ -407,22 +418,22 @@
 					// 	title: 'ok',
 					// 	icon: "none"
 					// })
-					if(item ==undefined){
+					if (item == undefined) {
 						this.count_number('iszan')
 					}
-					
-					this.iflike=true
+
+					this.iflike = true
 				}
 			},
-			
-			async count_number(type){
+
+			async count_number(type) {
 				let userInfo = JSON.parse(JSON.stringify(loginStore.userInfo))
 				const res = await this.$myRuquest({
 					url: '/api/front/index/changeImUserData',
 					method: "POST",
 					data: {
 						user_id: userInfo.user_id,
-						column:type
+						column: type
 					},
 				})
 				if (res.code == 200) {
@@ -430,7 +441,7 @@
 				}
 			},
 			async check_if_friend(invite_after) {
-				
+
 				var user_arr = new Array()
 				user_arr.push(this.fromUser.user_id)
 				user_arr.push(invite_after)
@@ -472,7 +483,7 @@
 							this.notice_content = '已打招呼，等待TA的回应！可在栏目-消息中查看'
 							this.pop_notice = true
 							this.notice_type = 2
-							
+
 							this.count_number('istalk')
 
 						} else {
@@ -546,6 +557,7 @@
 		font-weight: bold;
 		padding: 10px 0;
 		display: flex;
+		align-items: center;
 	}
 
 	.main_No {

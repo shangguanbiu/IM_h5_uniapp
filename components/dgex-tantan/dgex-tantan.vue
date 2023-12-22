@@ -46,19 +46,19 @@
 									<view class="title" v-if="item.realname" v-text="item.realname"></view>
 									<view class="desc" @tap="see_more">
 
-										<view class="talk_sex p_type1" style="margin-right: 2px;" v-if="item.sex==0">
+										<view class="talk_sex p_type1" style=" height: 20px;" v-if="item.sex==0">
 											<view class="sex_ico">
 												<image src="@/static/image/nv_b.png" style="width: 100%;"
 													mode='widthFix'></image>
 											</view>
-											<view style=" line-height: 25px;">{{item.ages}}</view>
+											<view style="font-weight: normal; font-size: 13px;">{{item.ages}}</view>
 										</view>
-										<view class="talk_sex p_type2" style="margin-right: 2px;" v-if="item.sex==1">
+										<view class="talk_sex p_type2" style="height: 20px;" v-if="item.sex==1">
 											<view class="sex_ico">
 												<image src="@/static/image/nan_b.png" style="width: 100%;"
 													mode='widthFix'></image>
 											</view>
-											<view style=" line-height: 25px;">{{item.ages}}</view>
+											<view style="font-weight: normal; font-size: 13px;">{{item.ages}}</view>
 										</view>
 
 										<view>{{item.isfar+'km·'+item.istime+'分钟前活跃'}}</view>
@@ -411,7 +411,7 @@
 	}
 
 	.tantan-slide-box-item-bg {
-		height: 480rpx;
+		height: 420rpx;
 		background-image: linear-gradient(to bottom, transparent, #000000 65%);
 		position: absolute;
 		left: 0;

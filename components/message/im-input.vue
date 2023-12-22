@@ -85,7 +85,23 @@
 				{{isCancel ? '松开取消' : '正在录音...'}}
 			</view>
 		</view>
-
+		<view v-show="pop_notice">
+			<view class="com_bg"></view>
+			<view class="com_main">
+				<view class="pop_mian">
+					<view class="pop_title">提示</view>
+					<view style="padding: 10px 15px;  line-height: 25px; flex-wrap: wrap; text-align: center;">
+						您还未开通会员，暂无使用该功能权限
+					</view>
+		
+					<view class="pop_foot">
+						<view class="pop_ft_btn1"  @tap="pop_notice=false">关闭</view>
+						<view class="pop_ft_btn2" @tap="pop_ok()" >去升级</view>
+						
+					</view>
+				</view>
+			</view>
+		</view>
 	</view>
 </template>
 <script>
@@ -117,6 +133,7 @@
 		},
 		data() {
 			return {
+				pop_notice:false,
 				InputBottom: 0,
 				paddingB: 0,
 				footerHeight: 50,
@@ -459,7 +476,18 @@
 					title: '自己扩展呗~~'
 				})
 			},
+			pop_ok() {
+				uni.navigateTo({
+					url: '/pages/movie/kefu/kefu'
+				});
+			},
 			calling(is_video) {
+				 let userInfo = JSON.parse(JSON.stringify(userStore.userInfo))
+				 
+				 if(userInfo.islevel==0&&userInfo.role !==1){
+					 this.pop_notice=true
+					 return;
+				 }
 				// #ifdef MP
 				return uni.showToast({
 					title: '小程序暂不支持',

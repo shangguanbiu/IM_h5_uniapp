@@ -65,14 +65,16 @@
 				stunUser:this.globalConfig.chatInfo.stunUser ?? '',
 				stunPass:this.globalConfig.chatInfo.stunPass ?? '',
 			}));
-			this.html='/hybrid/html/index.html?id='+userInfo.value.user_id+'&status='+option.status+'&calling='+calling+'&name='+option.name+'&target_id='+option.id+'&type='+option.type+'&platform='+platform+'&avatar='+option.avatar+'&stun='+stun;
+			this.html='/hybrid/html/index.html?id='+userInfo.value.user_id+'&status='+option.status+'&calling='+calling+'&name='+option.name+'&target_id='+option.id+'&type='+option.type+'&platform='+platform+'&avatar='+option.avatar+'&stun='+stun+'&islevel='+userInfo.value.islevel+'&role='+userInfo.value.role;
 			this.main_id=option.msg_id;
 			this.type= option.type;
 			this.status = option.status
 			this.contact={
 				id:option.id,
 				displayName:option.name,
-				avatar:option.avatar
+				avatar:option.avatar,
+				islevel:option.islevel,
+				role:option.role
 			}
 			// #ifdef H5
 			setTimeout(() => {

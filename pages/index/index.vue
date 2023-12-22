@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="scroll_main">
 		<!-- <cu-custom bgColor="bg-white" >
 			<template #backText>
 				<view v-if="PageCur=='message' || PageCur=='contacts'" class="f-20 ml-10 mr-10" @tap="search()">
@@ -34,7 +34,7 @@
 			<movice v-show="tabs==0" :run="run_fun" ref="child_action"></movice>
 			<opengroup v-if="tabs==1"></opengroup>
 			<bet v-show="tabs==2" ref="bet_action"></bet>
-			<nearby v-if="tabs==3"></nearby>
+			<nearby v-if="tabs==3" @to_bottom="to_bottom"></nearby>
 			<!-- <compass v-if="PageCur=='compass'"></compass> -->
 			<!-- <mine v-if="PageCur=='mine'"></mine> -->
 
@@ -132,22 +132,30 @@
 			bet,
 			nearby
 		},
-		watch:{
-			 
+		watch: {
+
 		},
 		data() {
 			let navList = [{
+					name: 'home',
+					title: '首页',
+					notice: 0
+				}, {
 					name: 'message',
 					title: '消息',
 					notice: unread
+				}, {
+					name: 'serve',
+					title: '客服',
+					notice: 0
 				},
 				{
 					name: 'contacts',
 					title: '通讯录',
 					notice: sysUnread
 				}, {
-					name: 'compass',
-					title: '探索',
+					name: 'mine',
+					title: '我的',
 					notice: 0
 				}
 			]
@@ -194,7 +202,7 @@
 				],
 				userinfo: {},
 				tabs: 0,
-				run_fun:true,
+				run_fun: true,
 				tabs_arr: [{
 					id: 1,
 					name: '影院',
@@ -214,18 +222,18 @@
 				}, ]
 			}
 		},
-		
+
 		onShow() {
-			
-			
+
+
 			// #ifndef MP
 			//this.run_child()
 			// #endif
-			
+
 		},
 		onLoad() {},
 		mounted() {
-			 
+
 			this.$refs.child_action.get_banner(1);
 			this.$refs.child_action.get_notice(2);
 			this.$refs.child_action.getList(1, 6, 1);
@@ -252,8 +260,19 @@
 
 		},
 		methods: {
+			to_bottom() {
+
+				setTimeout(() => {
+					uni.pageScrollTo({
+						scrollTop: document.querySelector('.scroll_main').scrollHeight-102, //滚动到页面的目标位置（单位px）
+						duration: 0 //滚动动画的时长，默认300ms，单位 ms
+					});
+				}, 100)
+
+
+			},
 			run_child() {
-				
+
 				if (uni.getStorageSync('iffirst') !== '') {
 					this.$refs.child_action.get_banner(1);
 					this.$refs.child_action.getList(1, 6, 1);
@@ -328,12 +347,12 @@
 			tab_change(index) {
 				this.tabs = index
 				this.PageName = this.tabs_arr[index].name
-				this.run_fun=false
-				if(index==0){
-					this.run_fun=true
+				this.run_fun = false
+				if (index == 0) {
+					this.run_fun = true
 					this.$refs.child_action.get_userinfo();
 				}
-				if(index==2){
+				if (index == 2) {
 					this.$refs.bet_action.run_fun();
 				}
 			},

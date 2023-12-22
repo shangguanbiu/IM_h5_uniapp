@@ -471,12 +471,12 @@
 	.talk_ico{margin: auto; width: 80px; height: 80px; overflow: hidden; margin-top: -20px; border: 2px solid #fff; border-radius: 50%;}
 	.talk_name{text-align: center; font-size: 15px; font-weight: bold;padding: 10px 0;}
 	.talk_desc{display: flex; justify-content: center;}
-	.talk_sex{display: flex; margin-right: 5px; border-radius: 15px; color: #fff; padding:0 10px;}
+	.talk_sex{display: flex; margin-right: 5px; border-radius: 15px; color: #fff; padding:2px 6px;}
 	.talk_form{display: flex; width: 90%; background: #f1f1f1; border-radius: 5px; margin:30px auto; margin-top: 50px; justify-content: space-between;}
 	
 	.p_type1{ background: #e6557f;}
 	.p_type2{ background: #55aaff;}
 	.p_type3{ background: #ccc;}
 	.p_type3{ background: #f37b1d;}
-	.sex_ico{width: 13px; margin-right:5px; padding-top: 5px;}
+	.sex_ico{width: 13px; margin-right:2px;}
 </style>
