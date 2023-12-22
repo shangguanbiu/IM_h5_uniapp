@@ -139,6 +139,11 @@
 				this.getWebsocketData();
 			}
 			this.appStatus=true;
+			var ifhad=uni.getStorageSync('language')
+			if(ifhad ==''||ifhad ==undefined){
+				uni.setStorageSync('language','zh')
+			}
+			
 			console.log('App Show')
 		},
 		methods:{

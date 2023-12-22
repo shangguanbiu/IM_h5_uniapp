@@ -21,11 +21,12 @@
 				<view class="title">用户名/昵称</view>
 				<input placeholder="请输入用户名或昵称"  maxlength="32" name="input" v-model="regForm.realname"/>
 			</view>
-			<view class="cu-form-group" v-if="parseInt(globalConfig.sysInfo.regauth)">
+			<!-- <view class="cu-form-group" v-if="parseInt(globalConfig.sysInfo.regauth)">
 				<view class="title">验证码</view>
 				<input placeholder="请输入验证码" maxlength="6" name="input" v-model="regForm.code"/>
 				<button class='cu-btn bg-blue shadow' @tap="sendCode">发送验证码</button>
-			</view>
+			</view> -->
+			
 			<view class="cu-form-group">
 				<view class="title">密码</view>
 				<input placeholder="请输入密码" maxlength="32" type="password" name="input" v-model="regForm.password"/>
@@ -33,6 +34,13 @@
 			<view class="cu-form-group">
 				<view class="title">重复密码</view>
 				<input placeholder="请重复输入密码" maxlength="32" type="password" name="input" v-model="regForm.repass"/>
+			</view>
+			<view class="cu-form-group" >
+				<view class="title">验证码</view>
+				<input placeholder="请输入验证码" maxlength="6" name="input" v-model="regForm.code"/>
+				<image :src="base_url+'/api/front/captcha/index?t='+time" @click="run_time" mode='widthFix'
+					style="width: 114px;"></image>
+				<!-- <button class='cu-btn bg-blue shadow' @tap="sendCode">发送验证码</button> -->
 			</view>
 		</form>
 		<view class="flex flex-direction im-login-btn">
@@ -61,7 +69,9 @@
 				},
 				forget:false,
 				packData:packageData,
-				globalConfig:loginStore.globalConfig
+				globalConfig:loginStore.globalConfig,
+				base_url:'',
+				time: parseInt(new Date().getTime() / 1000),
 			}
 		},
 		watch:{
@@ -72,9 +82,12 @@
 			}
 		},
 		mounted() {
-
+				this.base_url = this.$baseurl()
 		},
 		methods: {
+			run_time() {
+				this.time = parseInt(new Date().getTime() / 1000)
+			},
 			handleInput(event) {
 			  let value = event.detail.value;
 			  let filteredValue = value.replace(/[\u4e00-\u9fa5]/g, '');

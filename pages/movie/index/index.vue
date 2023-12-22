@@ -43,8 +43,8 @@
 				</view>
 			</view>
 			<view class="main_i">
-
-				<view class="title_line">今日推荐<view class="type_more" @tap="to_more">更多</view>
+				
+				<view class="title_line">今日推荐-{{$t('To_Login')}}<view class="type_more" @tap="to_more">更多</view>
 				</view>
 				<view class="index_lanmu">
 					<view class="index_lm_zi" @click="on_func_notice(roomitem)" v-for="(roomitem,index) in room"
@@ -297,6 +297,8 @@
 				}
 			},
 			async get_banner(type_id) {
+				
+	
 				this.bannerdata = []
 				window.scrollTo({
 					top: 0,
@@ -401,7 +403,7 @@
 		},
 		// 在使用到的页面 添加如下代码
 		mounted() {
-
+		
 			var token = uni.getStorageSync('ifLogin')
 			
 		},
