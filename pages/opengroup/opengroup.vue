@@ -17,15 +17,17 @@
 
 					</view>
 					<view v-if="people.ifin" @tap="openDetails(people)" class="item_btn2">
-						立即进入
+						
+						{{$t('group.in_group')}}
 					</view>
 					<view v-else class="item_btn" @tap="into_droup(people.group_id,t_index)">
-						加入群聊
+						
+						{{$t('group.add_group')}}
 					</view>
 				</view>
 			</view>
 		</view>
-		<Empty v-else noDatatext="暂无记录" textcolor="#999" />
+		<Empty v-else :noDatatext="$t('group.no_data')" textcolor="#999" />
 	</view>
 </template>
 
@@ -89,7 +91,7 @@
 				}).then((res) => {
 					if (res.code == 0) {
 						uni.showToast({
-							title: '加入成功',
+							title: this.$t('group.seccess'),
 							icon: "success"
 						});
 						this.initContacts()

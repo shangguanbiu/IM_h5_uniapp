@@ -44,7 +44,7 @@
 			</view>
 			<view class="main_i">
 				
-				<view class="title_line">今日推荐-{{$t('To_Login')}}<view class="type_more" @tap="to_more">更多</view>
+				<view class="title_line">{{$t('index.part_1')}}<view class="type_more" @tap="to_more">{{$t('index.more')}}</view>
 				</view>
 				<view class="index_lanmu">
 					<view class="index_lm_zi" @click="on_func_notice(roomitem)" v-for="(roomitem,index) in room"
@@ -58,7 +58,7 @@
 						</view>
 					</view>
 				</view>
-				<view class="title_line">热门<view class="type_more" @tap="to_more">更多</view>
+				<view class="title_line">{{$t('index.part_2')}}<view class="type_more" @tap="to_more">{{$t('index.more')}}</view>
 				</view>
 				<view style="padding-bottom: 55px;">
 					<view class="user_line" v-for="(people,t_index) in hot_list" :key="t_index"
@@ -94,15 +94,15 @@
 			<view class="com_bg"></view>
 			<view class="com_main">
 				<view class="pop_mian">
-					<view class="pop_title">提示</view>
+					<view class="pop_title">{{$t('pop.title')}}</view>
 					<view
 						style="padding: 10px 15px; display:flex; justify-content: flex-start; line-height: 25px; flex-wrap: wrap;">
-						您当前可观看浏览视频数量已达到每日限制，观看更多可开通会员，请联系客服
+						{{$t('pop.content2')}}
 					</view>
 
 					<view class="pop_foot">
-						<view class="pop_ft_btn1" @tap="pop_notice=false">关闭</view>
-						<view class="pop_ft_btn2" @tap="pop_ok()">去升级</view>
+						<view class="pop_ft_btn1" @tap="pop_notice=false">{{$t('pop.close')}}</view>
+						<view class="pop_ft_btn2" @tap="pop_ok()">{{$t('pop.up')}}</view>
 					</view>
 				</view>
 			</view>

@@ -1,4 +1,139 @@
 export default{
+	nav:{
+		home:"首页",
+		message:'消息',
+		serve:'客服',
+		contacts:'通讯录',
+		mine:"我的"
+	},
+	tab_nav:{
+		nav1:"影院",
+		nav2:"福利群",
+		nav3:"投票",
+		nav4:"附近的人",
+	},
+	
+	pop:{
+		title:"提示",
+		content1:'您当前为普通用户暂无权限查看喜欢我的TA，查看更多可开通会员，请联系客服',
+		content2:'您当前可观看浏览视频数量已达到每日限制，观看更多可开通会员，请联系客服',
+		close:'关闭',
+		up:'去升级'
+	},
+	index:{
+		part_1:'今日推荐',
+		part_2:'热门',
+		more:'更多',
+	},
+	usercenter:{
+		title:'我的',
+		vip_title:'我的特权',
+		vip_desc:'￥50/月即可获得特权VIP',
+		l_nav1:'喜欢我的TA',
+		l_nav2:'我喜欢的TA',
+		l_nav3:'通用设置',
+		l_nav4:'账号安全',
+		login_put:"退出登录",
+		vip_p_title:"VIP会员",
+		vip_p_open:"立即升级",
+		vip_p_up:'立即升级',
+		vip_p_desc1:'暂未激活会员',
+		vip_p_desc2:'月卡VIP',
+		vip_p_desc3:'季度卡VIP',
+		vip_p_desc4:'年卡VIP',
+		
+		vip_p_desc5:'月',
+		vip_p_desc6:'季度',
+		vip_p_desc7:'年',
+		vip_p_desc8:'￥',
+
+		
+		
+		vip_p_main:"VIP特权",
+		vip_p_nav1:"查看我喜欢了谁",
+		vip_p_nav1_1:" 我喜欢了TA！查看我念念不忘的TA ",
+		vip_p_nav2:"查看谁喜欢我",
+		vip_p_nav1_2:" TA喜欢了我？查看前5名对我心动的TA ",
+		vip_p_nav1_2s:" TA喜欢了我？不错过对我满意的TA",
+		vip_p_nav3:"次右滑",
+		vip_p_nav3s:"无限",
+		vip_p_nav1_3:" 突破每天右滑上限，不错过每个机会 ",
+		vip_p_nav4:"视频每天",
+		vip_p_nav4s:"次观看",
+		vip_p_nav1_4:" 突破每天视频观看上线，不错热门视频吃瓜 ",
+		vip_p_nav5:"会员身份标识 ",
+		vip_p_nav1_5:" 获得红字昵称 ",
+		
+		vip_p_pop_1:"积分不足",
+		vip_p_pop_2:"您已经是该等级了",
+		vip_p_pop_3:"当前等级不能降级",
+		vip_p_pop_4:"开通成功",
+		
+		
+	},
+
+	talk:{
+		reload:"更新消息列表",
+		add_friend:'添加朋友',
+		new_group:'创建群聊',
+		close:'取消'
+	},
+	group:{
+		in_group:'立即进入',
+		add_group:'加入群聊',
+		no_data:'暂无记录',
+		seccess:"加入成功"
+	},
+	bet:{
+		now:'当前期数',
+		go_on:'投票中',
+		close:"封盘中",
+		history:"历史出票",
+		bet_n1:'春',
+		bet_n2:'夏',
+		bet_n3:'秋',
+		bet_n4:'冬',
+		rule:'投票规则',
+		content:'游戏投票规则',
+		outlist:'我的出票',
+		bet_tit:'快捷投票',
+		balance:"可用积分",
+		bet_tit_1:"投票积分",
+		reset:'重置',
+		set_ok:"投票",
+		close:'关闭'
+	},
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	"Language": '语言',
 	"Home": '首页',
 	"Recharge": "充值",
@@ -15,22 +150,7 @@ export default{
 	"Update_psw": '修改登陆密码',
 	'if_logout': "是否确定退出登陆！",
 
-	index: {
-		no_level: '您等级未达到进入房间最低要求，不可进入',
-		no_levellimt: '您等级未达到進入房间最低等级要求，不可进入'
-	},
 
-	usercenter: {
-		"balance": "我的余额",
-		"Withdrawal": "提现",
-		"volume": '剩余打码量',
-		"Recharge": "去充值",
-		"volumeOK": "打码量已达标",
-		"set_nickname": "立即设置昵称",
-		'nick_title': '修改昵称',
-		"ok": '确认',
-		'place': '请输入昵称'
-	},
 	updatepsw: {
 		"update_title": '修改登陆密码',
 		"old_psw": '请输入旧密码',

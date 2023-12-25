@@ -57,20 +57,20 @@
 						<view class="cu-item" @tap="initContacts();">
 							<view class="content padding-tb-sm">
 								<text class="cuIcon-refresh"></text>
-								<text>更新消息列表</text>
+								<text>{{$t('talk.reload')}}</text>
 							</view>
 						</view>
 						<view v-if="userinfo.role !==undefined &&userinfo.role==1">
 							<view class="cu-item" @tap="addFriend()" v-if='globalConfig.sysInfo.runMode==2'>
 								<view class="content padding-tb-sm">
 									<text class="cuIcon-friendadd"></text>
-									<text>添加朋友</text>
+									<text>{{$t('talk.add_friend')}}</text>
 								</view>
 							</view>
 							<view class="cu-item" @tap="addGroup()">
 								<view class="content padding-tb-sm">
 									<text class=" cuIcon-friend"></text>
-									<text>创建群聊</text>
+									<text>{{$t('talk.new_group')}}</text>
 								</view>
 							</view>
 							<!-- <view class="cu-item" @tap="scan()">
@@ -83,7 +83,7 @@
 						<view class="parting-line-5"></view>
 						<view class="cu-item" @tap="modelName=''">
 							<view class="content padding-tb-sm">
-								<text class="c-red">取消</text>
+								<text class="c-red">{{$t('talk.close')}}</text>
 							</view>
 						</view>
 
@@ -91,6 +91,7 @@
 				</view>
 			</view>
 		</view>
+		
 	</view>
 </template>
 
@@ -137,66 +138,68 @@
 		},
 		data() {
 			let navList = [{
-					name: 'home',
-					title: '首页',
-					notice: 0
-				}, {
-					name: 'message',
-					title: '消息',
-					notice: unread
-				}, {
-					name: 'serve',
-					title: '客服',
-					notice: 0
-				},
-				{
-					name: 'contacts',
-					title: '通讯录',
-					notice: sysUnread
-				}, {
-					name: 'mine',
-					title: '我的',
-					notice: 0
-				}
+						name: 'home',
+						title:this.$t('nav.home'),
+						notice: 0
+					}, {
+						name: 'message',
+						title: this.$t('nav.message'),
+						notice: unread
+					}, {
+						name: 'serve',
+						title: this.$t('nav.serve'),
+						notice: 0
+					},
+					{
+						name: 'contacts',
+						title: this.$t('nav.contacts'),
+						notice: sysUnread
+					}, {
+						name: 'mine',
+						title: this.$t('nav.mine'),
+						notice: 0
+					}
 			]
 			let compass = {
 				name: 'compass',
-				title: '探索',
+				title: this.$t('nav.contacts'),
 				notice: 0
 			};
 
 			let mine = {
 				name: 'mine',
-				title: '我的',
+				title: this.$t('nav.mine'),
 				notice: 0
 			}
 			// navList.push(mine);
 			return {
+				
 				globalConfig: loginStore.globalConfig,
 				PageCur: 'home',
 				PageName: '首页',
+				
 				TabCur: 0,
 				modelName: false,
 				navList: [{
 						name: 'home',
-						title: '首页',
+						title:this.$t('nav.home'),
 						notice: 0
 					}, {
 						name: 'message',
-						title: '消息',
+						title: this.$t('nav.message'),
 						notice: unread
 					}, {
 						name: 'serve',
-						title: '客服',
+						title: this.$t('nav.serve'),
 						notice: 0
 					},
 					{
 						name: 'contacts',
-						title: '通讯录',
+						title: this.$t('nav.contacts'),
 						notice: sysUnread
 					}, {
 						name: 'mine',
-						title: '我的',
+						title: this.$t('nav.mine'),
 						notice: 0
 					}
 				],
@@ -205,19 +208,19 @@
 				run_fun: true,
 				tabs_arr: [{
 					id: 1,
-					name: '影院',
+					name: this.$t('tab_nav.nav1'),
 					ifshow: false
 				}, {
 					id: 2,
-					name: '福利群',
+					name:  this.$t('tab_nav.nav2'),
 					ifshow: false
 				}, {
 					id: 3,
-					name: '投票',
+					name:  this.$t('tab_nav.nav3'),
 					ifshow: false
 				}, {
 					id: 4,
-					name: '附近的人',
+					name:  this.$t('tab_nav.nav4'),
 					ifshow: false
 				}, ]
 			}
@@ -399,4 +402,5 @@
 		left: 25%;
 		bottom: -8px;
 	}
+	
 </style>

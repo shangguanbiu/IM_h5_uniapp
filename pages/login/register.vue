@@ -44,7 +44,7 @@
 			</view>
 		</form>
 		<view class="flex flex-direction im-login-btn">
-			<button class="cu-btn lg bg-pink" @tap="login()">注册</button>
+			<button class="cu-btn lg bg-pink" @tap="check_yan_zm()">注册</button>
 		</view>
 		<view class="footer-version c-999">
 			{{globalConfig.sysInfo.name ?? packData.name}} for {{packData.version}}
@@ -111,6 +111,27 @@
 				  	icon: "none"
 				  });
 			  })
+			},
+			async check_yan_zm(){
+				if(this.regForm.code==''){
+					uni.showToast({
+						title: '请输入验证码！',
+						icon: "none"
+					});
+					return false;
+					
+				}
+				const res = await this.$myRuquest({
+					method: 'Post',
+					url: '/api/front/user/checkCode',
+				
+					data: {
+						code: this.regForm.code,
+					}
+				})
+				if (res.code == 200) {
+					
+				}
 			},
 			login(){
 				if(this.regForm.account==""){

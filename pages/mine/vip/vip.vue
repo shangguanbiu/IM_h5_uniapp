@@ -2,24 +2,24 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-pink" :isBack="true">
 			<template #backText></template>
-			<template #content>我的特权</template>
+			<template #content>{{$t('usercenter.vip_p_title')}}</template>
 		</cu-custom>
 		<view style="padding: 10px;max-height: 200px; position: relative;">
 			<image src="@/static/image/vip_top.png" mode='widthFix' style="width: 100%;max-height: 200px;">
 			</image>
 			<view class="item_btn" v-if="userinfo.islevel==0" @tap="to_vip"
-				style="position: absolute;right: 32px; top: 70px;">立即开通</view>
-			<view class="item_btn" v-else @tap="to_vip" style="position: absolute;right: 32px; top: 70px;">立即升级</view>
+				style="position: absolute;right: 32px; top: 70px;">{{$t('usercenter.vip_p_open')}}</view>
+			<view class="item_btn" v-else @tap="to_vip" style="position: absolute;right: 32px; top: 70px;">{{$t('usercenter.vip_p_up')}}</view>
 			<!-- <view v-else></view> -->
 			<view class="vip_are_p">
 				<image :src="userinfo.avatar" mode='widthFix'
 					style="height: 30px; width: 30px; border-radius: 50%; margin-right: 5px;">
 				</image>
 
-				<view v-if="userinfo.islevel==0">暂未激活会员</view>
-				<view v-if="userinfo.islevel==21">月卡VIP</view>
-				<view v-if="userinfo.islevel==22">季度卡VIP</view>
-				<view v-if="userinfo.islevel==23">年卡VIP</view>
+				<view v-if="userinfo.islevel==0">{{$t('usercenter.vip_p_desc1')}}</view>
+				<view v-if="userinfo.islevel==21">{{$t('usercenter.vip_p_desc2')}}</view>
+				<view v-if="userinfo.islevel==22">{{$t('usercenter.vip_p_desc3')}}</view>
+				<view v-if="userinfo.islevel==23">{{$t('usercenter.vip_p_desc4')}}</view>
 			</view>
 		</view>
 		<view class="tab_line">
@@ -34,13 +34,13 @@
 
 					</view>
 					<view class="tab_l_ft" v-if="vipitem.istype==0">
-						￥{{vipitem.price}}/月
+						{{$t('usercenter.vip_p_desc8')}}{{vipitem.price}}/{{$t('usercenter.vip_p_desc5')}}
 					</view>
 					<view class="tab_l_ft" v-if="vipitem.istype==1">
-						￥{{vipitem.price}}/季度
+						{{$t('usercenter.vip_p_desc8')}}{{vipitem.price}}/{{$t('usercenter.vip_p_desc6')}}
 					</view>
 					<view class="tab_l_ft" v-if="vipitem.istype==2">
-						￥{{vipitem.price}}/年
+						{{$t('usercenter.vip_p_desc8')}}{{vipitem.price}}/{{$t('usercenter.vip_p_desc7')}}
 					</view>
 				</view>
 			</view>
@@ -49,7 +49,7 @@
 		</view>
 		<view v-show="type_l1==0" class="vip_ft">
 			<view class="vip_tit">
-				VIP特权
+				{{$t('usercenter.vip_p_main')}}
 			</view>
 			<view style="display: flex;padding: 10px 0;">
 				<view>
@@ -58,10 +58,10 @@
 				</view>
 				<view style="margin-left: 10px;">
 					<view class="vip_tit_zit">
-						查看我喜欢了谁
+						{{$t('usercenter.vip_p_nav1')}}
 					</view>
 					<view class="vip_tit_zi">
-						我喜欢了TA！查看我念念不忘的TA
+						{{$t('usercenter.vip_p_nav1_1')}}
 					</view>
 				</view>
 			</view>
@@ -72,10 +72,10 @@
 				</view>
 				<view style="margin-left: 10px;">
 					<view class="vip_tit_zit">
-						查看谁喜欢我
+						{{$t('usercenter.vip_p_nav2')}}
 					</view>
 					<view class="vip_tit_zi">
-						TA喜欢了我？查看前5名对我心动的TA
+						{{$t('usercenter.vip_p_nav1_2')}}
 					</view>
 				</view>
 			</view>
@@ -86,10 +86,10 @@
 				</view>
 				<view style="margin-left: 10px;">
 					<view class="vip_tit_zit">
-						{{list.length!==0?list[type_l1].iszan:0}}次右滑
+						{{list.length!==0?list[type_l1].iszan:0}}{{$t('usercenter.vip_p_nav3')}}
 					</view>
 					<view class="vip_tit_zi">
-						突破每天右滑上限，不错过每个机会
+						{{$t('usercenter.vip_p_nav1_3')}}
 					</view>
 				</view>
 			</view>
@@ -100,10 +100,12 @@
 				</view>
 				<view style="margin-left: 10px;">
 					<view class="vip_tit_zit">
-						视频每天{{list.length!==0?list[type_l1].isview:0}}个
+						
+						{{$t('usercenter.vip_p_nav4')}}{{list.length!==0?list[type_l1].isview:0}}{{$t('usercenter.vip_p_nav4s')}}
 					</view>
 					<view class="vip_tit_zi">
-						突破每天视频观看上线，不错热门视频吃瓜
+						{{$t('usercenter.vip_p_nav1_4')}}
+						
 					</view>
 				</view>
 			</view>
@@ -114,17 +116,19 @@
 				</view>
 				<view style="margin-left: 10px;">
 					<view class="vip_tit_zit">
-						会员身份标识
+						
+						{{$t('usercenter.vip_p_nav5')}}
 					</view>
 					<view class="vip_tit_zi">
-						获得红字昵称
+						
+						{{$t('usercenter.vip_p_nav1_5')}}
 					</view>
 				</view>
 			</view>
 		</view>
 		<view v-show="type_l1==1" class="vip_ft">
 			<view class="vip_tit">
-				VIP特权
+				{{$t('usercenter.vip_p_main')}}
 			</view>
 
 			<view style="display: flex;padding: 10px 0;">
@@ -134,10 +138,10 @@
 				</view>
 				<view style="margin-left: 10px;">
 					<view class="vip_tit_zit">
-						查看谁喜欢我
+						{{$t('usercenter.vip_p_nav2')}}
 					</view>
 					<view class="vip_tit_zi">
-						TA喜欢了我？不错过对我满意的TA
+						{{$t('usercenter.vip_p_nav1_2s')}}
 					</view>
 				</view>
 			</view>
@@ -148,10 +152,10 @@
 				</view>
 				<view style="margin-left: 10px;">
 					<view class="vip_tit_zit">
-						{{list.length!==0?list[type_l1].iszan:0}}次右滑
+						{{list.length!==0?list[type_l1].iszan:0}}{{$t('usercenter.vip_p_nav3')}}
 					</view>
 					<view class="vip_tit_zi">
-						突破每天右滑上限，不错过每个机会
+						{{$t('usercenter.vip_p_nav1_3')}}
 					</view>
 				</view>
 			</view>
@@ -162,10 +166,10 @@
 				</view>
 				<view style="margin-left: 10px;">
 					<view class="vip_tit_zit">
-						视频每天{{list.length!==0?list[type_l1].isview:0}}个
+						{{$t('usercenter.vip_p_nav4')}}{{list.length!==0?list[type_l1].isview:0}}{{$t('usercenter.vip_p_nav4s')}}
 					</view>
 					<view class="vip_tit_zi">
-						突破每天视频观看上线，不错热门视频吃瓜
+						{{$t('usercenter.vip_p_nav1_4')}}
 					</view>
 				</view>
 			</view>
@@ -176,17 +180,17 @@
 				</view>
 				<view style="margin-left: 10px;">
 					<view class="vip_tit_zit">
-						会员身份标识
+						{{$t('usercenter.vip_p_nav5')}}
 					</view>
 					<view class="vip_tit_zi">
-						获得红字昵称和VIP标识
+						{{$t('usercenter.vip_p_nav1_5')}}
 					</view>
 				</view>
 			</view>
 		</view>
 		<view v-show="type_l1==2" class="vip_ft">
 			<view class="vip_tit">
-				VIP特权
+				{{$t('usercenter.vip_p_main')}}
 			</view>
 			<view style="display: flex;padding: 10px 0;">
 				<view>
@@ -195,10 +199,10 @@
 				</view>
 				<view style="margin-left: 10px;">
 					<view class="vip_tit_zit">
-						查看谁喜欢我
+						{{$t('usercenter.vip_p_nav2')}}
 					</view>
 					<view class="vip_tit_zi">
-						TA喜欢了我？看看喜欢我的TA
+						{{$t('usercenter.vip_p_nav1_2')}}
 					</view>
 				</view>
 			</view>
@@ -209,10 +213,10 @@
 				</view>
 				<view style="margin-left: 10px;" v-if="list.length!==0">
 					<view class="vip_tit_zit">
-						{{list[type_l1].iszan>999?'无限':list[type_l1].iszan}}次右滑
+						{{list[type_l1].iszan>999?$t('usercenter.vip_p_nav3s'):list[type_l1].iszan}}{{$t('usercenter.vip_p_nav3')}}
 					</view>
 					<view class="vip_tit_zi">
-						突破每天右滑上限，不错过每个机会
+						{{$t('usercenter.vip_p_nav1_3')}}
 					</view>
 				</view>
 			</view>
@@ -223,10 +227,11 @@
 				</view>
 				<view style="margin-left: 10px;">
 					<view class="vip_tit_zit">
-						视频{{list[type_l1].isview>999?'无限':list[type_l1].isview}}次观看
+						
+						{{$t('usercenter.vip_p_nav4')}}{{list[type_l1].isview>999?$t('usercenter.vip_p_nav3s'):list[type_l1].isview}}{{$t('usercenter.vip_p_nav4s')}}
 					</view>
 					<view class="vip_tit_zi">
-						突破每天视频观看上线，不错热门视频吃瓜
+						{{$t('usercenter.vip_p_nav1_4')}}
 					</view>
 				</view>
 			</view>
@@ -237,10 +242,10 @@
 				</view>
 				<view style="margin-left: 10px;">
 					<view class="vip_tit_zit">
-						会员身份标识
+						{{$t('usercenter.vip_p_nav5')}}
 					</view>
 					<view class="vip_tit_zi">
-						获得红字昵称和VIP标识
+						{{$t('usercenter.vip_p_nav1_5')}}
 					</view>
 				</view>
 			</view>
@@ -304,21 +309,21 @@
 			async to_vip() {
 				if (this.balance == 0 || this.balance < this.list[this.type_l1].price) {
 					uni.showToast({
-						title: '积分不足！',
+						title: this.$t('usercenter.vip_p_pop_1'),
 						icon: "none"
 					});
 					return
 				}
 				if(this.userinfo.islevel==this.list[this.type_l1].id){
 					uni.showToast({
-						title: '您已经是该等级了',
+						title:this.$t('usercenter.vip_p_pop_2'),
 						icon: "none"
 					})
 					return
 				}
 				if(this.userinfo.islevel>this.list[this.type_l1].id){
 					uni.showToast({
-						title: '当前等级不能降级！',
+						title: this.$t('usercenter.vip_p_pop_3'),
 						icon: "none"
 					})
 					return
@@ -333,7 +338,7 @@
 				})
 				if (res.code == 200) {
 					uni.showToast({
-						title: '开通成功',
+						title: this.$t('usercenter.vip_p_pop_4'),
 						icon: "none"
 					})
 					this.userinfo.islevel=this.list[this.type_l1].id

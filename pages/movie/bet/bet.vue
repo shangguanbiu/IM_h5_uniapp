@@ -7,24 +7,24 @@
 		<view class="bet_top">
 			<view style="padding: 10px  15px">
 				<view class="bet_line bet_ge">
-					<view>当前期数</view>
+					<view>{{$t('bet.now')}}</view>
 				</view>
 				<view style="display: flex; align-items: center;" class="bet_ge">
 					<view style="font-weight: bold; font-size: 16px; margin-right: 3px;">{{qishu}}</view>
-					<view v-if="ifrun">投票中</view>
-					<view v-if="!ifrun">封盘中</view>
+					<view v-if="ifrun">{{$t('bet.go_on')}}</view>
+					<view v-if="!ifrun">{{$t('bet.close')}}</view>
 				</view>
 				<view class="time">{{time2+':'+time3}}</view>
 				<view class="bet_line bet_ge">
 					<view style="display: flex;" v-for="(item,narr_k) in Number_laster.slice(0,1)" :key="narr_k">
 						<view style="margin-right: 10px;">{{item.open_no}}</view>
 						
-						<view class="color_n2" v-if="item.number>5||item.number==5">春</view>
-						<view class="color_n1" v-if="item.number<4 ||item.number==4">夏</view>
-						<view class="color_n1" v-if="item.number % 2 === 1">秋</view>
-						<view class="color_n2" v-if="item.number% 2 === 0">冬</view>
+						<view class="color_n2" v-if="item.number>5||item.number==5">{{$t('bet.bet_n1')}}</view>
+						<view class="color_n1" v-if="item.number<4 ||item.number==4">{{$t('bet.bet_n1')}}</view>
+						<view class="color_n1" v-if="item.number % 2 === 1">{{$t('bet.bet_n1')}}</view>
+						<view class="color_n2" v-if="item.number% 2 === 0">{{$t('bet.bet_n1')}}</view>
 					</view>
-					<view @click="ifhistory=!ifhistory" style="display: flex;">历史出票
+					<view @click="ifhistory=!ifhistory" style="display: flex;">{{$t('bet.history')}}
 
 						<view class="cuIcon-unfold" style="line-height: 19px;margin-left: 2px;" v-if="!ifhistory">
 						</view>
@@ -36,10 +36,10 @@
 								:key="narr_k">
 								<view style="margin-right: 10px;">{{item.open_no}}</view>
 								
-								<view class="color_n2" v-if="item.number>5||item.number==5">春</view>
-								<view class="color_n1" v-if="item.number<4 ||item.number==4">夏</view>
-								<view class="color_n1" v-if="item.number % 2 === 1">秋</view>
-								<view class="color_n2" v-if="item.number% 2 === 0">冬</view>
+								<view class="color_n2" v-if="item.number>5||item.number==5">{{$t('bet.bet_n1')}}</view>
+								<view class="color_n1" v-if="item.number<4 ||item.number==4">{{$t('bet.bet_n1')}}</view>
+								<view class="color_n1" v-if="item.number % 2 === 1">{{$t('bet.bet_n1')}}</view>
+								<view class="color_n2" v-if="item.number% 2 === 0">{{$t('bet.bet_n1')}}</view>
 
 							</view>
 						</view>
@@ -52,9 +52,9 @@
 
 		</view>
 		<view class="bet_top_ft">
-			<view class="bet_t_ft_m" @tap="pop_notice=true">投票规则</view>
+			<view class="bet_t_ft_m" @tap="pop_notice=true">{{$t('bet.rule')}}</view>
 			<view class="bet_t_ft_m" @click="see_list" style="display: flex; justify-content: center; color:#e6557f ;">
-				我的出票
+				{{$t('bet.outlist')}}
 				<view class="cuIcon-right" style="line-height: 40px; margin-left: 2px;"></view>
 			</view>
 
@@ -73,8 +73,8 @@
 		<view class="bet_foot" v-show="pop_bet">
 			<view class="bet_f_m">
 				<view class="bet_f_mtit">
-					<view>快捷投票</view>
-					<view class="had_num">可用积分:{{max_num}}</view>
+					<view>{{$t('bet.bet_tit')}}</view>
+					<view class="had_num">{{$t('bet.balance')}}:{{max_num}}</view>
 				</view>
 				<view class="bet_num_line">
 					<view class="bet_num" v-for="(item,narr_k) in cost_arr" :key="narr_k" @click="get_num(item)">
@@ -83,14 +83,14 @@
 
 				</view>
 				<view class="bet_num_line" style="padding: 15px 0;">
-					<view style="line-height: 30px;">投票积分:</view>
+					<view style="line-height: 30px;">{{$t('bet.bet_tit_1')}}:</view>
 					<view><input class="uni-input inmut_l" v-model="bet_num" @input="change_num(bet_num)" type="number"
 							placeholder="" />
 					</view>
-					<view><button type="default" class="reset_btn" @click="reset">重置</button></view>
+					<view><button type="default" class="reset_btn" @click="reset">{{$t('bet.reset')}}</button></view>
 				</view>
-				<button type="default" v-if="ifrun" class="ok_btn" @tap="submit_bet">投票</button>
-				<button type="default" v-if="!ifrun" class="ok_btn2">封盘中</button>
+				<button type="default" v-if="ifrun" class="ok_btn" @tap="submit_bet">{{$t('bet.set_ok')}}</button>
+				<button type="default" v-if="!ifrun" class="ok_btn2">{{$t('bet.close')}}</button>
 			</view>
 
 		</view>
@@ -98,14 +98,15 @@
 			<view class="com_bg"></view>
 			<view class="com_main">
 				<view class="pop_mian">
-					<view class="pop_title">投票规则</view>
+					<view class="pop_title">{{$t('bet.rule')}}</view>
 					<view
 						style="padding: 10px 15px; display:flex; justify-content: flex-start; line-height: 25px; flex-wrap: wrap;">
-						游戏投票规则
+						{{$t('bet.content')}}
+						
 					</view>
 
 					<view class="pop_foot">
-						<view class="pop_ft_btn2" @tap="pop_notice=false">关闭</view>
+						<view class="pop_ft_btn2" @tap="pop_notice=false">{{$t('bet.close')}}</view>
 
 					</view>
 				</view>

@@ -6,8 +6,12 @@
 	import { useloginStore } from '@/store/login';
 	const msgStore = useMsgStore(pinia)
 	const userStore = useloginStore(pinia)
+
+
+
 	export default {
 		onLaunch: function() {
+
 			// 初始化APP设置
 			let setting=uni.getStorageSync('appSetting') ?? '';
 			if(!setting){

@@ -276,6 +276,8 @@
 		},
 		onShow() {
 			this.get_userinfo()
+			this.getList()
+			uni.removeStorageSync('movice_info')
 			this.fromUser = uni.getStorageSync('userInfo')
 			
 			this.show_login = false

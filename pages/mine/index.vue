@@ -2,7 +2,7 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-pink" :isBack="false">
 
-			<template #content>我的</template>
+			<template #content>{{$t('usercenter.title')}}</template>
 		</cu-custom>
 		<view class="padding flex im-space-between im-align-items-center bg-white mb-10">
 			<view class="flex justify-start bg-white" @tap="editInfo()">
@@ -22,8 +22,8 @@
 		</view>
 		<view class="vip_are_P" @click="to_vip">
 			<view class="vip_are_m">
-				<view class="vip_are_tit">我的特权</view>
-				<view class="vip_are_p">￥50/月即可获得特权VIP</view>
+				<view class="vip_are_tit">{{$t('usercenter.vip_title')}}</view>
+				<view class="vip_are_p">{{$t('usercenter.vip_desc')}}</view>
 			</view>
 			<image src="@/static/image/vip_me.png" mode='widthFix' style="width: 100%;max-height: 100px;">
 			</image>
@@ -41,7 +41,7 @@
 			<view class="cu-item" @tap="to_like(1)">
 				<view class="content">
 					<text class="cuIcon-likefill text-red"></text>
-					<text>喜欢我的TA</text>
+					<text>{{$t('usercenter.l_nav1')}}</text>
 				</view>
 				<view class="action">
 					<text class="text-grey cuIcon-right"></text>
@@ -50,7 +50,7 @@
 			<view class="cu-item" @tap="to_like(2)">
 				<view class="content">
 					<text class="cuIcon-emojiflashfill text-pink"></text>
-					<text>我喜欢的TA</text>
+					<text>{{$t('usercenter.l_nav2')}}</text>
 				</view>
 				<view class="action">
 					<text class="text-grey cuIcon-right"></text>
@@ -59,7 +59,7 @@
 			<view class="cu-item" @tap="showSetting">
 				<view class="content">
 					<text class="cuIcon-settings text-grey"></text>
-					<text>通用设置</text>
+					<text>{{$t('usercenter.l_nav3')}}</text>
 				</view>
 				<view class="action">
 					<text class="text-grey cuIcon-right"></text>
@@ -68,7 +68,7 @@
 			<view class="cu-item" @tap="showsecure">
 				<view class="content">
 					<text class="cuIcon-safe text-orange"></text>
-					<text>账号安全</text>
+					<text>{{$t('usercenter.l_nav4')}}</text>
 				</view>
 				<view class="action">
 					<text class="text-grey cuIcon-right"></text>
@@ -85,7 +85,7 @@
 			</view> -->
 		</view>
 		<view class="padding flex flex-direction">
-			<button class="cu-btn bg-red lg" @tap="logout()">退出登录</button>
+			<button class="cu-btn bg-red lg" @tap="logout()">{{$t('usercenter.login_put')}}</button>
 		</view>
 		<view class="cu-bar tabbar bg-white shadow foot">
 			<view class="action" @click="NavChange(item)" v-for="(item,index) in navList" :key="index"
@@ -102,15 +102,15 @@
 			<view class="com_bg"></view>
 			<view class="com_main">
 				<view class="pop_mian">
-					<view class="pop_title">提示</view>
+					<view class="pop_title">{{$t('pop.title')}}</view>
 					<view
 						style="padding: 10px 15px; display:flex; justify-content: flex-start; line-height: 25px; flex-wrap: wrap;">
-						您当前为普通用户暂无权限查看喜欢我的TA，查看更多可开通会员，请联系客服
+						{{$t('pop.content1')}}
 					</view>
 
 					<view class="pop_foot">
-						<view class="pop_ft_btn1" @tap="pop_notice=false">关闭</view>
-						<view class="pop_ft_btn2" @tap="pop_ok()">去升级</view>
+						<view class="pop_ft_btn1" @tap="pop_notice=false">{{$t('pop.close')}}</view>
+						<view class="pop_ft_btn2" @tap="pop_ok()">{{$t('pop.up')}}</view>
 					</view>
 				</view>
 			</view>
@@ -146,24 +146,24 @@
 				PageCur: 'mine',
 				navList: [{
 						name: 'home',
-						title: '首页',
+						title:this.$t('nav.home'),
 						notice: 0
 					}, {
 						name: 'message',
-						title: '消息',
+						title: this.$t('nav.message'),
 						notice: unread
 					}, {
 						name: 'serve',
-						title: '客服',
+						title: this.$t('nav.serve'),
 						notice: 0
 					},
 					{
 						name: 'contacts',
-						title: '通讯录',
+						title: this.$t('nav.contacts'),
 						notice: sysUnread
 					}, {
 						name: 'mine',
-						title: '我的',
+						title: this.$t('nav.mine'),
 						notice: 0
 					}
 				],
