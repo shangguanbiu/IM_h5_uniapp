@@ -2,7 +2,7 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-pink" :isBack="true">
 			<template #backText></template>
-			<template #content>新邀请</template>
+			<template #content>{{$t('friend.title')}}</template>
 			<template #right>
 				<view class="f-20 ml-10 mr-10" @tap="searchFriend()" >
 					<text class="cuIcon-add"></text>
@@ -16,15 +16,15 @@
 				</view>
 				<view class="content padding-tb-sm" @tap='openDetails(x.create_user_info.user_id)'>
 					<view class="text-grey"  v-if="!params.is_mine">
-						<text class="text-blue">{{x.create_user_info.realname}} </text> 申请添加您为好友
+						<text class="text-blue">{{x.create_user_info.realname}} </text> {{$t('friend.replay_add')}}
 					</view>
 					<view class="text-gray text-sm lh-15x">{{x.remark}}</view>
 				</view>
 				<view class="action ml-10">
-					<text class="text-red" v-if="x.status==0">已拒绝</text>
-					<text class="text-blue" v-if="x.status==1" @tap="sendMsg(x.create_user_info.user_id)">发消息</text>
+					<text class="text-red" v-if="x.status==0">{{$t('friend.reback')}}</text>
+					<text class="text-blue" v-if="x.status==1" @tap="sendMsg(x.create_user_info.user_id)">{{$t('friend.send')}}</text>
 					<button class="cu-btn round sm bg-green"  v-if="x.status==2" @tap="optApply(x)">
-						操作
+						{{$t('friend.control')}}
 					</button>
 				</view>
 			</view>
@@ -33,20 +33,20 @@
 				</view>
 				<view class="content" @tap='openDetails(x.user_id_info.user_id)'>
 					<view class="text-grey">
-						和<text class="text-blue"> {{x.user_id_info.realname}} </text> 打了招呼
+						和<text class="text-blue"> {{x.user_id_info.realname}} </text> {{$t('friend.talk')}}
 					</view>
 				</view>
 				<view class="action ml-10">
-					<text class="text-red" v-if="x.status==0">已拒绝</text>
-					<text class="text-blue" v-if="x.status==1"  @tap="sendMsg(x.user_id_info.user_id)">再打招呼</text>
-					<text  class="text-orange" v-if="x.status==2">待同意</text>
+					<text class="text-red" v-if="x.status==0">{{$t('friend.jujue')}}</text>
+					<text class="text-blue" v-if="x.status==1"  @tap="sendMsg(x.user_id_info.user_id)">{{$t('friend.retalk')}}</text>
+					<text  class="text-orange" v-if="x.status==2">{{$t('friend.wait_tongyi')}}</text>
 				</view>
 			</view>
 			<view class="m-10" v-if="list.length">
 				<uni-pagination :current="params.page" :total="total" :pageSize="params.limit"  @change="changePage"/>
 			</view>
 			
-			<Empty v-if="!list.length" noDatatext="暂无群聊" textcolor="#999" ></Empty>
+			<Empty v-if="!list.length" :noDatatext="$t('friend.no_data')" textcolor="#999" ></Empty>
 		</view>
 
 	</view>
@@ -65,7 +65,7 @@
 		name  : "group",
 		data() {
 			return {
-				items: ['我收到的', '我发起的'],
+				items: [this.$t('friend.send_for_me'), this.$t('friend.send_by_me')],
 				current: 0,
 				list: [],
 				total:0,
@@ -119,7 +119,7 @@
 					})
 				}else{
 					uni.showToast({
-						title: '可去附近的人打招呼',
+						title: this.$t('friend.pop_tit'),//'可去附近的人打招呼',
 						icon: "none"
 					});
 					return
@@ -128,11 +128,11 @@
 			},
 			optApply(x){
 				uni.showModal({
-					title: '提示',
-					content:"你确定同意该好友的请求吗",
-					cancelText:"拒绝",
+					title: this.$t('friend.pop_n1'),//'提示',
+					content:this.$t('friend.pop_n2'),//"你确定同意该好友的请求吗",
+					cancelText:this.$t('friend.pop_n3'),//"拒绝",
 					cancelColor:'#e54d42',
-					confirmText:"接受",
+					confirmText:this.$t('friend.pop_n4'),//"接受",
 					success: (res)=>{
 						let status=0;
 						if (res.confirm) {

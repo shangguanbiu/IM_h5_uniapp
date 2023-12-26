@@ -139,40 +139,44 @@
 	export default {
 		data() {
 			return {
+				keyIndex: 1,
 				pop_notice: false,
+				hackReset: false,
 				loginStore: loginStore,
 				globalConfig: loginStore.globalConfig,
 				appSetting: loginStore.appSetting,
 				PageCur: 'mine',
-				navList: [{
-						name: 'home',
-						title:this.$t('nav.home'),
-						notice: 0
-					}, {
-						name: 'message',
-						title: this.$t('nav.message'),
-						notice: unread
-					}, {
-						name: 'serve',
-						title: this.$t('nav.serve'),
-						notice: 0
-					},
-					{
-						name: 'contacts',
-						title: this.$t('nav.contacts'),
-						notice: sysUnread
-					}, {
-						name: 'mine',
-						title: this.$t('nav.mine'),
-						notice: 0
-					}
-				],
+				navList: [],
 			}
 		},
 		onShow() {
 
+			this.navList = [{
+					name: 'home',
+					title: this.$t('nav.home'),
+					notice: 0
+				}, {
+					name: 'message',
+					title: this.$t('nav.message'),
+					notice: unread
+				}, {
+					name: 'serve',
+					title: this.$t('nav.serve'),
+					notice: 0
+				},
+				{
+					name: 'contacts',
+					title: this.$t('nav.contacts'),
+					notice: sysUnread
+				}, {
+					name: 'mine',
+					title: this.$t('nav.mine'),
+					notice: 0
+				}
+			]
 		},
 		mounted() {
+
 			// 检查本地联系人,如果没有才去请求接口
 			let contacts = uni.getStorageSync('allContacts');
 			if (!contacts.length) {
@@ -210,7 +214,7 @@
 			},
 			to_like(type) {
 				let userInfo = JSON.parse(JSON.stringify(loginStore.userInfo))
-				
+
 				if (type == 1) {
 					if (userInfo.islevel == 0 && userInfo.role == 0) {
 						this.pop_notice = true

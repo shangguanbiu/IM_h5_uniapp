@@ -180,9 +180,18 @@
 				
 				TabCur: 0,
 				modelName: false,
-				navList: [{
+				navList: [],
+				userinfo: {},
+				tabs: 0,
+				run_fun: true,
+				tabs_arr: [ ]
+			}
+		},
+
+		onShow() {
+				this.navList = [{
 						name: 'home',
-						title:this.$t('nav.home'),
+						title: this.$t('nav.home'),
 						notice: 0
 					}, {
 						name: 'message',
@@ -202,11 +211,8 @@
 						title: this.$t('nav.mine'),
 						notice: 0
 					}
-				],
-				userinfo: {},
-				tabs: 0,
-				run_fun: true,
-				tabs_arr: [{
+				]
+				this.tabs_arr=[{
 					id: 1,
 					name: this.$t('tab_nav.nav1'),
 					ifshow: false
@@ -222,19 +228,16 @@
 					id: 4,
 					name:  this.$t('tab_nav.nav4'),
 					ifshow: false
-				}, ]
-			}
-		},
-
-		onShow() {
-
+				}]
 
 			// #ifndef MP
 			//this.run_child()
 			// #endif
 
 		},
-		onLoad() {},
+		onLoad() {
+			
+		},
 		mounted() {
 
 			this.$refs.child_action.get_banner(1);

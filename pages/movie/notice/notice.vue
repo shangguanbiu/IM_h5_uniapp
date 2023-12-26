@@ -2,7 +2,7 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-pink" :isBack="true">
 			<template #backText></template>
-			<template #content>系统通知</template>
+			<template #content>{{$t('notice_list.title')}}</template>
 		</cu-custom>
 		<view class="listare">
 			<view v-if="list.length !==0">
@@ -16,7 +16,7 @@
 					</view>
 					<van-divider />
 					<view class="li_a_top money_line">
-						<view style="width: 120px;">查看详情 >></view>
+						<view style="width: 120px;">{{$t('notice_list.more')}} >></view>
 						<!-- <view style="flex: 1; text-align: right; padding-right: 40px;">{{listitem.create_time}}</view> -->
 
 						<view class="money_lr">
@@ -31,7 +31,7 @@
 					<!-- <van-empty class="custom-image" :image="empty_img" description="" /> -->
 					<image src="@/static/image/empty.png" style="margin-top: 3px; "
 						mode='widthFix' />
-						<view style="text-align: center;">暂无通知记录...</view>
+						<view style="text-align: center;">{{$t('notice_list.no_data')}}</view>
 				</view>
 			</view>
 		</view>
@@ -50,7 +50,7 @@
 				ifpop: false,
 				page: 1,
 				pagesize: 10,
-				notice: "上拉加载更多",
+				notice: this.$t('notice_list.load_m1'),
 				loadingType: 0,
 				loadingText: '加载中...',
 				contentText: {
@@ -122,7 +122,7 @@
 				return str.replace(reg, "$1,");
 			},
 			async getmorelists() {
-				this.notice = '正在加载...'
+				this.notice = this.$t('notice_list.load_m2')//'正在加载...'
 				if (this.loadingType !== 0) { //loadingType!=0;直接返回
 					return false
 				}
@@ -143,7 +143,7 @@
 
 					if (this.page == Number(res.data.last_page)) { // 没有数据
 						this.loadingType = 2
-						this.notice = '沒有更多数据了'
+						this.notice = this.$t('notice_list.load_m3')//'沒有更多数据了'
 						uni.hideNavigationBarLoading() // 关闭加载动画
 						return
 					}

@@ -2,7 +2,7 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-pink" :isBack="true">
 			<template #backText></template>
-			<template #content>群信息</template>
+			<template #content>{{$t('group_sys.message_tit')}}</template>
 		</cu-custom>
 		<view align="center" class="groupInfo">
 			<image :src="contact.avatar" mode="widthFix" style="width:120px;height:120px;border-radius: 12rpx;"></image>
@@ -12,12 +12,12 @@
 		</view>
 		<view class="padding flex flex-direction mt-10" v-if="!contact.isJoin">
 			<button class="cu-btn bg-green lg"  @tap="applyGroup">
-				加入群聊
+				{{$t('group_sys.message_tit2')}}
 			</button>
 		</view>
 		<view class="padding flex flex-direction mt-10" v-else>
 			<button class="cu-btn bg-green lg"  @tap="openChat">
-				进入聊天
+				{{$t('group_sys.message_tit3')}}
 			</button>
 		</view>
 	</view>
@@ -51,7 +51,7 @@
 			applyGroup() {
 				if(this.contact.setting.invite==0){
 					return uni.showToast({
-						title:'该群聊已经关闭加群申请',
+						title:this.$t('group_sys.pop_tit4'),//'该群聊已经关闭加群申请',
 						icon:'none'
 					})
 				}

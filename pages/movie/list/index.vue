@@ -29,32 +29,35 @@
 			</view>
 
 		</view>
-		<Empty v-else noDatatext="暂无记录" textcolor="#999" />
+		<Empty v-else :noDatatext="$t('list.no_data')" textcolor="#999" />
 		<view v-show="show_more" class="type_more">
 			<view style="padding-top: 50px;">
-				<view class="type_tit">热门分类</view>
+				<view class="type_tit">{{$t('list.type_hot')}}</view>
 				<view class="type_zi" :class="{'type_get':index_get==99}" @click="get_type('',99)">
-					全部
+					{{$t('list.all')}}
 				</view>
 				<view class="type_zi" :class="{'type_get':index_get==inde_t}" v-for="(typeitem,inde_t) in type_list" :key="inde_t" @click="get_type(typeitem,inde_t)">
-					{{typeitem.name}}
+					<view v-if="language=='zh'">{{typeitem.name}}</view>
+					<view v-if="language=='zhCN'">{{typeitem.name_2}}</view>
+					<view v-if="language=='en'">{{typeitem.name_3}}</view>
 				</view>
 
 			</view>
-			<view class="type_close" @click="show_more=false">关闭</view>
+			<view class="type_close" @click="show_more=false">{{$t('list.close')}}</view>
 		</view>
 		<view v-show="pop_notice">
 			<view class="com_bg"></view>
 			<view class="com_main">
 					<view class="pop_mian">
-						<view class="pop_title">提示</view>
+						<view class="pop_title">{{$t('pop.title')}}</view>
 						<view style="padding: 10px 15px; display:flex; justify-content: flex-start; line-height: 25px; flex-wrap: wrap;">
-							您当前可观看浏览视频数量已达到每日限制，观看更多可开通会员，请联系客服
+							
+							{{$t('pop.content2')}}
 						</view>
 						
 						<view class="pop_foot">
-							<view class="pop_ft_btn1" @tap="pop_notice=false">关闭</view>
-							<view class="pop_ft_btn2" @tap="pop_ok()">去升级</view>
+							<view class="pop_ft_btn1" @tap="pop_notice=false">{{$t('pop.close')}}</view>
+							<view class="pop_ft_btn2" @tap="pop_ok()">{{$t('pop.up')}}</view>
 						</view>
 					</view>
 			</view>	
@@ -71,7 +74,7 @@
 			return {
 				pop_notice:false,
 				active: 0,
-				top_title:'影院',
+				top_title:this.$t('list.title'),//'影院',
 				show_more: false,
 				loadingType: 0,
 				page: 1,
@@ -83,6 +86,7 @@
 				State: '',
 				index_get:99,
 				fromUser: '',
+				language:loginStore.language
 			}
 		},
 		methods: {
@@ -168,10 +172,10 @@
 				this.openMore()
 				if(data !==''){
 					this.State = data.id
-					this.top_title='影院-'+data.name
+					this.top_title=this.$t('list.title')+'-'+data.name
 				}else{
 					this.State = ''
-					this.top_title='影院'
+					this.top_title=this.$t('list.title')
 				}	
 				
 				this.getList()

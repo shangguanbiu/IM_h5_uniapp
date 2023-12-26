@@ -2,16 +2,16 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-pink" :isBack="true" >
 			<template #backText></template>
-			<template #content>{{title}}</template>
+			<template #content>{{$t('contact.search_title')}}</template>
 		</cu-custom>
 		<view class="cu-bar bg-white search fixed" :style="[{top:CustomBar + 'px'}]">
 			<view class="search-form round">
 				<text class="cuIcon-search"></text>
-				<input type="text" v-model="keywords" placeholder="请输入用户账号进行搜索" confirm-type="search"/>
+				<input type="text" v-model="keywords" :placeholder="$t('contact.search')" confirm-type="search"/>
 				
 			</view>
 			<view class="action">
-				<button class="cu-btn round bg-green" @tap="search()">搜索</button>
+				<button class="cu-btn round bg-green" @tap="search()">{{$t('contact.search_btn')}}</button>
 			</view>
 		</view>
 		
@@ -25,8 +25,8 @@
 							<view class="c-333">{{items.realname}}</view>
 						</view>
 						<view class="action ml-10">
-							<view class="text-blue" v-if="items.friend" @tap.stop="sendMsg(items.user_id)">发消息</view>
-							<view class="text-blue" v-if="!items.friend">查看</view>
+							<view class="text-blue" v-if="items.friend" @tap.stop="sendMsg(items.user_id)">{{$t('contact.send_msg')}}</view>
+							<view class="text-blue" v-if="!items.friend">{{$t('contact.see_more')}}</view>
 						</view>
 					</view>
 				</view>
@@ -50,18 +50,18 @@
 				keywords:'',
 				contacts:[],
 				type:1,
-				noText:'暂无数据'
+				noText:this.$t('contact.no_data'),//'暂无数据'
 			};
 		},
 		methods: {
 			search(){
 				if(this.keywords==''){
 					return uni.showToast({
-						title:"请输入用户账号进行搜索",
+						title:this.$t('contact.search_pop'),//"请输入用户账号进行搜索",
 						icon:'none'
 					})
 				}
-				this.noText="未搜索到数据";
+				this.noText=this.$t('contact.search_no_data')//"未搜索到数据";
 				this.$api.msgApi.searchUser({keywords:this.keywords}).then((res)=>{
 					if(res.code==0){
 						this.contacts=res.data;

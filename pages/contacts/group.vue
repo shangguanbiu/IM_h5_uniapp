@@ -2,7 +2,7 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-pink" :isBack="true" >
 			<template #backText></template>
-			<template #content>群聊列表</template>
+			<template #content>{{$t('group_sys.title')}}</template>
 			<template #right>
 				<view class="f-20 ml-10 mr-10" @tap="search()">
 					<text class="cuIcon-search"></text>
@@ -17,7 +17,7 @@
 					<view class="c-333">{{items.displayName}}</view>
 				</view>
 			</view>
-			<Empty v-if="!groupList.length" noDatatext="暂无群聊" textcolor="#999" ></Empty>
+			<Empty v-if="!groupList.length" :noDatatext="$t('group_sys.no_data')" textcolor="#999" ></Empty>
 		</view>
 
 	</view>

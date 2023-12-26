@@ -2,7 +2,7 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-pink" :isBack="true">
 			<template #backText></template>
-			<template #content>账号注册</template>
+			<template #content>{{$t('register.title')}}</template>
 		</cu-custom>
 		<view style="height:100rpx;"></view>
 		<view class="padding im-flex im-rows im-justify-content-center mb-10">
@@ -14,12 +14,12 @@
 		<view class="im-flex im-rows im-justify-content-center">{{globalConfig.sysInfo.name ?? packData.name}}</view>
 		<form>
 			<view class="cu-form-group margin-top">
-				<view class="title">账号</view>
-				<input placeholder="账号"  class="uni-input" maxlength="32" name="input" v-model="regForm.account" @input="handleInput"/>
+				<view class="title">{{$t('register.tit_l1')}}</view>
+				<input :placeholder="$t('register.tit_l1_p1')"  class="uni-input" maxlength="32" name="input" v-model="regForm.account" @input="handleInput"/>
 			</view>
 			<view class="cu-form-group margin-top">
-				<view class="title">用户名/昵称</view>
-				<input placeholder="请输入用户名或昵称"  maxlength="32" name="input" v-model="regForm.realname"/>
+				<view class="title">{{$t('register.tit_l2')}}</view>
+				<input :placeholder="$t('register.tit_l1_p2')"  maxlength="32" name="input" v-model="regForm.realname"/>
 			</view>
 			<!-- <view class="cu-form-group" v-if="parseInt(globalConfig.sysInfo.regauth)">
 				<view class="title">验证码</view>
@@ -28,23 +28,23 @@
 			</view> -->
 			
 			<view class="cu-form-group">
-				<view class="title">密码</view>
-				<input placeholder="请输入密码" maxlength="32" type="password" name="input" v-model="regForm.password"/>
+				<view class="title">{{$t('register.tit_l3')}}</view>
+				<input :placeholder="$t('register.tit_l1_p3')" maxlength="32" type="password" name="input" v-model="regForm.password"/>
 			</view>
 			<view class="cu-form-group">
-				<view class="title">重复密码</view>
-				<input placeholder="请重复输入密码" maxlength="32" type="password" name="input" v-model="regForm.repass"/>
+				<view class="title">{{$t('register.tit_l4')}}</view>
+				<input :placeholder="$t('register.tit_l1_p4')" maxlength="32" type="password" name="input" v-model="regForm.repass"/>
 			</view>
-			<view class="cu-form-group" >
+			<!-- <view class="cu-form-group" >
 				<view class="title">验证码</view>
 				<input placeholder="请输入验证码" maxlength="6" name="input" v-model="regForm.code"/>
 				<image :src="base_url+'/api/front/captcha/index?t='+time" @click="run_time" mode='widthFix'
 					style="width: 114px;"></image>
-				<!-- <button class='cu-btn bg-blue shadow' @tap="sendCode">发送验证码</button> -->
-			</view>
+				
+			</view> -->
 		</form>
 		<view class="flex flex-direction im-login-btn">
-			<button class="cu-btn lg bg-pink" @tap="check_yan_zm()">注册</button>
+			<button class="cu-btn lg bg-pink" @tap="login()">{{$t('register.ok')}}</button>
 		</view>
 		<view class="footer-version c-999">
 			{{globalConfig.sysInfo.name ?? packData.name}} for {{packData.version}}
@@ -136,28 +136,28 @@
 			login(){
 				if(this.regForm.account==""){
 					uni.showToast({
-						title: '请输入账号！',
+						title:this.$t('register.pop_tit1'),// '请输入账号！',
 						icon: "none"
 					});
 					return false;
 				}
 				if(this.regForm.realname==""){
 					uni.showToast({
-						title: '请输入用户名或者昵称！',
+						title:this.$t('register.pop_tit2'),//  '请输入用户名或者昵称！',
 						icon: "none"
 					});
 					return false;
 				}
 				if(this.regForm.password=="" && this.regForm.password.length<6 && this.regForm.password>16){
 					uni.showToast({
-						title: '请输入6-16位密码！',
+						title:this.$t('register.pop_tit3'),//  '请输入6-16位密码！',
 						icon: "none"
 					});
 					return false;
 				}
 				if(this.regForm.password!=this.regForm.repass){
 					uni.showToast({
-						title: '两次密码输入不相同！',
+						title: this.$t('register.pop_tit4'),// '两次密码输入不相同！',
 						icon: "none"
 					});
 					return false;
@@ -195,7 +195,7 @@
 					id: this.$util.getUuid(),
 					from_user: fromUser,
 					to_user: toContactid,
-					content: '欢迎加入喇叭花，我是人工接待员将为您24小时咨询服务',
+					content:this.$t('welcome'),// '欢迎加入喇叭花，我是人工接待员将为您24小时咨询服务',
 					create_time: new Date().getTime()/1000
 				}
 			

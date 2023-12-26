@@ -10,29 +10,29 @@
 		<view class="im-flex im-rows im-justify-content-center">{{globalConfig.sysInfo.name ?? packData.name}}</view>
 		<form>
 			<view class="cu-form-group margin-top">
-				<view class="title">账号</view>
-				<input placeholder="账号"  maxlength="32" name="input" v-model="loginForm.account"/>
+				<view class="title">{{$t('login.tit_l1')}}</view>
+				<input :placeholder="$t('login.tit_l1_p1')"  maxlength="32" name="input" v-model="loginForm.account"/>
 			</view>
 			<view class="cu-form-group" v-if="!forget">
-				<view class="title">密码</view>
-				<input placeholder="请输入密码" maxlength="32" type="password" name="input" v-model="loginForm.password"/>
+				<view class="title">{{$t('login.tit_l2')}}</view>
+				<input :placeholder="$t('login.tit_l1_p2')" maxlength="32" type="password" name="input" v-model="loginForm.password"/>
 			</view>
 			<view class="cu-form-group" v-else>
-				<view class="title">验证码</view>
-				<input placeholder="请输入验证码" maxlength="6" name="input" v-model="loginForm.code"/>
+				<view class="title">{{$t('login.tit_l3')}}</view>
+				<input :placeholder="$t('login.tit_l1_p3')" maxlength="6" name="input" v-model="loginForm.code"/>
 				<button class='cu-btn bg-blue shadow' @tap="sendCode">发送验证码</button>
 			</view>
 		</form>
 		<view class='forget'>
-			<view><switch class="switch" :checked="loginForm.rememberMe"  :class="loginForm.rememberMe?'checked':''" @change="switchChange"  style="transform:scale(0.7)" />记住我</view>
-			<view class="text-blue" @tap="to_kefu" v-show="!forget">忘记密码？点击联系客服</view>
+			<view><switch class="switch" :checked="loginForm.rememberMe"  :class="loginForm.rememberMe?'checked':''" @change="switchChange"  style="transform:scale(0.7)" />{{$t('login.tit_l4')}}</view>
+			<view class="text-blue" @tap="to_kefu" v-show="!forget">{{$t('login.tit_l5')}}</view>
 			
 		</view>
 		<view class="flex flex-direction im-login-btn">
-			<button class="cu-btn lg bg-pink" @tap="login()">登录</button>
+			<button class="cu-btn lg bg-pink" @tap="login()">{{$t('login.tit_l6')}}</button>
 		</view>
 		<view class="flex flex-direction im-reg-btn" v-if="globalConfig && globalConfig.sysInfo.regtype==1">
-			<button class=" cu-btn lg bg-white" @tap="register()">注册</button>
+			<button class=" cu-btn lg bg-white" @tap="register()">{{$t('login.tit_l7')}}</button>
 		</view>
 		<!-- <view class="m-20 c-666" v-if="globalConfig && globalConfig.demon_mode ">
 			<view class="f-16 remark-title mb-10">站点仅用于演示，演示账号</view>
@@ -124,14 +124,14 @@
 				}
 				if(this.loginForm.account==""){
 					uni.showToast({
-						title: '请输入账号！',
+						title: this.$t('login.pop_tit1'),//'请输入账号！',
 						icon: "none"
 					});
 					return false;
 				}
 				if(this.loginForm.password==""){
 					uni.showToast({
-						title: '请输入密码！',
+						title: this.$t('login.pop_tit2'),//'请输入密码！',
 						icon: "none"
 					});
 					return false;

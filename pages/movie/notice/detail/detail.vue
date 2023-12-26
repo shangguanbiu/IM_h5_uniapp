@@ -2,7 +2,7 @@
 	<view style="background-color: #190D30;">
 		<cu-custom bgColor="bg-gradual-pink" :isBack="true">
 			<template #backText></template>
-			<template #content>系统通知</template>
+			<template #content>{{$t('notice_list.title')}}</template>
 		</cu-custom>
 		<view class="mainare">
 			<view class="msgheadare">

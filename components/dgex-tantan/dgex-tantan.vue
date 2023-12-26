@@ -61,8 +61,8 @@
 											<view style="font-weight: normal; font-size: 13px;">{{item.ages}}</view>
 										</view>
 
-										<view>{{item.isfar+'km·'+item.istime+'分钟前活跃'}}</view>
-										<view class="about_more">查看详情 <view class="cuIcon-unfold"></view>
+										<view>{{item.isfar+'km·'+item.istime+$t('nearby.actie_time')}}</view>
+										<view class="about_more">{{$t('nearby.detail')}} <view class="cuIcon-unfold"></view>
 										</view>
 									</view>
 

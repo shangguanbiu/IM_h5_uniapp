@@ -2,7 +2,7 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-pink" :isBack="true">
 			<template #backText></template>
-			<template #content>喜欢我的TA</template>
+			<template #content>{{$t('like.title2')}}</template>
 		</cu-custom>
 		<view v-if="list.length !==0">
 			<view class="user_line" v-for="(people,t_index) in list" :key="t_index" v-show="t_index<4">
@@ -30,14 +30,14 @@
 						</view>
 						<view class="col_96" style="display: flex;width: 150px; justify-content: flex-end;">
 							<view>{{people.isfar}}km · </view>
-							<view v-if="people.ifonline">在线</view>
-							<view v-if="!people.ifonline">{{people.istime}}小时</view>
+							<view v-if="people.ifonline">{{$t('like.like_msg_1')}}</view>
+							<view v-if="!people.ifonline">{{people.istime}}{{$t('like.like_msg_2')}}</view>
 						</view>
 					</view>
 					<view style="margin: 5px 0; text-align: right;">
-						<view class="item_btn" @tap="bet_talk(people)">打招呼</view>
+						<view class="item_btn" @tap="bet_talk(people)">{{$t('like.talk')}}</view>
 					</view>
-					<view v-if="people.motto !==''&&people.motto !==null" class="motto">签名：{{people.motto}}</view>
+					<view v-if="people.motto !==''&&people.motto !==null" class="motto">{{$t('like.sine')}}：{{people.motto}}</view>
 					<!-- <view style=" max-height: 84px;">
 						<view style="display: flex;padding: 10px 0; flex-wrap: wrap;" v-if="people.tags !==null && people.tags !==''">
 							<view :class="'item_'+t_tag"  v-for="(tagitem,t_tag) in people.tags.split(',')" :key="t_tag">{{tagitem}}</view>
@@ -49,7 +49,7 @@
 			</view>
 
 		</view>
-		<Empty v-else noDatatext="暂无记录" textcolor="#999" />
+		<Empty v-else :noDatatext="$t('like.no_data')" textcolor="#999" />
 		<view v-show="show_talk">
 			<view class="com_bg" @tap="show_talk=false"></view>
 			<view class="talk_mian">
@@ -83,11 +83,11 @@
 					</view>
 					<view class="talk_form">
 						<view style="padding-left: 10px;">
-							<input placeholder="随意打个招呼吧" style="height: 32px; font-size: 14px;" maxlength="32"
+							<input :placeholder="$t('like.talk_desc_1')" style="height: 32px; font-size: 14px;" maxlength="32"
 								name="input" v-model="send_content" />
 						</view>
 						<view>
-							<button class='cu-btn bg-blue shadow' @tap="check_if_friend(talk_data.user_id)">发送</button>
+							<button class='cu-btn bg-blue shadow' @tap="check_if_friend(talk_data.user_id)">{{$t('like.send')}}</button>
 						</view>
 					</view>
 				</view>
@@ -97,15 +97,15 @@
 			<view class="com_bg"></view>
 			<view class="com_main">
 				<view class="pop_mian">
-					<view class="pop_title">提示</view>
+					<view class="pop_title">{{$t('pop.title')}}</view>
 					<view style="padding: 10px 15px;  line-height: 25px; flex-wrap: wrap; text-align: center;">
 						{{notice_content}}
 					</view>
 
 					<view class="pop_foot">
-						<view class="pop_ft_btn1" v-if="notice_type==1" @tap="pop_notice=false">关闭</view>
-						<view class="pop_ft_btn2" @tap="pop_ok()" v-if="notice_type==1">去升级</view>
-						<view class="pop_ft_btn2" @tap="pop_notice=false" v-if="notice_type==2">确定</view>
+						<view class="pop_ft_btn1" v-if="notice_type==1" @tap="pop_notice=false">{{$t('pop.close')}}</view>
+						<view class="pop_ft_btn2" @tap="pop_ok()" v-if="notice_type==1">{{$t('pop.up')}}</view>
+						<view class="pop_ft_btn2" @tap="pop_notice=false" v-if="notice_type==2">{{$t('pop.ok')}}</view>
 					</view>
 				</view>
 			</view>
@@ -122,7 +122,7 @@
 			return {
 				pop_notice: false,
 				notice_type: 1,
-				notice_content: "您当前可打招呼次数已达到每日限制，联更多的TA可开通会员，请联系客服",
+				notice_content: this.$t('pop.content4'),//"您当前可打招呼次数已达到每日限制，联更多的TA可开通会员，请联系客服",
 				paddingB: 0,
 				total: 0,
 				 
@@ -246,7 +246,7 @@
 							// 	icon: "success"
 							// })
 							this.show_talk = false
-							this.notice_content = '已打招呼，等待TA的回应！可在下方栏目-消息中查看'
+							this.notice_content =this.$t('pop.content6')// '已打招呼，等待TA的回应！可在下方栏目-消息中查看'
 							this.pop_notice = true
 							this.notice_type = 2
 							

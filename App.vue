@@ -145,7 +145,7 @@
 			this.appStatus=true;
 			var ifhad=uni.getStorageSync('language')
 			if(ifhad ==''||ifhad ==undefined){
-				uni.setStorageSync('language','zh')
+				uni.setStorageSync('language','zhCN')
 			}
 			
 			console.log('App Show')

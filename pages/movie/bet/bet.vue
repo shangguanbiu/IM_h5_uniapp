@@ -359,14 +359,14 @@
 				
 				if (Number(this.bet_num) > Number(this.max_num)) {
 					uni.showToast({
-						title: '积分不足！',
+						title: this.$t('bet.pop_tit1'),
 						icon: "none"
 					});
 					return
 				}
 				if (Number(this.bet_num) < 0 || Number(this.bet_num) == 0) {
 					uni.showToast({
-						title: '请输入积分！',
+						title:this.$t('bet.pop_tit2'),
 						icon: "none"
 					});
 					return
@@ -380,7 +380,7 @@
 				})
 				if(ids.length==0){
 					uni.showToast({
-						title: '请选择投票对象！',
+						title: this.$t('bet.pop_tit3'),
 						icon: "none"
 					});
 					return
@@ -397,9 +397,10 @@
 				})
 				if (res.code == 200) {
 					uni.showToast({
-						title: '投票成功！',
+						title: this.$t('bet.pop_tit4'),
 						icon: "success"
 					});
+					this.bet_num=''
 					this.Number_arr.forEach((item) => {
 						item.ifhad = false
 

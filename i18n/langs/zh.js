@@ -12,13 +12,18 @@ export default{
 		nav3:"投票",
 		nav4:"附近的人",
 	},
-	
+	welcome:'欢迎加入喇叭花，我是人工接待员将为您24小时咨询服务',
 	pop:{
 		title:"提示",
 		content1:'您当前为普通用户暂无权限查看喜欢我的TA，查看更多可开通会员，请联系客服',
 		content2:'您当前可观看浏览视频数量已达到每日限制，观看更多可开通会员，请联系客服',
+		content3:"您当前浏览附近的人已达到喜欢的每日限制，观看更多可开通会员，请联系客服",
+		content4:"您当前可打招呼次数已达到每日限制，更多权限可升级会员，请联系客服",
+		content5:'您当前可点击喜欢TA的次数已达到每日限制，更多权限可升级会员，请联系客服',
+		content6:'已打招呼，等待TA的回应！可在栏目-消息中查看',
 		close:'关闭',
-		up:'去升级'
+		up:'去升级',
+		ok:'确定',
 	},
 	index:{
 		part_1:'今日推荐',
@@ -35,7 +40,7 @@ export default{
 		l_nav4:'账号安全',
 		login_put:"退出登录",
 		vip_p_title:"VIP会员",
-		vip_p_open:"立即升级",
+		vip_p_open:"立即开通",
 		vip_p_up:'立即升级',
 		vip_p_desc1:'暂未激活会员',
 		vip_p_desc2:'月卡VIP',
@@ -47,8 +52,6 @@ export default{
 		vip_p_desc7:'年',
 		vip_p_desc8:'￥',
 
-		
-		
 		vip_p_main:"VIP特权",
 		vip_p_nav1:"查看我喜欢了谁",
 		vip_p_nav1_1:" 我喜欢了TA！查看我念念不忘的TA ",
@@ -101,178 +104,294 @@ export default{
 		bet_tit_1:"投票积分",
 		reset:'重置',
 		set_ok:"投票",
-		close:'关闭'
+		close:'关闭',
+		pop_tit1:'积分不足',
+		pop_tit2:'请输入积分',
+		pop_tit3:'请选择投票对象',
+		pop_tit4:'投票成功',
 	},
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	"Language": '语言',
-	"Home": '首页',
-	"Recharge": "充值",
-	"Service": "客服",
-	"My": "我的",
-
-	"Index_menu1": "娱乐大厅",
-	"Noitce": "是否登陆",
-	"ifout": "是否退出",
-	"Close": "关闭",
-	"To_Login": "立即登陆",
-	"No_login": '您还未登陆！请登陆~',
-	"log_Out": '退出登陆',
-	"Update_psw": '修改登陆密码',
-	'if_logout': "是否确定退出登陆！",
-
-
-	updatepsw: {
-		"update_title": '修改登陆密码',
-		"old_psw": '请输入旧密码',
-		"new_psw": '请输入新密码',
-		"renew_psw": '请再次輸入新密码',
-		"save": '保存',
-		"msg1":"兩次密码输入不相同",
-		"msg2":"请完善密码输入",
-		"msg3":"提交中",
-		"msg4":"密码已修改成功",
-	},
-	"service": '客服',
-	get_cash: {
-		"title": '申请提现',
-		'number': "提现金额",
-		"can_get": '当前可提现余额',
-		"danwei": '港元',
-		"get_all": '全部提现',
-		'need_bet': "提现还需打码量",
-		'bet_ok': '打码量已达标',
-		'get_status': '提现状态',
-		'get_now_No': '当前提现金额',
-		'btn_get': "提现",
-		'get_notice1': '提现打码量不足',
-		'get_notice2': '请输入金额',
-		'get_notice3': '请输入正确格式金额，大于0的数字',
-		'get_notice4': '最高可提现金额为',
-		'get_success': '提交成功',
-		'set_flow1': '处理中',
-		'set_flow2': '转账中',
-		'set_flow3': '已成功',
-	},
-	login: {
-		'title': '账户登陆',
-		'account': "请输入账号",
-		'psw': "请输入密码",
-		'forget1': '忘记密码',
-		'connect_kf': '立即联系客服',
-		'status1': '登陆中',
-		'status2': '已登陆',
-		'btn_b1': '立即登陆',
-		'btn_b2': '免费注册',
-	},
-	room_m: {
-		'close_time1': '距离第',
-		'close_time2': '期封盘',
-		'close_statu': '封盘中',
-		
-		'yue': '余额',
-		'da': '大',
-		'xiao': '小',
-		'dan': '单',
-		'shuang': '双',
-
-		'qishu': '期数',
-		'he': '总和',
-		'jieguo': '结果',
-
-		'type': '交易类型',
-		'jine': '交易金额',
-
-		'bet_notice1': '本期已封盘，请停止下注',
-		'bet_btn1': '快速投注',
-		'bet_btn2': '退出',
-		'bet_nav1': '市場走势',
-		'bet_nav2': '在线客服',
-		'bet_nav3': '交易説明',
-
-		'game_type1': '大小单双',
-		'game_type2': '数字投注',
-		'game_type3': '特殊玩法',
-
-		'jine': '金额',
-		'pop_btn1': '重新交易',
-		'pop_btn2': '确认下注',
-		'pop_notice': '暂无內容',
-		'use_jine':"可用金额",
-		'limit_jine':"最低下注金额",
-		
-		'robet_name':"未设置昵称用户",
-		'lock':"您的账户已冻结，未能下注请咨询客服详情",
-		'lockgame':"已经封盘",
-		'msg1':'请输入投注金额',
-		'msg2':"可用余额不足",
-		'msg3':"单注最低投注额为",
-		'msg4':"单注最高投注额为",
-		'msg5':'投注中...',
-		"msg6":"已投注",
-		"msg7":"",
-		"msg8":"注",
-		"in_limit":'您金额不足，不可进入',
-		"more_list":"详情",
+	bet_list:{
+		title:'我的出票',
+		qihao:'期号',
+		jifen:'投票积分',
+		time:'投票时间',
+		toupiao:"投票",
+		bet_n1:'春',
+		bet_n2:'夏',
+		bet_n3:'秋',
+		bet_n4:'冬',
+		no_data:'暂无记录',
+		reload:"下拉刷新",
+		loading:'加载中',
 		
 	},
-	reg: {
-		'title': "账户注册",
-		'account': "请输入您的账号-输入至少任意6字符",
-		"psw": "请输您的密码-输入至少任意6字符的密码",
-		"repsw": '请再次输入您的密码-输入至少任意6字符',
-		"phone": "请输入您的手机号码",
-		"code_invite": "请输入邀请码",
-		"code": "请输入图形码",
-		"reg_btn1": "免费注册",
-		"reg_btn2": "立即登录",
-		"reg_msg":'兩次密码输入不相同！',
-		"subimt":"提交中...",
-		"success":"注册成功"
+	nearby:{
+		title:'附近的人',
+		detail:'查看详情',
+		actie_time:'分钟前活跃',
+		actie_time2:'分钟前活跃',
+		like_ta:"人喜欢了TA",
+		about_me:"关于我",
+		talk:'打招呼',
+		like:'喜欢',
 	},
-	zoushi:{
-		"title":'走势图',
-		"qihao":'期号',
-		"zhi":'值',
-		"da":"大",
-		"xiao":'小',
-		"dan":'单',
-		"shuang":"双"
+	
+	message:{
+		group_title:"群聊",
+		no_read:'条未读',
+		cancle_top:'取消置顶',
+		set_top:'置顶聊天',
+		set_notice:"免扰",
+		cancle_notice:'取消免扰',
+		del_talk:'删除会话',
+		no_data:'暂无聊天',
+		reedit:'重新编辑',
+		read:'已读',
+		unread:"未读",
+		close:'关闭',
+		reback:"撤回消息",
+		copy:"复制",
+		re_turn:"转发",
+		quxiao:"取消",
+		copyTxt_t1:"文本",
+		copyTxt_t2:"消息",
+		copyTxt_t3:"图片链接",
+		copyTxt_t4:"文件链接",
+		reback_msg:"你撤回了一条消息",
+		pop_tit1:'系统已关闭单聊，或者群已开启禁言，无法发送消息',
+		pop_tit2:'文件大小不能超过10M',
+		
+		msg_tit:'聊天信息',
+		msg_add:'添加成员',
+		msg_remove:'移除成员',
+		msg_see:"查看全部群成员",
+		msg_group_name:'群聊名称',
+		msg_group_notice:'群公告',
+		msg_group_nonotice:'暂无公告',
+		msg_group_guanli:"群管理",
+		msg_group_rename:'修改群名称',
+		msg_group_set_no:"消息免打扰",
+		msg_group_set_top:"置顶聊天",
+		msg_group_close:"解散群聊",
+		msg_group_out:"退出群聊",
+		save:'保存',
+		msg_group_notice2:'请输入公告内容...',
+		msg_group_set_t1:'仅群主和群管理员可以管理',
+		msg_group_set_t2:'启用后，其他成员不能修改群名称，编辑公告等',
+		msg_group_set_t3:'允许群成员邀请',
+		msg_group_set_t4:'启用后，其他成员可以邀请其他人加入群聊',
+		msg_group_set_t5:"允许添加群成员为好友",
+		msg_group_set_t6:'启用后，成员可以互相查看资料并添加为好友或发消息',
+		msg_group_set_t7:'群聊禁言',
+		msg_group_close2:'关闭',
+		msg_group_set_r1:'仅管理员可发言',
+		msg_group_set_r2:'仅群主可发言',
+		pop_no_t1:'确定要',
+		pop_no_t2:'已开启用户隐私！',
+		pop_no_t3:"确定要删除吗?"
 	},
-	notice:{
-		"title":'系统通知',
-		"see_more":"查看详情",
-		"no_msg":'暂无內容',
-		"no_record":'暂无记录'
+	contact:{
+		title:'个人信息',
+		remarks:'备注',
+		no_set:'未设置',
+		emial:'邮箱',
+		sex:'性别',
+		sex_nan:'男',
+		sex_nv:'女',
+		no_msg:'未知',
+		send_msg:'发消息',
+		call:'打电话',
+		video:'音视频通话',
+		del_friend:'删除好友',
+		add_friend:'加好友',
+		video_yuyin:'语音通话',
+		video_shiping:'视频通话',
+		close:'取消',
+		other:'其他终端正在通话中',
+		
+		sure_del:"确定要删除该好友吗？",
+		check_msg:'请输入验证信息',
+		check_remark:"请输入备注！",
+		can_not_set:'无法设置',
+		check_remark2:"请输入备注信息",
+		check_remark3:'请输入好友备注！',
+		
+		invite:'新邀请',
+		group_tit:'群聊',
+		total:"个朋友",
+		no_user:'暂无联系人',
+		search_placeholder:'输入搜索的关键词',
+		
+		search_title:'搜索朋友',
+		search:"请输入用户账号进行搜索",
+		search_btn:'搜索',
+		see_more:"查看",
+		no_data:"暂无数据",
+		search_no_data:"未搜索到数据",
+		search_pop:"请输入用户账号进行搜索"
 	},
-	online_server:"在线客服",whats_app:"WhatsApp"
+	
+	friend:{
+		title:'新邀请',
+		replay_add:'申请添加您为好友',
+		reback:"已拒绝",
+		send:'发消息',
+		control:'操作',
+		talk:'打了招呼',
+		jujue:'已拒绝',
+		retalk:'再打招呼',
+		wait_tongyi:'待同意',
+		no_data:'暂无群聊',
+		send_by_me:'我发起的',
+		send_for_me:'我收到的',
+		pop_tit:"可去附近的人打招呼",
+		pop_n1:"提示",
+		pop_n2:"你确定同意该好友的请求吗",
+		pop_n3:"拒绝",
+		pop_n4:"接受",
+	},
+	group_sys:{
+		title:'群聊列表',
+		no_data:'暂无群聊',
+		user_list:'群成员',
+		search_placeholder:"输入搜索的关键词",
+		role_t1:"群主",
+		role_t2:"管理员",
+		search_no_data:'未搜索到数据',
+		change_admin:'转让管理权限',
+		role_set_t1:'取消管理员',
+		role_set_t2:'设为管理员',
+		out_group:'移出群聊',
+		ok:"取消",
+		pop_tit1:'确定要删除该成员吗',
+		pop_tit2:'确定将管理权限转移给该成员吗?',
+		pop_tit3:'已开启用户隐私！',
+		
+		message_tit:"群信息",
+		message_tit2:"加入群聊",
+		message_tit3:"进入聊天",
+		pop_tit4:'该群聊已经关闭加群申请',
+		
+		call_title:"通话"
+	},
+	like:{
+		title:'我喜欢的TA',
+		sex_nv:"女",
+		sex_nan:"男",
+		sine:"签名",
+		no_data:'暂无记录',
+		title2:'喜欢我的TA',
+		like_msg_1:"在线",
+		like_msg_1:"小时",
+		talk:"打招呼",
+		talk_desc_1:"随意打个招呼吧",
+		send:"发送"
+	},
+	mine:{
+		title:"个人信息",
+		icon:'头像',
+		fengmian:"",
+		account:'账号',
+		jifen:'积分',
+		ming:'姓名',
+		nickname:'昵称',
+		emial:'请输入email地址',
+		age:'年纪',
+		age_num:"请输入数字",
+		sex:'性别',
+		sine:'个性签名',
+		sine_place:'请输入个性签名',
+		save:'保存',
+		sex_nan:'男',
+		sex_nv:'女',
+		no_msg:'未知',
+		set_t_1:"请输入昵称",
+		set_t_2:"保存成功",
+		set_t_3:"上传中...",
+		
+	},
+	safe:{
+		title:"账号安全",
+		account:"我的账号",
+		update_psw:'修改密码',
+		save:'保存',
+		close:'取消',
+		old_psw:'原密码',
+		old_psw_1:"输入原来的密码",
+		new_psw:'新密码',
+		new_psw_1:"输入新的密码",
+		renew_psw:'重复新密码',
+		renew_psw_1:"重复输入新密码",
+	},
+	set:{
+		title:'通用设置',
+		new_msg:'新消息',
+		notice_t:"声音",
+		notice_t1:"震动",
+		notice_t2:"其他设置",
+		notice_t3:"圆形头像",
+		language:'语言',
+		ok:'确定',
+		pop_tit1:"中文",
+		pop_tit2:"繁体中文",
+		pop_tit3:"English",
+	},
+	
+	server:{
+		title:'客服',
+		meiqia:"在线客服",
+		whatapp:"WhatsApp"
+	},
+	list:{
+		no_data:'暂无记录',
+		type_hot:"热门分类",
+		all:'全部',
+		close:'关闭',
+		title:"影院"
+	},
+	notice_list:{
+		title:"系统通知",
+		more:"查看详情",
+		no_data:'暂无通知记录...',
+		load_m1:'上拉加载更多',
+		load_m2:'正在加载...',
+		load_m3:'沒有更多数据了',
+	},
+	login:{
+		tit_l1:'账号',
+		tit_l1_p1:'账号',
+		tit_l2:'密码',
+		tit_l1_p2:'请输入密码',
+		tit_l3:'验证码',
+		tit_l1_p3:'请输入验证码',
+		
+		tit_l4:'记住我',
+		tit_l5:'忘记密码？点击联系客服',
+		
+		tit_l6:'登录',
+		tit_l7:'注册',
+		
+		pop_tit1:'请输入账号！',
+		pop_tit2:'请输入密码！',
+		
+	},
+	register:{
+		title:'账号注册',
+		tit_l1:'账号',
+		tit_l1_p1:'账号',
+		tit_l2:'用户名/昵称',
+		tit_l1_p2:'请输入用户名或昵称',
+		tit_l3:'密码',
+		tit_l1_p3:'请输入密码',
+		tit_l4:'重复密码',
+		tit_l1_p4:'请重复输入密码',
+		ok:'注册',
+		pop_tit1:"请输入账号！",
+		pop_tit2:"请输入用户名或者昵称！",
+		pop_tit3:"请输入6-16位密码！",
+		pop_tit4:"两次密码输入不相同！",
+	},
+	
+	
+	
 }

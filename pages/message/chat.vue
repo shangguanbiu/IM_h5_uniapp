@@ -4,7 +4,7 @@
 		<cu-custom bgColor="bg-white" :isBack="true" class="cu-header">
 			<template #backText></template>
 			<template #content>
-				<view class="im-flex im-justify-content-center im-align-items-center">	<Tags v-if="is_group==1" text="群聊" size="mini" />
+				<view class="im-flex im-justify-content-center im-align-items-center">	<Tags v-if="is_group==1" :text="$t('message.group_title')" size="mini" />
 					<statusPoint v-if="is_group==0 && contact.is_online==1 && globalConfig.chatInfo.online==1" type="success"></statusPoint><text class="text-overflow">{{contact.displayName}}</text>
 				</view>
 			</template>
@@ -16,7 +16,7 @@
 		<view class="cu-chat" :style="{paddingBottom:paddingB+'px'}" @click="closeInput" id="more-oprate">
 			<uni-load-more :status="loading"></uni-load-more>
 			<template v-for="(item,index) in messageList" :key="index" :id="'chatItem_'+index">
-				<view class="cu-info"  v-if="item.type=='event'">{{item.content}} <text class="c-primary" v-if="item.is_undo==1 && (getTime() - item.sendTime) < 120000" @tap="reEdit(item.oldContent ?? '')">重新编辑</text></view>
+				<view class="cu-info"  v-if="item.type=='event'">{{item.content}} <text class="c-primary" v-if="item.is_undo==1 && (getTime() - item.sendTime) < 120000" @tap="reEdit(item.oldContent ?? '')">{{$t('message.reedit')}}</text></view>
 				<template v-else>
 					<view class="cu-item" :class="[item.fromUser.id==user.user_id ? 'im-rows-reverse self im-justify-content-start' : '' ]">
 						<im-user :info="item.fromUser" :profile="isProfile"></im-user>
@@ -67,12 +67,12 @@
 							<view class="cuIcon-icloading icon-spin c-999" v-if="item.status=='going'"></view>
 							<view class="cuIcon-infofill c-red" v-if="item.status=='failed'" @tap="reSend(item)"></view>
 						</view>
-						<view class="date"><text v-if="item.is_group==0 && item.fromUser.id==user.user_id" :class="item.is_read ? 'c-success' : 'c-gray'">{{item.is_read ? "已读" : "未读"}}</text> {{sendTime(item.sendTime)}} </view>
+						<view class="date"><text v-if="item.is_group==0 && item.fromUser.id==user.user_id" :class="item.is_read ? 'c-success' : 'c-gray'">{{item.is_read ? $t('message.read') : $t('message.unread')}}</text> {{sendTime(item.sendTime)}} </view>
 					</view>
 				</template>
 			</template>
 			<view v-if="videoModel" class="video-model im-flex im-align-items-center" >
-				<view class="c-white radius-16 close-model" @tap="closeModel">关闭 </view>
+				<view class="c-white radius-16 close-model" @tap="closeModel">{{$t('message.close')}} </view>
 				<video class="video-box" id="myVideo"  :src="videoUrl"  controls autoplay="autoplay"></video>
 			</view>
 			
@@ -88,25 +88,25 @@
 						<view class="cu-item" @tap="undoMsg()" v-if="(getTime() - curMsg.sendTime < 120000 && curMsg.fromUser.id==user.user_id) || contact.role<3">
 							<view class="content padding-tb-sm">
 								<text class="cuIcon-repeal"></text>
-								<text>撤回消息</text>
+								<text>{{$t('message.reback')}} </text>
 							</view>
 						</view>
 						<view class="cu-item" @tap="copyMsg()">
 							<view class="content padding-tb-sm">
 								<text class="cuIcon-copy"></text>
-								<text>复制{{copyTxt}}</text>
+								<text>{{$t('message.copy')}} {{copyTxt}}</text>
 							</view>
 						</view>
 						<view class="cu-item" @tap="forwardMsg()" v-if="curMsg.type!='voice'">
 							<view class="content padding-tb-sm">
 								<text class="cuIcon-forward"></text>
-								<text>转发</text>
+								<text>{{$t('message.re_turn')}} </text>
 							</view>
 						</view>
 						<view class="parting-line-5"></view>
 						<view class="cu-item" @tap="modelName=''">
 							<view class="content padding-tb-sm">
-								<text class="c-red">取消</text>
+								<text class="c-red">{{$t('message.quxiao')}} </text>
 							</view>
 						</view>
 
@@ -122,7 +122,7 @@
 				<view class="cu-list menu bg-white">
 					<view class="cu-item"  @tap='closeMusic()'>
 						<view class="content padding-tb-sm">
-							<text>关闭</text>
+							<text>>{{$t('message.close')}}</text>
 						</view>
 					</view>
 				</view>
@@ -131,8 +131,8 @@
 		<view class="cu-modal bottom-modal" :class="modelName=='copyModel'?'show':''">
 			<view class="cu-dialog">
 				<view class="cu-bar bg-white">
-					<view class="action text-gray" @tap="modelName=''">取消</view>
-					<view class="action text-green" @tap="copyMsg()">复制</view>
+					<view class="action text-gray" @tap="modelName=''">{{$t('message.quxiao')}}</view>
+					<view class="action text-green" @tap="copyMsg()">{{$t('message.copy')}}</view>
 				</view>
 				<scroll-view scroll-y="true" :style="{height:scrollH+'rpx'}">
 					<view class="pd-20 text-container">
@@ -200,7 +200,7 @@
 				modelName:'',
 				curMsg:'',
 				isSending:false,
-				copyTxt:'文本',
+				copyTxt:this.$t('message.copyTxt_t1'),
 				wsData:null,
 				timer:null,
 				lastTapDiffTime: 0,
@@ -516,11 +516,11 @@
 				this.timer = setTimeout(() => {
 					this.curMsg=item;
 					if(item.type=="text"){
-						this.copyTxt="消息";
+						this.copyTxt=this.$t('message.copyTxt_t2');//"消息";
 					}else if(item.type=="image"){
-						this.copyTxt="图片链接";
+						this.copyTxt=this.$t('message.copyTxt_t3');//"图片链接";
 					}else{
-						this.copyTxt="文件链接";
+						this.copyTxt=this.$t('message.copyTxt_t4');//"文件链接";
 					}
 					this.modelName='moreOpt';
 				}, 1000); // 设置为 1 秒
@@ -534,7 +534,7 @@
 					  id: message.id,
 					  type: "event",
 					  is_undo:1,
-					  content: '你撤回了一条消息',
+					  content: this.$t('message.reback_msg'),//'你撤回了一条消息',
 					  oldContent:message.content,
 					  toContactId: message.toContactId,
 					};
@@ -599,7 +599,7 @@
 				if((!this.globalConfig.chatInfo.simpleChat && this.is_group == 0) || !this.nospeak()){
 					//已开启禁言
 					uni.showToast({
-						title: '系统已关闭单聊，或者群已开启禁言，无法发送消息',
+						title:this.$t('message.pop_tit1'),// '系统已关闭单聊，或者群已开启禁言，无法发送消息',
 						icon: "none"
 					})
 					return;
@@ -635,7 +635,7 @@
 					var self=this;
 					if(message.fileSize>10240000){
 						return uni.showToast({
-							title: '文件大小不能超过10M',
+							title: this.$t('message.pop_tit2'),//'文件大小不能超过10M',
 							icon:'error'
 						})
 					}

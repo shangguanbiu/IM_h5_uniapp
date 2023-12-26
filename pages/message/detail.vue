@@ -3,7 +3,7 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-pink" :isBack="true" >
 			<template #backText></template>
-			<template #content>聊天信息</template>
+			<template #content>{{$t('message.msg_tit')}}</template>
 		</cu-custom>
 		<view>
 			<view class="bg-white">
@@ -16,18 +16,18 @@
 						<view class="user-opt radius-8" style='margin:auto' @tap='editUser(2)'>
 							<view class="icon cuIcon-add f-24"></view>
 						</view>
-						<view class="f-11 mt-5">添加成员</view>
+						<view class="f-11 mt-5">{{$t('message.msg_add')}}</view>
 					</view>
 					<view class="user-info mt-20" v-if="isAuth">
 						<view class="user-opt radius-8" style='margin:auto' @tap='manageUser()'>
 							<view class="icon cuIcon-move f-24"></view>
 						</view>
-						<view class="f-11 mt-5">移除成员</view>
+						<view class="f-11 mt-5">{{$t('message.msg_remove')}}</view>
 					</view>
 				</view>
 				<navigator v-if="is_group==1" class="mt-10" :url="`/pages/message/group/groupUser?group_id=${contact_id}`">
 					<view class="text-center pb-15 pt-15 im-flex im-justify-content-center im-align-items-center">
-						<text class="gui-list-title-text gui-list-one-line gui-primary-color">查看全部群成员</text>
+						<text class="gui-list-title-text gui-list-one-line gui-primary-color">{{$t('message.msg_see')}}</text>
 						<text class="gui-list-title-desc gui-color-gray">{{allUser.length}}人</text>
 						<text class="cuIcon-right"></text>
 					</view>
@@ -38,7 +38,7 @@
 			<view class="cu-list menu mt-15 bg-white" v-if="is_group==1">
 				<view class="cu-item"  @click="open">
 					<view class="content padding-tb-sm">
-						<view> 群聊名称 </view>
+						<view> {{$t('message.msg_group_name')}} </view>
 					</view>
 					<view class="action">
 						<view class="text-grey">{{contact.displayName}} <text class="cuIcon-right"></text></view>
@@ -54,12 +54,12 @@
 				</view> -->
 				<view class="cu-item"  @tap="openModel('notice')">
 					<view class="content padding-tb-sm">
-						<view> 群公告 </view>
+						<view> {{$t('message.msg_group_notice')}} </view>
 					</view>
 					<view class="action" style="width:80%">
 						<view class="text-grey im-flex im-justify-content-end">
 							<view class="text-overflow notice-line">
-								{{contact.notice ?? '暂无公告'}}
+								{{contact.notice ?? $t('message.msg_group_nonotice')}}
 							</view>
 							<text class="cuIcon-right"></text>
 						</view>
@@ -67,14 +67,14 @@
 				</view>
 				<view class="cu-item"  v-if="isAuth" @tap="openModel('manage')">
 					<view class="content padding-tb-sm">
-						<view> 群管理 </view>
+						<view> {{$t('message.msg_group_guanli')}}  </view>
 					</view>
 					<view class="action">
 						<view class="text-grey"><text class="cuIcon-right"></text></view>
 					</view>
 				</view>
 				<uni-popup ref="popup" type="dialog">
-					<uni-popup-dialog mode="input" :value="contact.displayName" title="修改群名称" :duration="2000" :before-close="true" @close="closePop" @confirm="editGroupName">
+					<uni-popup-dialog mode="input" :value="contact.displayName" :title="$t('message.msg_group_rename')" :duration="2000" :before-close="true" @close="closePop" @confirm="editGroupName">
 						
 					</uni-popup-dialog>
 				</uni-popup>
@@ -83,7 +83,7 @@
 			<view class="cu-list menu mt-15 bg-white">
 				<view class="cu-item">
 					<view class="content padding-tb-sm">
-						<view> 消息免打扰 </view>
+						<view> {{$t('message.msg_group_set_no')}} </view>
 					</view>
 					<view class="action">
 						<switch class="switch" @change="setIsNotice" :class="!contact.is_notice?'checked':''" :checked="!contact.is_notice?true:false"></switch>
@@ -91,7 +91,7 @@
 				</view>
 				<view class="cu-item">
 					<view class="content padding-tb-sm">
-						<view> 置顶聊天 </view>
+						<view> {{$t('message.msg_group_set_top')}} </view>
 					</view>
 					<view class="action">
 						<switch class="switch" @change="setIsTop" :class="contact.is_top?'checked':''" :checked="contact.is_top?true:false"></switch>
@@ -112,33 +112,33 @@
 			
 			<view class="cu-list menu mt-15 bg-white" v-if="is_group==1" @tap="removeGroup">
 				<view class="cu-item text-center delete-btn">
-					<text class="c-red">{{isAdmin ? '解散群聊' : '退出群聊'  }}</text>
+					<text class="c-red">{{isAdmin ? $t('message.msg_group_close') : $t('message.msg_group_out')  }}</text>
 				</view>
 			</view>
 			<view class="parting-line-20"></view>
 			<view class="cu-modal bottom-modal" :class="modelName=='notice'?'show':''">
 				<view class="cu-dialog">
 					<view class="cu-bar bg-white">
-						<view class="action text-gray" @tap="closeModel">取消</view>
-						<view class="action text-green" @tap="editNotice">保存</view>
+						<view class="action text-gray" @tap="closeModel">{{$t('message.quxiao')}}</view>
+						<view class="action text-green" @tap="editNotice">{{$t('message.save')}}</view>
 					</view>
 					<view class="notice-content">
-						<textarea class="im-textarea" maxlength="-1" :disabled="!isAuth" v-model="contact.notice" @input="textareaAInput" placeholder="请输入公告内容..."></textarea>
+						<textarea class="im-textarea" maxlength="-1" :disabled="!isAuth" v-model="contact.notice" @input="textareaAInput" :placeholder="$t('message.msg_group_notice2')"></textarea>
 					</view>
 				</view>
 			</view>
 			<view class="cu-modal bottom-modal" :class="modelName=='manage'?'show':''">
 				<view class="cu-dialog">
 					<view class="cu-bar bg-white">
-						<view class="action text-gray" @tap="closeModel">取消</view>
-						<view class="action text-green" @tap="saveManage">保存</view>
+						<view class="action text-gray" @tap="closeModel">{{$t('message.quxiao')}}</view>
+						<view class="action text-green" @tap="saveManage">{{$t('message.save')}}</view>
 					</view>
 					<view class="manage-content">
 						<view class="cu-list menu mt-15 bg-white">
 							<view class="cu-item">
 								<view class="content padding-tb-sm">
-									<view>仅群主和群管理员可以管理</view>
-									<view class="text-gray text-sm"> 启用后，其他成员不能修改群名称，编辑公告等</view>
+									<view>{{$t('message.msg_group_set_t1')}}</view>
+									<view class="text-gray text-sm">{{$t('message.msg_group_set_t2')}} </view>
 								</view>
 								<view class="action">
 									<switch class="switch" @change="setManage" :class="contact.setting.manage=='1'?'checked':''" :checked="contact.setting.manage=='1'?true:false"></switch>
@@ -146,8 +146,8 @@
 							</view>
 							<view class="cu-item">
 								<view class="content padding-tb-sm">
-									<view>允许群成员邀请</view>
-									<view class="text-gray text-sm">启用后，其他成员可以邀请其他人加入群聊</view>
+									<view>{{$t('message.msg_group_set_t3')}}</view>
+									<view class="text-gray text-sm">{{$t('message.msg_group_set_t4')}}</view>
 								</view>
 								<view class="action">
 									<switch class="switch"  @change="setInvite" :class="contact.setting.invite=='1'?'checked':''" :checked="contact.setting.invite=='1'?true:false"></switch>
@@ -155,14 +155,14 @@
 							</view>
 							<view class="cu-item">
 								<view class="content padding-tb-sm">
-									<view>允许添加群成员为好友</view>
-									<view class="text-gray text-sm">启用后，成员可以互相查看资料并添加为好友或发消息</view>
+									<view>{{$t('message.msg_group_set_t5')}}</view>
+									<view class="text-gray text-sm">{{$t('message.msg_group_set_t6')}}</view>
 								</view>
 								<view class="action">
 									<switch class="switch"  @change="setProfile" :class="contact.setting.profile=='1'?'checked':''" :checked="contact.setting.profile=='1'?true:false"></switch>
 								</view>
 							</view>
-							<uni-section title="群聊禁言" type="line">
+							<uni-section :title="$t('message.msg_group_set_t7')" type="line">
 								<radio-group class="block" @change="setSpeak">
 									<view class="cu-form-group" v-for="item in radioList">
 										<view class="title">{{item.label}}</view>
@@ -228,15 +228,15 @@
 					},
 				],
 				radioList: [{
-						label: "关闭",
+						label: this.$t('message.msg_group_close2'),//"关闭",
 						value: 0
 					},
 					{
-						label: "仅管理员可发言",
+						label: this.$t('message.msg_group_set_r1'),//"仅管理员可发言",
 						value: 1
 					},
 					{
-						label: "仅群主可发言",
+						label: this.$t('msg_group_set_r2'),//"仅群主可发言",
 						value: 2
 					},
 				],
@@ -338,10 +338,10 @@
 			//移除群聊
 			removeGroup() {
 				// 如果是群主就解散群聊，否则就退出群聊
-				let txt="退出群聊";
-				if(this.isAdmin) txt="解散群聊";
+				let txt=this.$t('message.msg_group_out')//"退出群聊";
+				if(this.isAdmin) txt=this.$t('message.msg_group_close')//"解散群聊";
 				uni.showModal({
-					title: '确定要'+txt+'吗?',
+					title: this.$t('message.pop_no_t1')+txt+'?',
 					success: e => {
 						if (e.confirm) {
 							if(this.isAdmin){
@@ -429,7 +429,7 @@
 					})
 				}else{
 					uni.showToast({
-						title:'已开启用户隐私！',
+						title:this.$t('message.pop_no_t2'),//'已开启用户隐私！',
 						icon:'none'
 					})
 					return false;

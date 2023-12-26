@@ -2,14 +2,14 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-pink" :isBack="true" >
 			<template #backText></template>
-			<template #content>账号安全</template>
+			<template #content>{{$t('safe.title')}}</template>
 		</cu-custom>
 		
 		<view class="cu-list menu mt-10">
 			<view class="cu-item" @tap="editAcc">
 				<view class="content">
 					<text class="cuIcon-settings text-grey"></text>
-					<text>我的账号</text>
+					<text>{{$t('safe.account')}}</text>
 				</view>
 				<view class="action">
 					<text>{{userInfo.account}}</text>
@@ -19,7 +19,7 @@
 			<view class="cu-item"  @tap="modelName='show';editPass=true">
 				<view class="content">
 					<text class="cuIcon-lock text-green"></text>
-					<text>修改密码</text>
+					<text>{{$t('safe.update_psw')}}</text>
 				</view>
 				<view class="action">
 					<text class="text-grey cuIcon-right"></text>
@@ -40,8 +40,8 @@
 		<view class="cu-modal bottom-modal" :class="modelName=='show'?'show':''"  @tap="modelName=''">
 			<view class="cu-dialog" @tap.stop=''>
 				<view class="cu-bar bg-white">
-					<view class="action text-gray" @tap="modelName=''">取消</view>
-					<view class="action text-green" @tap="save">保存</view>
+					<view class="action text-gray" @tap="modelName=''">{{$t('safe.close')}}</view>
+					<view class="action text-green" @tap="save">{{$t('safe.save')}}</view>
 				</view>
 				<view class="manage-content mb-20">
 					<view class="cu-list menu mt-15 bg-white">
@@ -66,16 +66,16 @@
 						</template>
 						<template v-else>
 							<view class="cu-form-group text-right" v-if="!userInfo.is_auth">
-								<view class="title">原密码</view>
-								<input placeholder="输入原来的密码" name="input" v-model="originalPassword" />
+								<view class="title">{{$t('safe.old_psw')}}</view>
+								<input :placeholder="$t('safe.old_psw_1')" name="input" v-model="originalPassword" />
 							</view>
 							<view class="cu-form-group text-right">
-								<view class="title">新密码</view>
-								<input placeholder="输入新的密码" name="input" v-model="password" />
+								<view class="title">{{$t('safe.new_psw')}}</view>
+								<input :placeholder="$t('safe.new_psw_1')" name="input" v-model="password" />
 							</view>
 							<view class="cu-form-group text-right">
-								<view class="title">重复新密码</view>
-								<input placeholder="重复输入新密码" name="input" v-model="repass" />
+								<view class="title">{{$t('safe.renew_psw')}}</view>
+								<input :placeholder="$t('safe.renew_psw_1')" name="input" v-model="repass" />
 							</view>
 						</template>
 					</view>

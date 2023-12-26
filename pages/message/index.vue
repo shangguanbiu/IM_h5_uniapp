@@ -68,7 +68,7 @@
 				// 第三个按钮被打开 [ 删除消息 ]
 				else if (index == 1) {
 					uni.showModal({
-						title: '确定要删除吗?',
+						title: this.$t('message.pop_no_t3'),//'确定要删除吗?',
 						success: e => {
 							if (e.confirm) {
 								this.$api.msgApi.delChatAPI({

@@ -2,44 +2,44 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-pink" :isBack="true">
 			<template #backText></template>
-			<template #content>我的出票</template>
+			<template #content>{{$t('bet_list.title')}}</template>
 		</cu-custom>
 	
 		<view v-if="list.length !==0">
 			<view class="list_line_are" v-for="(qishuitem,indexs) in list" :key="indexs">
 				<view class="list_line_line">
-					<view class="list_line_zi">期号</view>
-					<view class="list_line_zi">投票积分</view>
+					<view class="list_line_zi">{{$t('bet_list.qihao')}}</view>
+					<view class="list_line_zi">{{$t('bet_list.jifen')}}</view>
 				</view>
 				<view class="list_line_line">
 					<view class="list_line_zi">{{qishuitem.open_no}}</view>
 					<view class="list_line_zi">{{qishuitem.amount}}</view>
 				</view>
 				<view class="list_line_line">
-					<view class="list_line_zi">投票时间</view>
-					<view class="list_line_zi">投票</view>
+					<view class="list_line_zi">{{$t('bet_list.time')}}</view>
+					<view class="list_line_zi">{{$t('bet_list.toupiao')}}</view>
 				</view>
 				<view class="list_line_line">
 					<view sclass="list_line_zi" style="flex: 1;">{{qishuitem.create_time}}</view>
 					<view class="list_line_zi">
 					<view style="display: flex; justify-items: flex-start;" >
-						<view class="color_n1"  v-if="qishuitem.multiple_id==1">春</view>
-						<view class="color_n2" v-if="qishuitem.multiple_id==2">夏</view>
-						<view class="color_n1" v-if="qishuitem.multiple_id==3">秋</view>
-						<view class="color_n2" v-if="qishuitem.multiple_id==4">冬</view>
+						<view class="color_n1"  v-if="qishuitem.multiple_id==1">{{$t('bet_list.bet_n1')}}</view>
+						<view class="color_n2" v-if="qishuitem.multiple_id==2">{{$t('bet_list.bet_n2')}}</view>
+						<view class="color_n1" v-if="qishuitem.multiple_id==3">{{$t('bet_list.bet_n3')}}</view>
+						<view class="color_n2" v-if="qishuitem.multiple_id==4">{{$t('bet_list.bet_n4')}}</view>
 					</view>
 					
 					</view>
 				</view>
 			</view>
-			<view style="text-align: center; line-height: 50px; color: #ccc;">{{notice}}</view>
+			<view style="text-align: center; line-height: 50px; color: #ccc;">{{$t('bet_list.reload')}}</view>
 		</view>
 		<view v-else class="listare li_are">
 			<view class="empty_ico">
 				<!-- <van-empty class="custom-image" :image="empty_img" description="" /> -->
 				<image src="@/static/image/empty.png" style="margin-top: 3px; "
 					mode='widthFix' />
-					<view style="text-align: center;">暂无记录...</view>
+					<view style="text-align: center;">{{$t('bet_list.no_data')}}</view>
 			</view>
 		</view>
 		

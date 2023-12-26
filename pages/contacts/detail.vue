@@ -2,7 +2,7 @@
 	<view>
 		<cu-custom bgColor="bg-white"  :isBack="true" >
 			<template #backText></template>
-			<template #content>个人信息</template>
+			<template #content>{{$t('contact.title')}}</template>
 		</cu-custom>
 		<view class="padding flex justify-start align-center">
 			<view class='cu-avatar lg radius mr-15' :style="'background-image:url('+detail.avatar+')'">
@@ -16,26 +16,26 @@
 			<view class="cu-item"  v-if="globalConfig.sysInfo.runMode==2 && detail.friend && userInfo.user_id!=detail.user_id" @tap="setNickname">
 				<view class="content">
 					<text class="cuIcon-edit text-green"></text>
-					<text>备注</text>
+					<text>{{$t('contact.remarks')}}</text>
 				</view>
 				<view class="action">
-					<text class="text-grey text-sm">{{detail.friend.nickname || '未设置'}}</text>
+					<text class="text-grey text-sm">{{detail.friend.nickname || $t('contact.no_set')}}</text>
 					<text class="text-grey text-sm ml-5 cuIcon-write"></text>
 				</view>
 			</view>
 			<view class="cu-item">
 				<view class="content">
 					<text class="cuIcon-mail text-green"></text>
-					<text>邮箱</text>
+					<text>{{$t('contact.emial')}}</text>
 				</view>
 				<view class="action">
-					<text class="text-grey text-sm">{{detail.email ?? 'raingad@foxmail.com'}}</text>
+					<text class="text-grey text-sm">{{detail.email ?? ''}}</text>
 				</view>
 			</view>
 			<view class="cu-item">
 				<view class="content">
 					<text class="cuIcon-safe text-green"></text>
-					<text>性别</text>
+					<text>{{$t('contact.sex')}}</text>
 				</view>
 				<view class="action">
 					<text class="text-grey text-sm">{{ sex(detail.sex)}}</text>
@@ -47,7 +47,7 @@
 					<text>IP</text>
 				</view>
 				<view class="action">
-					<text class="text-grey text-sm" v-if="detail.last_login_ip">{{ detail.last_login_ip || "未知"}} （{{detail.location || "未知"}}）</text>
+					<text class="text-grey text-sm" v-if="detail.last_login_ip">{{ detail.last_login_ip || $t('contact.no_msg')}} （{{detail.location || $t('contact.no_msg')}}）</text>
 					<text class="text-grey text-sm" v-else>未知</text>
 				</view>
 			</view>
@@ -55,13 +55,13 @@
 		
 		<template class="" v-if="userInfo.user_id!=detail.user_id">
 			<view class="padding flex flex-direction" v-if="globalConfig.sysInfo.runMode==1 || detail.friend">
-				<button class="cu-btn bg-green mt-10 lg" @tap="sendMsg(detail)">发消息</button>
-				<button class="cu-btn bg-blue mt-10 lg" v-if="validatePhone" @tap="callPhone()">打电话</button>
-				<button class="cu-btn bg-grey mt-10 lg" @tap="modelName='callRtc'" v-if="parseInt(globalConfig.chatInfo.webrtc)">音视频通话</button>
-				<button class="cu-btn bg-red  mt-10 lg" @tap="delFriend()" v-if="globalConfig.sysInfo.runMode==2">删除好友</button>
+				<button class="cu-btn bg-green mt-10 lg" @tap="sendMsg(detail)">{{$t('contact.send_msg')}}</button>
+				<button class="cu-btn bg-blue mt-10 lg" v-if="validatePhone" @tap="callPhone()">{{$t('contact.call')}}</button>
+				<button class="cu-btn bg-grey mt-10 lg" @tap="modelName='callRtc'" v-if="parseInt(globalConfig.chatInfo.webrtc)">{{$t('contact.video')}}</button>
+				<button class="cu-btn bg-red  mt-10 lg" @tap="delFriend()" v-if="globalConfig.sysInfo.runMode==2">{{$t('contact.del_friend')}}</button>
 			</view>
 			<view class="padding flex flex-direction" v-if="globalConfig.sysInfo.runMode==2 && !detail.friend">
-				<button class="cu-btn bg-green lg" @tap="addFriend()">加好友</button>
+				<button class="cu-btn bg-green lg" @tap="addFriend()">{{$t('contact.add_friend')}}</button>
 			</view>
 		</template>
 		<view class="cu-modal bottom-modal" :class="modelName=='callRtc'?'show':''"  @tap="modelName=''">
@@ -71,19 +71,19 @@
 						<view class="cu-item" @tap="calling(0)">
 							<view class="content padding-tb-sm">
 								<text class="cuIcon-dianhua"></text>
-								<text>语音通话</text>
+								<text>{{$t('contact.video_yuyin')}}</text>
 							</view>
 						</view>
 						<view class="cu-item" @tap="calling(1)">
 							<view class="content padding-tb-sm">
 								<text class=" cuIcon-record"></text>
-								<text>视频通话</text>
+								<text>{{$t('contact.video_shiping')}}</text>
 							</view>
 						</view>
 						<view class="parting-line-5"></view>
 						<view class="cu-item" @tap="modelName=''">
 							<view class="content padding-tb-sm">
-								<text class="c-red">取消</text>
+								<text class="c-red">{{$t('contact.close')}}</text>
 							</view>
 						</view>
 
@@ -129,8 +129,8 @@
 				})
 			},
 			sex(value) {
-						let arr = ['女', '男','未知']
-						return arr[value] || '未知';
+						let arr = [this.$t('contact.sex_nv'), this.$t('contact.sex_nan'),this.$t('contact.no_msg')]
+						return arr[value] || this.$t('contact.no_msg');
 			},
 			callPhone(){
 				uni.makePhoneCall({
@@ -140,7 +140,7 @@
 			calling(is_video){
 				if(msgStore.webrtcLock){
 					return uni.showToast({
-						title:'其他终端正在通话中',
+						title:this.$t('contact.other'),//'其他终端正在通话中',
 						icon:'none'
 					})
 				}
@@ -152,7 +152,7 @@
 			},
 			delFriend(){
 				uni.showModal({
-					title: '确定要删除该好友吗？',
+					title: this.$t('contact.sure_del'),//'确定要删除该好友吗？',
 					success: (res)=>{
 						if (res.confirm) {
 							let data={ id: this.detail.user_id};
@@ -171,13 +171,13 @@
 			},
 			addFriend(){
 				uni.showModal({
-					title: '请输入验证信息',
+					title: this.$t('contact.check_msg'),//'请输入验证信息',
 					editable:true,
 					success: (res)=>{
 						if (res.confirm) {
 							if(res.content==''){
 								return uni.showToast({
-									title:'请输入备注！',
+									title:this.$t('contact.check_remark'),//'请输入备注！',
 									icon:'error'
 								})
 							}
@@ -197,18 +197,18 @@
 				let friend_id=this.detail.friend.friend_id ?? '';
 				if(!this.detail.friend){
 					return uni.showToast({
-						title:'无法设置',
+						title:this.$t('contact.can_not_set'),//'无法设置',
 						icon:'error'
 					})
 				}
 				uni.showModal({
-					title: '请输入备注信息',
+					title: this.$t('contact.check_remark2'),//'请输入备注信息',
 					editable:true,
 					success: (res)=>{
 						if (res.confirm) {
 							if(res.content==''){
 								return uni.showToast({
-									title:'请输入好友备注！',
+									title:this.$t('contact.check_remark3'),//'请输入好友备注！',
 									icon:'error'
 								})
 							}

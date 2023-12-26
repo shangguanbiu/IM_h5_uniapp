@@ -26,8 +26,8 @@
 			<!-- <mine v-if="PageCur=='mine'"></mine> -->
 
 		</view>
-		<view class="cu-bar tabbar bg-white shadow foot">
-			<view class="action" @click="NavChange(item)" v-for="(item,index) in navList" :key="index"
+		<view class="cu-bar tabbar bg-white shadow foot" :key="keyIndex">
+			<view class="action" @click="NavChange(item)" v-for="(item,index) in navList" 
 				data-cur="message">
 				<view class='cuIcon-cu-image'>
 					<image :src="'/static/image/tabbar/' + [item.name] + [PageCur==item.name?'-active':''] + '.svg'">
@@ -44,20 +44,20 @@
 						<view class="cu-item" @tap="initContacts();">
 							<view class="content padding-tb-sm">
 								<text class="cuIcon-refresh"></text>
-								<text>更新消息列表</text>
+								<text>{{$t('talk.reload')}}</text>
 							</view>
 						</view>
 						<view v-if="userinfo.role !==undefined &&userinfo.role==1">
 							<view class="cu-item" @tap="addFriend()" v-if='globalConfig.sysInfo.runMode==2'>
 								<view class="content padding-tb-sm">
 									<text class="cuIcon-friendadd"></text>
-									<text>添加朋友</text>
+									<text>{{$t('talk.add_friend')}}</text>
 								</view>
 							</view>
 							<view class="cu-item" @tap="addGroup()">
 								<view class="content padding-tb-sm">
 									<text class=" cuIcon-friend"></text>
-									<text>创建群聊</text>
+									<text>{{$t('talk.new_group')}}</text>
 								</view>
 							</view>
 							<!-- <view class="cu-item" @tap="scan()">
@@ -70,7 +70,7 @@
 						<view class="parting-line-5"></view>
 						<view class="cu-item" @tap="modelName=''">
 							<view class="content padding-tb-sm">
-								<text class="c-red">取消</text>
+								<text class="c-red">{{$t('talk.close')}}</text>
 							</view>
 						</view>
 
@@ -139,34 +139,13 @@
 			}
 			// navList.push(mine);
 			return {
+				
 				globalConfig: loginStore.globalConfig,
 				PageCur: 'message',
-				PageName: '消息',
+				PageName: this.$t('nav.message'),
 				TabCur: 0,
 				modelName: false,
-				navList: [{
-						name: 'home',
-						title: '首页',
-						notice: 0
-					},{
-						name: 'message',
-						title: '消息',
-						notice: unread
-					},{
-						name: 'serve',
-						title: '客服',
-						notice: 0
-					},
-					{
-						name: 'contacts',
-						title: '通讯录',
-						notice: sysUnread
-					},{
-						name: 'mine',
-						title: '我的',
-						notice: 0
-					}
-				],
+				navList: [],
 				userinfo: {},
 				tabs: 0,
 				tabs_arr: [{
@@ -191,10 +170,35 @@
 		},
 		onShow() {
 			//this.initContacts();
+			this.navList = [{
+					name: 'home',
+					title: this.$t('nav.home'),
+					notice: 0
+				}, {
+					name: 'message',
+					title: this.$t('nav.message'),
+					notice: unread
+				}, {
+					name: 'serve',
+					title: this.$t('nav.serve'),
+					notice: 0
+				},
+				{
+					name: 'contacts',
+					title: this.$t('nav.contacts'),
+					notice: sysUnread
+				}, {
+					name: 'mine',
+					title: this.$t('nav.mine'),
+					notice: 0
+				}
+			]
 		},
-
+		onLoad() {
+				
+		},
 		mounted() {
-			 
+			  
 			// #ifndef MP
 			uni.hideTabBar();
 			// #endif	

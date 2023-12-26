@@ -2,7 +2,7 @@
   <view class="">
 	  <cu-custom bgColor="bg-gradual-pink" :isBack="true" >
 	  	<template #backText></template>
-	  	<template #content>通话</template>
+	  	<template #content>{{$t('group_sys.call_title')}}</template>
 	  </cu-custom>
     <web-view @message="message" :src="html"></web-view>
   </view>

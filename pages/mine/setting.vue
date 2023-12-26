@@ -2,17 +2,17 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-pink" :isBack="true">
 			<template #backText></template>
-			<template #content>通用设置</template>
+			<template #content>{{$t('set.title')}}</template>
 		</cu-custom>
 
 		<view class="cu-bar bg-white solid-bottom margin-top">
-			<view class="action">新消息</view>
+			<view class="action">{{$t('set.new_msg')}}</view>
 		</view>
 
 		<view class="cu-list menu">
 			<view class="cu-item">
 				<view class="content">
-					<text>声音</text>
+					<text>{{$t('set.notice_t')}}</text>
 				</view>
 				<view class="action">
 					<switch class="switch" @change="setVoice" :class="setting.voiceStatus?'checked':''"
@@ -21,7 +21,7 @@
 			</view>
 			<view class="cu-item">
 				<view class="content">
-					<text>震动</text>
+					<text>{{$t('set.notice_t1')}}</text>
 				</view>
 				<view class="action">
 					<switch class="switch" @change="setVibrate" :class="setting.vibrateStatus?'checked':''"
@@ -31,13 +31,13 @@
 		</view>
 
 		<view class="cu-bar bg-white solid-bottom margin-top">
-			<view class="action">其他设置</view>
+			<view class="action">{{$t('set.notice_t2')}}</view>
 		</view>
 
 		<view class="cu-list menu">
 			<view class="cu-item">
 				<view class="content">
-					<text>圆形头像</text>
+					<text>{{$t('set.notice_t3')}}</text>
 				</view>
 				<view class="action">
 					<switch class="switch" @change="setAvatar" :class="setting.circleAvatar?'checked':''"
@@ -48,7 +48,7 @@
 		<view class="cu-list menu">
 			<view class="cu-item">
 				<view class="content">
-					<text>{{$t('To_Login')}}语言</text>
+					<text>{{$t('set.language')}}</text>
 				</view>
 				<view class="action">
 					<view @click="show_more=true">
@@ -61,7 +61,7 @@
 		</view>
 		<view v-show="show_more" class="type_more">
 			<view style="padding-top: 50px;">
-				<view class="type_tit">语言</view>
+				<view class="type_tit">{{$t('set.language')}}</view>
 
 				<view class="type_zi" :class="{'type_get':index_get==inde_t}" v-for="(typeitem,inde_t) in type_list"
 					:key="inde_t" @click="get_type(typeitem,inde_t,1)">
@@ -69,7 +69,7 @@
 				</view>
 
 			</view>
-			<view class="type_close" @click="get_type('','',2)">确定</view>
+			<view class="type_close" @click="get_type('','',2)">{{$t('set.ok')}}</view>
 		</view>
 	</view>
 </template>
@@ -95,15 +95,15 @@
 				language: '',
 				type_list: [{
 					id: 1,
-					name: "中文",
+					name: this.$t('set.pop_tit1'),
 					valus: 'zh'
 				}, {
 					id: 2,
-					name: "繁体中文",
+					name: this.$t('set.pop_tit2'),//"繁体中文",
 					valus: 'zhCN'
 				}, {
 					id: 3,
-					name: "english",
+					name: this.$t('set.pop_tit3'),//"english",
 					valus: 'en'
 				}, ],
 				show_more: false,

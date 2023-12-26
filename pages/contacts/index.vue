@@ -9,7 +9,7 @@
 					<view class='cu-avatar mr-15 invite-bg'  :class="appSetting.circleAvatar?'round':'radius'">
 					</view>
 					<view class="content">
-						<text class="c-333">新邀请</text>
+						<text class="c-333">{{$t('contact.invite')}}</text>
 					</view>
 					<view class="action">
 						<view class="cu-tag round bg-red sm" v-if="unread>0">{{unread}}</view>
@@ -19,7 +19,7 @@
 					<view class='cu-avatar mr-15 group-bg' :class="appSetting.circleAvatar?'round':'radius'">
 					</view>
 					<view class="content">
-						<text class="c-333">群聊</text>
+						<text class="c-333">{{$t('contact.group_tit')}}</text>
 					</view>
 				</view>
 			</view>
@@ -38,8 +38,8 @@
 					</view>
 				</view>
 			</block>
-			<view class="text-center m-20 text-grey">{{total}} 个朋友</view>
-			<Empty v-if="!contacts.length" noDatatext="暂无联系人" textcolor="#999" ></Empty>
+			<view class="text-center m-20 text-grey">{{total}} {{$t('contact.total')}}</view>
+			<Empty v-if="!contacts.length" :noDatatext="$t('contact.no_user')" textcolor="#999" ></Empty>
 		 </view>
 		</scroll-view>
 		
@@ -52,7 +52,7 @@
 		<view class="cu-bar bg-white search fixed" :style="[{top:CustomBar + 'px'}]"  v-if="TabCur==1">
 			<view class="search-form round">
 				<text class="cuIcon-search"></text>
-				<input type="text" v-model="keywords" placeholder="输入搜索的关键词" confirm-type="search"/>
+				<input type="text" v-model="keywords" :placeholder="$t('contact.search_placeholder')" confirm-type="search"/>
 			</view>
 		</view>
 		<scroll-view scroll-y class="indexes" :style="[{top:'50px',height:'calc(100vh - '+ (CustomBar+inlineTools+StatusBar) + 'px)'}]"
@@ -132,29 +132,7 @@
 		data() {
 			return {
 				PageCur:'contacts',
-				navList: [{
-						name: 'home',
-						title: '首页',
-						notice: 0
-					},{
-						name: 'message',
-						title: '消息',
-						notice: unread
-					},{
-						name: 'serve',
-						title: '客服',
-						notice: 0
-					},
-					{
-						name: 'contacts',
-						title: '通讯录',
-						notice: sysUnread
-					},{
-						name: 'mine',
-						title: '我的',
-						notice: 0
-					}
-				],
+				navList: [],
 				TabCur:0,
 				//#ifdef H5
 				tabbarH:50,
@@ -228,6 +206,31 @@
 			this.initContacts(this.msgs);
 			this.userinfo=uni.getStorageSync('userInfo')
 			
+		},
+		onShow() {
+			this.navList = [{
+					name: 'home',
+					title: this.$t('nav.home'),
+					notice: 0
+				}, {
+					name: 'message',
+					title: this.$t('nav.message'),
+					notice: unread
+				}, {
+					name: 'serve',
+					title: this.$t('nav.serve'),
+					notice: 0
+				},
+				{
+					name: 'contacts',
+					title: this.$t('nav.contacts'),
+					notice: sysUnread
+				}, {
+					name: 'mine',
+					title: this.$t('nav.mine'),
+					notice: 0
+				}
+			]
 		},
 		methods: {
 			NavChange: function(item) {

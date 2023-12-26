@@ -2,7 +2,7 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-pink" :isBack="true">
 			<template #backText></template>
-			<template #content>我喜欢的TA</template>
+			<template #content>{{$t('like.title')}}</template>
 		</cu-custom>
 		<view v-if="likes_arr.length !==0">
 			<view class="user_line" v-for="(people,t_index) in likes_arr" :key="t_index" v-show="t_index<4">
@@ -25,10 +25,10 @@
 					<view class="col_96" style="display: flex;width: 150px; justify-content: flex-end;"><view>{{people.isfar}}km · </view><view v-if="people.ifonline">在线</view><view v-if="!people.ifonline">{{people.istime}}小时</view></view>
 					</view>
 					<view style="margin: 5px 0;">
-						<view class="p_type p_type1" v-if="people.sex==0">女</view>
-						<view class="p_type p_type2" v-if="people.sex==1">男</view>
+						<view class="p_type p_type1" v-if="people.sex==0">{{$t('like.sex_nv')}}</view>
+						<view class="p_type p_type2" v-if="people.sex==1">{{$t('like.sex_nan')}}</view>
 					</view>
-					<view v-if="people.motto !==''&&people.motto !==null" class="motto">签名：{{people.motto}}</view>
+					<view v-if="people.motto !==''&&people.motto !==null" class="motto">{{$t('like.sine')}}：{{people.motto}}</view>
 					<!-- <view style=" max-height: 84px;">
 						<view style="display: flex;padding: 10px 0; flex-wrap: wrap;" v-if="people.tags !==null && people.tags !==''">
 							<view :class="'item_'+t_tag"  v-for="(tagitem,t_tag) in people.tags.split(',')" :key="t_tag">{{tagitem}}</view>
@@ -40,7 +40,7 @@
 				</view>
 			</view>
 		</view>
-		<Empty v-else noDatatext="暂无记录" textcolor="#999" />
+		<Empty v-else :noDatatext="$t('like.no_data')" textcolor="#999" />
 	</view>
 </template>
 

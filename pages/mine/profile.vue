@@ -2,11 +2,11 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-pink" :isBack="true">
 			<template #backText></template>
-			<template #content>个人信息</template>
+			<template #content>{{$t('mine.title')}}</template>
 		</cu-custom>
 		<form>
 			<view class="cu-form-group" style="height:140rpx">
-				<view class="title">头像</view>
+				<view class="title">{{$t('mine.icon')}}</view>
 				<view class="im-flex im-align-items-center">
 					<avatar
 					       selWidth="240px" selHeight="480upx" @upload="uploadAvatar" :avatarSrc="userInfo.avatar"
@@ -14,33 +14,33 @@
 					   </avatar>
 					<text class="cuIcon-right ml-10 f-18 text-grey"></text></view>
 			</view>
-			<view class="cu-form-group" @tap="to_fengmian">
+			<!-- <view class="cu-form-group" @tap="to_fengmian">
 				<view class="title">封面图</view>
 				<view class="text-gray"><text class="cuIcon-right ml-10 f-18 text-grey"></text></view>
-			</view>
+			</view> -->
 			<view class="cu-form-group">
-				<view class="title">账号</view>
+				<view class="title">{{$t('mine.account')}}</view>
 				<view class="text-gray">{{userInfo.account}}</view>
 			</view>
 			<view class="cu-form-group">
-				<view class="title">积分</view>
+				<view class="title">{{$t('mine.jifen')}}</view>
 				<view class="text-pink">{{balance}}</view>
 			</view>
 			<view class="cu-form-group">
-				<view class="title">{{globalConfig.sysInfo.runMode==1 ? "姓名" : '昵称'}}</view>
+				<view class="title">{{globalConfig.sysInfo.runMode==1 ? $t('mine.ming') : $t('mine.nickname')}}</view>
 				<view class="text-gray" v-if="globalConfig.sysInfo.runMode==1">{{userInfo.realname}}</view>
 				<input class="uni-input" style="text-align: right;" v-if="globalConfig.sysInfo.runMode==2" v-model="userInfo.realname"  placeholder="请输入昵称" />
 			</view>
 			<view class="cu-form-group">
 				<view class="title">e-mail</view>
-				<input class="uni-input" style="text-align: right;" v-model="userInfo.email"  placeholder="请输入email地址" />
+				<input class="uni-input" style="text-align: right;" v-model="userInfo.email"  :placeholder="$t('mine.emial')" />
 			</view>
 			<view class="cu-form-group">
-				<view class="title">年纪</view>
-				<input class="uni-input" style="text-align: right;" v-model="userInfo.ages"  placeholder="请输入数字" type="number" />
+				<view class="title">{{$t('mine.age')}}</view>
+				<input class="uni-input" style="text-align: right;" v-model="userInfo.ages"  :placeholder="$t('mine.age_num')" type="number" />
 			</view>
 			<view class="cu-form-group">
-				<view class="title">性别</view>
+				<view class="title">{{$t('mine.sex')}}</view>
 				<view>
 					<radio-group @change="changeSex">
 					<label class="radio mr-10" v-for="x in sexList"><radio name="sex" :value="x.id" :checked="userInfo.sex==x.id" /> {{x.name}}</label>
@@ -48,12 +48,12 @@
 				</view>
 			</view>
 			<view class="cu-form-group align-start">
-				<view class="title">个性签名</view>
-				<textarea maxlength="-1" v-model="userInfo.motto" placeholder="请输入个性签名"></textarea>
+				<view class="title">{{$t('mine.sine')}}</view>
+				<textarea maxlength="-1" v-model="userInfo.motto" :placeholder="$t('mine.sine_place')"></textarea>
 			</view>
 		</form>
 		<view class="padding flex flex-direction">
-			<button class="cu-btn bg-green lg" :style="saved ? 'border: solid 1px #dbdada;' : ''" :disabled="saved" @tap="saveInfo()" >保存</button>
+			<button class="cu-btn bg-green lg" :style="saved ? 'border: solid 1px #dbdada;' : ''" :disabled="saved" @tap="saveInfo()" >{{$t('mine.save')}}</button>
 		</view>
 	</view>
 </template>
@@ -75,15 +75,15 @@
 				sexList:[
 					{
 						id:'2',
-						name:'未知'
+						name:this.$t('mine.no_msg')
 					},
 					{
 						id:'1',
-						name:'男'
+						name:this.$t('mine.sex_nan')
 					},
 					{
 						id:'0',
-						name:'女'
+						name:this.$t('mine.sex_nv')
 					},
 				],
 				saved:false,
@@ -129,7 +129,7 @@
 			saveInfo(){
 				if(this.userInfo.realname == ''){
 					uni.showToast({
-						title:'请输入昵称',
+						title:this.$t('mine.set_t_1'),//'请输入昵称',
 						icon:'none'
 					})
 					return false
@@ -146,7 +146,7 @@
 				  this.$api.msgApi.updateUserInfo(params).then(res=>{
 					if(res.code == 0){
 					  uni.showToast({
-					  	title:'保存成功',
+					  	title:this.$t('mine.set_t_2'),//'保存成功',
 					  	icon:'none'
 					  })
 					  let data=JSON.parse(JSON.stringify(this.userInfo))
@@ -165,7 +165,7 @@
 			},
 			uploadAvatar(res){
 				uni.showLoading({
-					title:'上传中...'
+					title:this.$t('mine.set_t_1')//'上传中...'
 				})
 				uni.uploadFile({
 					url: this.$api.msgApi.uploadAvatar,

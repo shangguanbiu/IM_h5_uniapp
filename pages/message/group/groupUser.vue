@@ -2,12 +2,12 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-pink" :isBack="true">
 			<template #backText></template>
-			<template #content>群成员</template>
+			<template #content>{{$t('group_sys.user_list')}}</template>
 		</cu-custom>
 		<view class="cu-bar bg-white search fixed" :style="[{top:CustomBar + 'px'}]">
 			<view class="search-form round">
 				<text class="cuIcon-search"></text>
-				<input type="text" v-model="keywords" placeholder="输入搜索的关键词" confirm-type="search"/>
+				<input type="text" v-model="keywords" :placeholder="$t('group_sys.search_placeholder')" confirm-type="search"/>
 			</view>
 		</view>
 		<view style="margin-top: 104rpx;">
@@ -17,7 +17,7 @@
 					<view class="content">
 						<view class="text-grey">
 							<view class="text-cut">{{item.userInfo.displayName}}</view>
-							<view v-if="item.role<3" class="cu-tag round sm" :class="item.role==1 ? 'bg-red' : 'bg-orange'">{{item.role ==1?"群主":item.role==2?'管理员':''}}</view>
+							<view v-if="item.role<3" class="cu-tag round sm" :class="item.role==1 ? 'bg-red' : 'bg-orange'">{{item.role ==1?$t('group_sys.role_t1'):item.role==2?$t('group_sys.role_t2'):''}}</view>
 							<view v-if="item.user_id==userInfo.user_id" class="cu-tag round sm">我</view>
 						</view>
 					</view>
@@ -25,7 +25,7 @@
 						<view class="text-grey text-sm"> <text class="cuIcon-more f-24" v-if="item.role>1 && isAuth" ></text></view>
 					</view>
 				</view>
-				<Empty v-if="!userList.length" noDatatext="未搜索到数据" textcolor="#999" ></Empty>
+				<Empty v-if="!userList.length" :noDatatext="$t('group_sys.search_no_data')" textcolor="#999" ></Empty>
 			</view>
 		</view>
 		<view class="cu-modal bottom-modal" :class="modelName=='userOpt'?'show':''">
@@ -36,28 +36,28 @@
 							<view class="content im-flex im-justify-content-center im-align-items-center">
 								<view class="cu-avatar round sm" :style="'background-image:url('+(curUser.avatar)+');'"></view>
 								<view class="text-cut ml-5">{{curUser.realname}}</view>
-								<view v-if="curUser.role==2" class="cu-tag round sm bg-orange">管理员</view>
+								<view v-if="curUser.role==2" class="cu-tag round sm bg-orange">{{$t('group_sys.role_t2')}}</view>
 							</view>
 						</view>
 						<view class="cu-item"  @tap="changeOwner()" v-if="isAdmin">
 							<view class="content padding-tb-sm">
-								<text class="c-orange">转让管理权限</text>
+								<text class="c-orange">{{$t('group_sys.change_admin')}}</text>
 							</view>
 						</view>
 						<view class="cu-item"  @tap="setManage()" v-if="isAdmin">
 							<view class="content padding-tb-sm">
-								<text>{{curUser.role==2 ? '取消管理员' : '设为管理员'}}</text>
+								<text>{{curUser.role==2 ? $t('group_sys.role_set_t1') : $t('group_sys.role_set_t2')}}</text>
 							</view>
 						</view>
 						<view class="cu-item" @tap="removeUser()">
 							<view class="content padding-tb-sm">
-								<text>移出群聊</text>
+								<text>{{$t('group_sys.out_group')}}</text>
 							</view>
 						</view>
 						<view class="parting-line-5"></view>
 						<view class="cu-item" @tap="modelName=''">
 							<view class="content padding-tb-sm">
-								<text class="c-red">取消</text>
+								<text class="c-red">{{$t('group_sys.ok')}}</text>
 							</view>
 						</view>
 		
@@ -145,7 +145,7 @@
 			removeUser(){
 				this.modelName='';
 				uni.showModal({
-					title: '确定要删除该成员吗?',
+					title: this.$t('group_sys.pop_tit1'),//'确定要删除该成员吗?,
 					success: e => {
 						if (e.confirm) {
 							this.$api.msgApi.removeUser({
@@ -163,7 +163,7 @@
 			changeOwner(){
 				this.modelName='';
 				uni.showModal({
-					title: '确定将管理权限转移给该成员吗?',
+					title: this.$t('group_sys.pop_tit2'),//'确定将管理权限转移给该成员吗?',
 					success: e => {
 						if (e.confirm) {
 							this.$api.msgApi.changeOwner({
@@ -194,7 +194,7 @@
 					})
 				}else{
 					uni.showToast({
-						title:'已开启用户隐私！',
+						title:this.$t('group_sys.pop_tit3'),//'已开启用户隐私！',
 						icon:'none'
 					})
 					return false;

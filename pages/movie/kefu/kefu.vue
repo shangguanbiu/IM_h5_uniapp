@@ -2,14 +2,14 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-pink" :isBack="true">
 			<template #backText></template>
-			<template #content>客服</template>
+			<template #content>{{$t('server.title')}}</template>
 		</cu-custom>
 		<view class="main">
 			<view @click="to_kefu(1)" class="kf_item">
 				<view class="kf_itemico">
 					<image src="@/static/image/online_i1.png" style="width:100%; " mode='widthFix' />
 					<view style="position: absolute; left: 0; bottom: 64px; width: 100%;">
-						<view style="text-align: center; color: #fff; font-size: 18px;">在线客服</view>
+						<view style="text-align: center; color: #fff; font-size: 18px;">{{$t('server.meiqia')}}</view>
 					</view>
 				</view>
 
@@ -18,7 +18,7 @@
 				<view class="kf_itemico">
 					<image src="@/static/image/online_i2.png" style="width:100%; " mode='widthFix' />
 					<view style="position: absolute; left: 0; bottom: 64px; width: 100%;">
-						<view style="text-align: center; color: #fff; font-size: 18px;">WhatsApp</view>
+						<view style="text-align: center; color: #fff; font-size: 18px;">{{$t('server.whatapp')}}</view>
 					</view>
 				</view>
 

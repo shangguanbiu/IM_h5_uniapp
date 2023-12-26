@@ -50,11 +50,11 @@
 
 					<view class="mian_price_line">
 						<view style="padding-right: 30px; color: #a09d9d;">
-							{{detail_data.isfar+'km '+detail_data.istime+'·分钟前活跃·'+detail_data.ispepole+'人喜欢了TA'}}
+							{{detail_data.isfar+'km '+detail_data.istime+$t('nearby.actie_time2')+detail_data.ispepole+$t('nearby.like_ta')}}
 						</view>
 
 					</view>
-					<view class="main_title" style="margin-top: 10px;color: #2a1468;">关于我</view>
+					<view class="main_title" style="margin-top: 10px;color: #2a1468;">{{$t('nearby.about_me')}}</view>
 					<view style="padding-bottom: 55px;">
 						<view class="dangan" style="color: #a09d9d;;">
 							{{detail_data.motto}}
@@ -70,20 +70,19 @@
 					<view class="ft_zhaohu_line">
 						<view style="margin-right: 5px;" @tap="bet_talk()">
 							<view class="ft_zh_zi" style="color:rgb(248, 186, 53)">
-								<view class="cuIcon-commandfill" style=" margin-right: 5px; font-size: 17px;"></view>打招呼
+								<view class="cuIcon-commandfill" style=" margin-right: 5px; font-size: 17px;"></view>{{$t('nearby.talk')}}
 							</view>
 						</view>
 						<view style="margin-left: 5px;" v-show="iflike ==true">
 							<view class="ft_zh_zi" style="color:rgb(250, 84, 124) ;">
 								<view class="cuIcon-likefill" style=" margin-right: 5px; font-size: 17px;"></view>
-
-								喜欢
+{{$t('nearby.like')}}
 							</view>
 						</view>
 						<view style="margin-left: 5px;" v-show="iflike ==false" @tap="bet_like()">
 							<view class="ft_zh_zi" style="color:rgb(250, 84, 124) ;">
 								<view class="cuIcon-like" style=" margin-right: 5px; font-size: 17px;"></view>
-								喜欢
+								{{$t('nearby.like')}}
 							</view>
 						</view>
 					</view>
@@ -98,15 +97,15 @@
 			<view class="com_bg"></view>
 			<view class="com_main">
 				<view class="pop_mian">
-					<view class="pop_title">提示</view>
+					<view class="pop_title">{{$t('pop.title')}}</view>
 					<view style="padding: 10px 15px;  line-height: 25px; flex-wrap: wrap; text-align: center;">
 						{{notice_content}}
 					</view>
 
 					<view class="pop_foot">
-						<view class="pop_ft_btn1" v-if="notice_type==1" @tap="pop_notice=false">关闭</view>
-						<view class="pop_ft_btn2" @tap="pop_ok()" v-if="notice_type==1">去升级</view>
-						<view class="pop_ft_btn2" @tap="pop_notice=false" v-if="notice_type==2">确定</view>
+						<view class="pop_ft_btn1" v-if="notice_type==1" @tap="pop_notice=false">{{$t('pop.close')}}</view>
+						<view class="pop_ft_btn2" @tap="pop_ok()" v-if="notice_type==1">{{$t('pop.up')}}</view>
+						<view class="pop_ft_btn2" @tap="pop_notice=false" v-if="notice_type==2">{{$t('pop.ok')}}</view>
 					</view>
 				</view>
 			</view>
@@ -187,7 +186,7 @@
 				if_more: false,
 				pop_notice: false,
 				notice_type: 1,
-				notice_content: "您当前可观看浏览附近的人已达到每日限制，观看更多可开通会员，请联系客服",
+				notice_content: this.$t('pop.content3'),//"您当前可观看浏览附近的人已达到每日限制，观看更多可开通会员，请联系客服",
 				send_content: '',
 				fromUser: '',
 				detail_data: '',
@@ -210,7 +209,7 @@
 				bannerdata: [],
 				indicatorColor: "#292b40",
 				indicatorActiveColor: "#ffffff",
-				tag: ['好看', '大片', '动作片', '青春', '喜剧']
+				tag: []
 			}
 		},
 		mounted() {
@@ -260,14 +259,14 @@
 			},
 			open_pop() {
 				this.pop_notice = !this.pop_notice
-				this.notice_content = '您当前浏览附近的人已达到喜欢的每日限制，观看更多可开通会员，请联系客服'
+				this.notice_content =this.$t('pop.content3')// '您当前浏览附近的人已达到喜欢的每日限制，观看更多可开通会员，请联系客服'
 			},
 			bet_talk() {
 
 				if (this.fromUser.istalk == 0 && this.fromUser.role == 0) {
 					this.pop_notice = true
 					this.notice_type = 1
-					this.notice_content = '您当前可打招呼次数已达到每日限制，更多权限可升级会员，请联系客服'
+					this.notice_content = this.$t('pop.content4') //'您当前可打招呼次数已达到每日限制，更多权限可升级会员，请联系客服'
 					return;
 
 				}
@@ -401,7 +400,7 @@
 				if (this.fromUser.iszan == 0 && this.fromUser.role == 0) {
 					this.notice_type = 1
 					this.pop_notice = true
-					this.notice_content = '您当前可点击喜欢TA的次数已达到每日限制，更多权限可升级会员，请联系客服'
+					this.notice_content =this.$t('pop.content5')// '您当前可点击喜欢TA的次数已达到每日限制，更多权限可升级会员，请联系客服'
 					return;
 				}
 				var _this = this
@@ -480,7 +479,7 @@
 							// 	icon: "success"
 							// })
 							this.show_talk = false
-							this.notice_content = '已打招呼，等待TA的回应！可在栏目-消息中查看'
+							this.notice_content =this.$t('pop.content6')// '已打招呼，等待TA的回应！可在栏目-消息中查看'
 							this.pop_notice = true
 							this.notice_type = 2
 

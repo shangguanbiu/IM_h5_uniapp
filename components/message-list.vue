@@ -7,14 +7,14 @@
 				<view class="cu-avatar lg" :class="appSetting.circleAvatar?'round':'radius'" :style="[{backgroundImage:'url('+ item.avatar +')'}]"></view>
 				<view class="content">
 					<view class="c-333">
-						<Tags v-if="item.is_group==1" text="群聊" size="mini"></Tags>
+						<Tags v-if="item.is_group==1" :text="$t('message.group_title')" size="mini"></Tags>
 						<statusPoint v-if="item.is_online && item.is_group==0 && globalConfig.chatInfo.online==1" type="success"></statusPoint> 
 						<view class="text-overflow f-16" style="width:80%">
 							{{item.displayName}}
 						</view>
 					</view>
 					<view class="im-flex im-justify-content-start im-align-items-start pt-5" style="height: 50rpx;overflow:hidden">
-						<view class="text-gray text-sm"><text v-if="item.unread>0 && item.is_notice==0">[{{item.unread}}条未读]&nbsp;</text></view>
+						<view class="text-gray text-sm"><text v-if="item.unread>0 && item.is_notice==0">[{{item.unread}}{{$t('message.no_read')}}]&nbsp;</text></view>
 						<mp-html :content="emojiToHtml(item.lastContent)" class="im-flex text-gray text-sm text-overflow no-click"/>
 					</view>
 					
@@ -27,15 +27,15 @@
 					</view>
 				</view>
 				<view class="move" :class="item.is_group==0 ? 'third' : 'second' ">
-					<view class="bg-grey" v-if="item.is_top==1" @tap="btnTap(0,item)">取消置顶</view>
-					<view class="bg-blue" v-else  @tap="btnTap(0,item)">置顶聊天</view>
-					<view class="bg-orange" v-if="item.is_notice==1"  @tap="btnTap(2,item)">免扰</view>
-					<view class="bg-orange" v-else  @tap="btnTap(2,item)">取消免扰</view>
-					<view class="bg-red" v-if="item.is_group==0" @tap="btnTap(1,item)">删除会话</view>
+					<view class="bg-grey" v-if="item.is_top==1" @tap="btnTap(0,item)">{{$t('message.cancle_top')}}</view>
+					<view class="bg-blue" v-else  @tap="btnTap(0,item)">{{$t('message.set_top')}}</view>
+					<view class="bg-orange" v-if="item.is_notice==1"  @tap="btnTap(2,item)">{{$t('message.set_notice')}}</view>
+					<view class="bg-orange" v-else  @tap="btnTap(2,item)">{{$t('message.cancle_notice')}}</view>
+					<view class="bg-red" v-if="item.is_group==0" @tap="btnTap(1,item)">{{$t('message.del_talk')}}</view>
 				</view>
 			</view>
 		</view>
-		<Empty v-else noDatatext="暂无聊天" textcolor="#999" />
+		<Empty v-else :noDatatext="$t('message.no_data')" textcolor="#999" />
 	</view>
 </template>
 
