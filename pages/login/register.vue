@@ -46,9 +46,9 @@
 		<view class="flex flex-direction im-login-btn">
 			<button class="cu-btn lg bg-pink" @tap="login()">{{$t('register.ok')}}</button>
 		</view>
-		<view class="footer-version c-999">
+		<!-- <view class="footer-version c-999">
 			{{globalConfig.sysInfo.name ?? packData.name}} for {{packData.version}}
-		</view>
+		</view> -->
 	</view>
 </template>
 

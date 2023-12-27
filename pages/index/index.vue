@@ -91,7 +91,7 @@
 				</view>
 			</view>
 		</view>
-		
+
 	</view>
 </template>
 
@@ -138,27 +138,27 @@
 		},
 		data() {
 			let navList = [{
-						name: 'home',
-						title:this.$t('nav.home'),
-						notice: 0
-					}, {
-						name: 'message',
-						title: this.$t('nav.message'),
-						notice: unread
-					}, {
-						name: 'serve',
-						title: this.$t('nav.serve'),
-						notice: 0
-					},
-					{
-						name: 'contacts',
-						title: this.$t('nav.contacts'),
-						notice: sysUnread
-					}, {
-						name: 'mine',
-						title: this.$t('nav.mine'),
-						notice: 0
-					}
+					name: 'home',
+					title: this.$t('nav.home'),
+					notice: 0
+				}, {
+					name: 'message',
+					title: this.$t('nav.message'),
+					notice: unread
+				}, {
+					name: 'serve',
+					title: this.$t('nav.serve'),
+					notice: 0
+				},
+				{
+					name: 'contacts',
+					title: this.$t('nav.contacts'),
+					notice: sysUnread
+				}, {
+					name: 'mine',
+					title: this.$t('nav.mine'),
+					notice: 0
+				}
 			]
 			let compass = {
 				name: 'compass',
@@ -173,22 +173,23 @@
 			}
 			// navList.push(mine);
 			return {
-				
+
 				globalConfig: loginStore.globalConfig,
 				PageCur: 'home',
-				PageName: '首页',
-				
+				PageName: this.$t('nav.home'),
+
 				TabCur: 0,
 				modelName: false,
 				navList: [],
 				userinfo: {},
 				tabs: 0,
 				run_fun: true,
-				tabs_arr: [ ]
+				tabs_arr: []
 			}
 		},
 
 		onShow() {
+			this.PageName = this.$t('nav.home'),
 				this.navList = [{
 						name: 'home',
 						title: this.$t('nav.home'),
@@ -212,23 +213,23 @@
 						notice: 0
 					}
 				]
-				this.tabs_arr=[{
-					id: 1,
-					name: this.$t('tab_nav.nav1'),
-					ifshow: false
-				}, {
-					id: 2,
-					name:  this.$t('tab_nav.nav2'),
-					ifshow: false
-				}, {
-					id: 3,
-					name:  this.$t('tab_nav.nav3'),
-					ifshow: false
-				}, {
-					id: 4,
-					name:  this.$t('tab_nav.nav4'),
-					ifshow: false
-				}]
+			this.tabs_arr = [{
+				id: 1,
+				name: this.$t('tab_nav.nav1'),
+				ifshow: false
+			}, {
+				id: 2,
+				name: this.$t('tab_nav.nav2'),
+				ifshow: false
+			}, {
+				id: 3,
+				name: this.$t('tab_nav.nav3'),
+				ifshow: false
+			}, {
+				id: 4,
+				name: this.$t('tab_nav.nav4'),
+				ifshow: false
+			}]
 
 			// #ifndef MP
 			//this.run_child()
@@ -236,7 +237,7 @@
 
 		},
 		onLoad() {
-			
+
 		},
 		mounted() {
 
@@ -270,7 +271,8 @@
 
 				setTimeout(() => {
 					uni.pageScrollTo({
-						scrollTop: document.querySelector('.scroll_main').scrollHeight-102, //滚动到页面的目标位置（单位px）
+						scrollTop: document.querySelector('.scroll_main').scrollHeight -
+						102, //滚动到页面的目标位置（单位px）
 						duration: 0 //滚动动画的时长，默认300ms，单位 ms
 					});
 				}, 100)
@@ -405,5 +407,4 @@
 		left: 25%;
 		bottom: -8px;
 	}
-	
 </style>

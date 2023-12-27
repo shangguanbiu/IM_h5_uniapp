@@ -27,18 +27,50 @@ axios.interceptors.response.use(
 		const res = response.data
 		let msg = res.msg
 		if (msg) {
-			if ([400, 401,402, 403, 404, 405, 502, 500].includes(res.code)) {
+			if ([400, 401, 402, 403, 404, 405, 502, 500].includes(res.code)) {
 				uni.showToast({
 					title: msg,
 					icon: "none",
 					duration: 2500
 				})
 			} else if (res.code == 0) {
-				uni.showToast({
-					title: msg,
-					icon: "none",
-					duration: 2500
-				})
+				let language = localStorage.getItem('language')
+				if (language == 'en') {
+					if (msg == '登录成功！'){
+						uni.showToast({
+							title: 'Login succeeded',
+							icon: "none",
+							duration: 2500
+						})
+					}else if (msg == '退出成功！'){
+						uni.showToast({
+							title: 'Exit successful',
+							icon: "none",
+							duration: 2500
+						})
+					}else if (msg == '注册成功'){
+						uni.showToast({
+							title: 'Register successful',
+							icon: "none",
+							duration: 2500
+						})
+					}else{
+						uni.showToast({
+							title: msg,
+							icon: "none",
+							duration: 2500
+						})
+					}
+						
+
+				} else {
+					uni.showToast({
+						title: msg,
+						icon: "none",
+						duration: 2500
+					})
+				}
+
 			} else if (res.code == -1) {
 				uni.showToast({
 					title: msg,
@@ -115,7 +147,7 @@ export const postRequest = (url, params) => {
 		url: `${url}`,
 		header: {
 			'Content-Type': 'application/x-www-form-urlencoded', //formdata 格式
-			'Authorization':uni.getStorageSync("authToken"),
+			'Authorization': uni.getStorageSync("authToken"),
 			"clientId": uni.getStorageSync('client_id'),
 			"cid": uni.getStorageSync('cid')
 		},
@@ -135,7 +167,7 @@ export const postJsonRequest = (url, params) => {
 		}
 	});
 };
-export const postJsonRequest_talk = (url, params,token,cid) => {
+export const postJsonRequest_talk = (url, params, token, cid) => {
 	return axios({
 		method: 'post',
 		url: `${url}`,
@@ -157,8 +189,8 @@ export const postJsonRequest_movice = (url, params) => {
 		header: {
 
 			"XX-Api-Version": 1,
-			"XX-Device-Type":'mobile',
-			"XX-Token":token,
+			"XX-Device-Type": 'mobile',
+			"XX-Token": token,
 			'content-type': 'application/json'
 		}
 	});

@@ -14,10 +14,10 @@
 				<view class="main_title">{{detail.name}}
 				</view>
 				<view class="mian_price_line" style="padding: 7px 0;">
-					<view class="mark_price">浏览量：{{detail.view_count}}</view>
+					<view class="mark_price">{{$t('detail.view')}}：{{detail.view_count}}</view>
 
 				</view>
-				<view class="main_title" style="margin-top: 10px;color: #2a1468;">简介</view>
+				<view class="main_title" style="margin-top: 10px;color: #2a1468;">{{$t('detail.jianjie')}}</view>
 				<view class="dangan">
 					{{detail.desc}}
 				</view>
@@ -27,7 +27,7 @@
 					</view>
 				</view>
 
-				<view class="main_title" style="margin-top: 10px; color: #2a1468;">猜你喜欢</view>
+				<view class="main_title" style="margin-top: 10px; color: #2a1468;">{{$t('detail.belike')}}</view>
 				<view class="like_are">
 					<view class="like_zi"   v-for="(guessitem,index_guess) in guess_arr" :key="index_guess" @click="see_detail(guessitem)">
 						<view class="like_zi_are">
@@ -54,15 +54,16 @@
 			<view class="com_bg"></view>
 			<view class="com_main">
 				<view class="pop_mian">
-					<view class="pop_title">提示</view>
+					<view class="pop_title">{{$t('pop.title')}}</view>
 					<view
 						style="padding: 10px 15px; display:flex; justify-content: flex-start; line-height: 25px; flex-wrap: wrap;">
-						您当前可观看浏览视频数量已达到每日限制，观看更多可开通会员，请联系客服
+						
+						{{$t('pop.content2')}}
 					</view>
 
 					<view class="pop_foot">
-						<view class="pop_ft_btn1" @tap="pop_notice=false">关闭</view>
-						<view class="pop_ft_btn2" @tap="pop_ok()">去升级</view>
+						<view class="pop_ft_btn1" @tap="pop_notice=false">{{$t('pop.close')}}</view>
+						<view class="pop_ft_btn2" @tap="pop_ok()">{{$t('pop.up')}}</view>
 					</view>
 				</view>
 			</view>

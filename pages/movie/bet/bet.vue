@@ -10,19 +10,19 @@
 					<view>{{$t('bet.now')}}</view>
 				</view>
 				<view style="display: flex; align-items: center;" class="bet_ge">
-					<view style="font-weight: bold; font-size: 16px; margin-right: 3px;">{{qishu}}</view>
+					<view style="font-weight: bold; font-size: 16px; margin-right: 3px;text-decoration: none;">{{qishu}}</view>
 					<view v-if="ifrun">{{$t('bet.go_on')}}</view>
 					<view v-if="!ifrun">{{$t('bet.close')}}</view>
 				</view>
 				<view class="time">{{time2+':'+time3}}</view>
 				<view class="bet_line bet_ge">
 					<view style="display: flex;" v-for="(item,narr_k) in Number_laster.slice(0,1)" :key="narr_k">
-						<view style="margin-right: 10px;">{{item.open_no}}</view>
+						<view style="margin-right: 10px;text-decoration: none;">{{item.open_no}}</view>
 						
 						<view class="color_n2" v-if="item.number>5||item.number==5">{{$t('bet.bet_n1')}}</view>
-						<view class="color_n1" v-if="item.number<4 ||item.number==4">{{$t('bet.bet_n1')}}</view>
-						<view class="color_n1" v-if="item.number % 2 === 1">{{$t('bet.bet_n1')}}</view>
-						<view class="color_n2" v-if="item.number% 2 === 0">{{$t('bet.bet_n1')}}</view>
+						<view class="color_n1" v-if="item.number<4 ||item.number==4">{{$t('bet.bet_n2')}}</view>
+						<view class="color_n1" v-if="item.number % 2 === 1">{{$t('bet.bet_n3')}}</view>
+						<view class="color_n2" v-if="item.number% 2 === 0">{{$t('bet.bet_n4')}}</view>
 					</view>
 					<view @click="ifhistory=!ifhistory" style="display: flex;">{{$t('bet.history')}}
 
@@ -37,9 +37,9 @@
 								<view style="margin-right: 10px;">{{item.open_no}}</view>
 								
 								<view class="color_n2" v-if="item.number>5||item.number==5">{{$t('bet.bet_n1')}}</view>
-								<view class="color_n1" v-if="item.number<4 ||item.number==4">{{$t('bet.bet_n1')}}</view>
-								<view class="color_n1" v-if="item.number % 2 === 1">{{$t('bet.bet_n1')}}</view>
-								<view class="color_n2" v-if="item.number% 2 === 0">{{$t('bet.bet_n1')}}</view>
+								<view class="color_n1" v-if="item.number<4 ||item.number==4">{{$t('bet.bet_n2')}}</view>
+								<view class="color_n1" v-if="item.number % 2 === 1">{{$t('bet.bet_n3')}}</view>
+								<view class="color_n2" v-if="item.number% 2 === 0">{{$t('bet.bet_n4')}}</view>
 
 							</view>
 						</view>
@@ -137,23 +137,7 @@
 				ifrun: true,
 				ifhistory: false,
 				history_list: [],
-				Number_arr: [{
-					name: '春',
-					value: 1,
-					ifhad: false
-				}, {
-					name: '夏',
-					value: 2,
-					ifhad: false
-				}, {
-					name: '秋',
-					value: 3,
-					ifhad: false
-				}, {
-					name: '冬',
-					value: 4,
-					ifhad: false
-				}],
+				Number_arr: [],
 				Number_laster: [],
 				cost_arr: [10, 50, 100, 200, 500, 1000],
 				userinfo: {},
@@ -412,7 +396,23 @@
 				this.get_userInfo()
 				this.getOpenData()
 				this.getHistoryOpenData()
-
+				this.Number_arr=[{
+						name: this.$t('bet.bet_n1'),//'春',
+						value: 1,
+						ifhad: false
+					}, {
+						name: this.$t('bet.bet_n2'),//'夏',
+						value: 2,
+						ifhad: false
+					}, {
+						name: this.$t('bet.bet_n3'),//'秋',
+						value: 3,
+						ifhad: false
+					}, {
+						name: this.$t('bet.bet_n4'),//'冬',
+						value: 4,
+						ifhad: false
+					}]
 			}
 		},
 		onLoad() {
@@ -420,12 +420,16 @@
 
 			var backbutton = document.getElementsByClassName('uni-page-head-hd')[0]
 			if (backbutton) backbutton.style.display = 'none';
+			
 
 		},
 		mounted() {
 			this.pageHeight = document.documentElement.clientHeight;
 
 
+		},
+		onShow() {
+			
 		}
 	}
 </script>

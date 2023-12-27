@@ -130,6 +130,8 @@ export default{
 		detail:'查看詳情',
 		actie_time:'分鐘前活躍',
 		actie_time2:'分鐘前活躍',
+		actie_times:'',
+		actie_time2s:'',
 		like_ta:"人喜歡了TA",
 		about_me:"關於我",
 		talk:'打招呼',
@@ -391,7 +393,11 @@ export default{
 		pop_tit3:"請輸入6-16比特密碼！",
 		pop_tit4:"兩次密碼輸入不相同！",
 	},
-	
+	detail:{
+		view:'流覽量',
+		jianjie:'簡介',
+		belike:"猜你喜歡",
+	},
 	
 	
 }

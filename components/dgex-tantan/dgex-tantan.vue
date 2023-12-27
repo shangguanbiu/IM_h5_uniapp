@@ -61,7 +61,7 @@
 											<view style="font-weight: normal; font-size: 13px;">{{item.ages}}</view>
 										</view>
 
-										<view>{{item.isfar+'km·'+item.istime+$t('nearby.actie_time')}}</view>
+										<view>{{item.isfar+'km·'+$t('nearby.actie_times')+item.istime+$t('nearby.actie_time')}}</view>
 										<view class="about_more">{{$t('nearby.detail')}} <view class="cuIcon-unfold"></view>
 										</view>
 									</view>

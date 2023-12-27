@@ -50,7 +50,7 @@
 
 					<view class="mian_price_line">
 						<view style="padding-right: 30px; color: #a09d9d;">
-							{{detail_data.isfar+'km '+detail_data.istime+$t('nearby.actie_time2')+detail_data.ispepole+$t('nearby.like_ta')}}
+							{{detail_data.isfar+'km '+$t('nearby.actie_time2s')+detail_data.istime+$t('nearby.actie_time2')+detail_data.ispepole+$t('nearby.like_ta')}}
 						</view>
 
 					</view>
