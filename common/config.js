@@ -1,13 +1,13 @@
-let host = 'imweb.91biu.top';
+let host = 'imweb.baobaoi.vip';
 // #ifdef  MP-WEIXIN
 let env = wx.getAccountInfoSync()
 if (env.miniProgram.envVersion == 'develop') {
-	host = 'imweb.91biu.top';
+	host = 'imweb.baobaoi.vip';
 }
 // #endif
 //  #ifdef APP-PLUS || H5
 if (process.env.NODE_ENV === 'development') {
-	host = 'imweb.91biu.top';
+	host = 'imweb.baobaoi.vip';
 }
 // #endif
 const apiUrl = 'https://' + host;

@@ -15,7 +15,10 @@
 						<!-- <view class='cu-tag ml-10  round light' :class="loginStore.userInfo.is_auth ? 'bg-orange' : 'bg-grey'">{{loginStore.userInfo.is_auth ? '已认证' : '未认证'}}</view>
 					 -->
 					</view>
-					<view class="text-gray mb-10">{{loginStore.userInfo.account}}</view>
+					<view  class="mb-10" style="text-decoration: none; display: flex; align-items: center;">
+						<view class="text-gray"></view>{{loginStore.userInfo.account}}
+					<view class="text-pink"  style="padding-left: 10px;">{{$t('mine.jifen')}}：{{balance}}</view>
+					</view>
 				</view>
 			</view>
 			<!-- <view class="cuIcon-qrcode f-24 text-gray" @tap="openQr"></view> -->
@@ -38,6 +41,24 @@
 					<text class="text-grey cuIcon-right"></text>
 				</view>
 			</view> -->
+			<view class="cu-item" @tap="edit_renzheng()">
+				<view class="content">
+					<text class="cuIcon-vip text-pink"></text>
+					<text>{{$t('usercenter.l_nav6')}}</text>
+				</view>
+				<view class="action">
+					<text class="text-grey cuIcon-right"></text>
+				</view>
+			</view>
+			<view class="cu-item" @tap="editInfo_msg()">
+				<view class="content">
+					<text class="cuIcon-newsfill text-red"></text>
+					<text>{{$t('usercenter.l_nav5')}}</text>
+				</view>
+				<view class="action">
+					<text class="text-grey cuIcon-right"></text>
+				</view>
+			</view>
 			<view class="cu-item" @tap="to_like(1)">
 				<view class="content">
 					<text class="cuIcon-likefill text-red"></text>
@@ -147,6 +168,8 @@
 				appSetting: loginStore.appSetting,
 				PageCur: 'mine',
 				navList: [],
+				balance:'0.00',
+				flow_data:{}
 			}
 		},
 		onShow() {
@@ -192,10 +215,23 @@
 			if (backbutton) backbutton.style.display = 'none';
 
 			this.get_userinfo()
-
+			 
 
 		},
 		methods: {
+			
+			async get_balance() {
+				var _this = this
+				const res = await this.$myRuquest({
+					url: '/api/front/user/getUserInfo',
+					method: "POST",
+				})
+				if (res.code == 200) {
+					this.flow_data=res.data
+					this.balance=res.data.balance
+				}
+			},
+			
 			async get_userinfo() {
 				let userInfo = JSON.parse(JSON.stringify(loginStore.userInfo))
 				const res = await this.$myRuquest({
@@ -206,9 +242,11 @@
 					},
 				})
 				if (res.code == 200) {
-
+					
 					let data = JSON.parse(JSON.stringify(res.data))
+					
 					loginStore.login(data)
+					this.get_balance()
 
 				}
 			},
@@ -304,6 +342,25 @@
 			editInfo() {
 				uni.navigateTo({
 					url: "/pages/mine/profile"
+				})
+			},
+			editInfo_msg() {
+				uni.navigateTo({
+					url: "/pages/mine/profile_msg"
+				})
+			},
+			edit_renzheng() {
+				
+				if(this.flow_data.agent_account !==null){
+					uni.showToast({
+						title: this.$t('usercenter.vip_p_pop_6'),
+						icon: "none"
+					})
+					return
+				}
+				
+				uni.navigateTo({
+					url: "/pages/mine/renzheng"
 				})
 			},
 			scan() {

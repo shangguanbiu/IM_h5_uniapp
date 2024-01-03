@@ -1,5 +1,10 @@
 <template>
 	<view>
+		
+		<cu-custom bgColor="bg-gradual-pink" :isBack="false">
+			<template #backText></template>
+			<template #content>{{$t('nav.contacts')}}</template>
+		</cu-custom>
 		<scroll-view scroll-y class="indexes" :scroll-into-view="'indexes-'+ listCurID" :style="[{height:'calc(100vh - '+ (CustomBar+inlineTools+StatusBar) + 'px)'}]"
 		 :scroll-with-animation="true" :enable-back-to-top="true" v-if="TabCur==0">
 		 <view style="padding-bottom:30rpx">

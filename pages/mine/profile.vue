@@ -2,7 +2,7 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-pink" :isBack="true">
 			<template #backText></template>
-			<template #content>{{$t('mine.title')}}</template>
+			<template #content>{{$t('mine.icon')}}</template>
 		</cu-custom>
 		<form>
 			<view class="cu-form-group" style="height:140rpx">
@@ -18,7 +18,7 @@
 				<view class="title">封面图</view>
 				<view class="text-gray"><text class="cuIcon-right ml-10 f-18 text-grey"></text></view>
 			</view> -->
-			<view class="cu-form-group">
+			<!-- <view class="cu-form-group">
 				<view class="title">{{$t('mine.account')}}</view>
 				<view class="text-gray">{{userInfo.account}}</view>
 			</view>
@@ -50,7 +50,7 @@
 			<view class="cu-form-group align-start">
 				<view class="title">{{$t('mine.sine')}}</view>
 				<textarea maxlength="-1" v-model="userInfo.motto" :placeholder="$t('mine.sine_place')"></textarea>
-			</view>
+			</view> -->
 		</form>
 		<view class="padding flex flex-direction">
 			<button class="cu-btn bg-green lg" :style="saved ? 'border: solid 1px #dbdada;' : ''" :disabled="saved" @tap="saveInfo()" >{{$t('mine.save')}}</button>

@@ -65,10 +65,44 @@
 					{{nitem.name}}
 				</view>
 			</view>
+		
 
-
-
-
+		</view>
+		<view style="padding-left: 15px; color: #e6557f; font-size: 16px; font-weight: bold; margin: 15px 0;">{{$t('bet.flow_tit')}}</view>
+		<view style="padding-left: 10%;">
+		<view class="flow_line">
+			<view style="width: 40%;">
+				<view style=" margin-left: -10px;" class="color1">{{$t('bet.flow1')}}</view>
+				<view class="flow_m">
+					<view class="cuIcon-title color1" v-if="flow_data.flow1==1"></view>
+					<view class="cuIcon-title color2" v-if="flow_data.flow1==0"></view>
+					<view class="flow_l color2_bg" :class="{'color1_bg':flow_data.flow1==1}" style="flex: 1;" ></view>
+				</view>
+				<view style=" margin-left: -10px;" class="color1" v-if="flow_data.flow1==1">{{$t('bet.flow_type1')}}</view>
+				<view style=" margin-left: -10px;" class="color2" v-else>{{$t('bet.flow_type2')}}</view>
+			</view>
+			<view style="width: 40%;">
+				<view style="margin-left: -10px;" class="color1">{{$t('bet.flow2')}}</view>
+				<view class="flow_m">
+					<view class="cuIcon-roundcheckfill color1" v-if="flow_data.flow2==1"></view>
+					<view class="cuIcon-title color2" v-if="flow_data.flow2==0"></view>
+					<view class="flow_l color2_bg" :class="{'color1_bg':flow_data.flow2==1}" style="flex: 1;" ></view>
+					 
+				</view>
+				<view style=" margin-left: -10px;" class="color1" v-if="flow_data.flow2==1">{{$t('bet.flow_type1')}}</view>
+				<view style=" margin-left: -10px;" class="color2" v-else>{{$t('bet.flow_type2')}}</view>
+			</view>
+			<view style="width: 20%;">
+				<view style="margin-left: -10px;" class="color1">{{$t('bet.flow3')}}</view>
+				<view class="flow_m">
+					<view class="cuIcon-roundcheckfill color1" v-if="flow_data.flow3==1"></view>
+					<view class="cuIcon-title color2" v-if="flow_data.flow3==0"></view>
+					
+				</view>
+				<view style=" margin-left: -10px;" class="color1" v-if="flow_data.flow3==1">{{$t('bet.flow_type1')}}</view>
+				<view style=" margin-left: -10px;" class="color2" v-else>{{$t('bet.flow_type2')}}</view>
+			</view>
+		</view>
 		</view>
 		<view class="bet_foot" v-show="pop_bet">
 			<view class="bet_f_m">
@@ -116,9 +150,14 @@
 </template>
 
 <script>
+	import { useloginStore } from '@/store/login'
+	import pinia from '@/store/index'
+	const loginStore = useloginStore(pinia)
+	
 	export default {
 		data() {
 			return {
+				loginStore:loginStore,
 				pop_notice: false,
 				scroll_ft: false,
 				pop_bet: false,
@@ -147,6 +186,7 @@
 				time_build: null,
 				if_over: false,
 				pageHeight: 0,
+				flow_data:{},
 
 			}
 		},
@@ -201,6 +241,21 @@
 			},
 		},
 		methods: {
+			get_sys_userinfo() {
+				let userInfo = JSON.parse(JSON.stringify(loginStore.userInfo))
+				var params={
+					user_id:userInfo.user_id
+				}
+				this.$api.third_openApi.get_user_info(params).then((res) => {
+					if (res.code == 0) {
+						console.log('ssssssssss',res)
+						let row=res.data.data
+						this.flow_data=row[0]
+						console.log('dddddddddd',this.flow_data.flow1)
+			
+					}
+				})
+			},
 			change_num(val) {
 
 			},
@@ -393,6 +448,7 @@
 				}
 			},
 			run_fun() {
+				this.get_sys_userinfo()
 				this.get_userInfo()
 				this.getOpenData()
 				this.getHistoryOpenData()
@@ -439,7 +495,13 @@
 		background: #969696;
 
 	}
-
+.flow_line{display: flex; justify-content: space-between; width: 85%; margin:20px auto;}
+.flow_l{height: 1px;}
+.flow_m{display: flex;align-items: center; margin: 10px 0;}
+.color2{color: #969799;}
+.color2_bg{background: #969799;}
+.color1{color: #e6557f;}
+.color1_bg{background: #e6557f;}
 	.bet_top {
 		height: auto;
 		width: 94%;

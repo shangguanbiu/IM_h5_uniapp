@@ -47,27 +47,27 @@
 				:style="[{height:boxHeight+'px'}]" v-if="appBox==2">
 				<view class="im-flex im-columns im-align-items-center mt-10 im-app-item" @tap="chooseImg">
 					<view class="bg-white cuIcon-album f-24 radius-10  im-app-item-icon"></view>
-					<view class="mt-5">照片</view>
+					<view class="mt-5">{{$t('shipin.title1')}}</view>
 				</view>
 				<view class="im-flex im-columns im-align-items-center mt-10 im-app-item" @tap="chooseVideo">
 					<view class="bg-white cuIcon-video f-24 radius-10 im-app-item-icon"></view>
-					<view class="mt-5">视频</view>
+					<view class="mt-5">{{$t('shipin.title1')}}</view>
 				</view>
 				<view class="im-flex im-columns im-align-items-center mt-10 im-app-item" @tap="chooseFile">
 					<view class="bg-white cuIcon-file f-24 radius-10 im-app-item-icon"></view>
-					<view class="mt-5">文件</view>
+					<view class="mt-5">{{$t('shipin.title2')}}</view>
 				</view>
 				<view class="im-flex im-columns im-align-items-center mt-10 im-app-item"
 					v-if='!contact.is_group && (isH5 || isApp) &&  parseInt(globalConfig.chatInfo.webrtc)'
 					@tap="calling(0)">
 					<view class="bg-white cuIcon-dianhua f-24 radius-10 im-app-item-icon"></view>
-					<view class="mt-5">语音通话</view>
+					<view class="mt-5">{{$t('shipin.title3')}}</view>
 				</view>
 				<view class="im-flex im-columns im-align-items-center mt-10 im-app-item"
 					v-if='!contact.is_group && (isH5 || isApp) && parseInt(globalConfig.chatInfo.webrtc)'
 					@tap="calling(1)">
 					<view class="bg-white cuIcon-record f-24 radius-10 im-app-item-icon"></view>
-					<view class="mt-5">视频通话</view>
+					<view class="mt-5">{{$t('shipin.title4')}}</view>
 				</view>
 
 			</view>
@@ -89,14 +89,15 @@
 			<view class="com_bg"></view>
 			<view class="com_main">
 				<view class="pop_mian">
-					<view class="pop_title">提示</view>
+					<view class="pop_title">{{$t('pop.title')}}</view>
 					<view style="padding: 10px 15px;  line-height: 25px; flex-wrap: wrap; text-align: center;">
-						您还未开通会员，暂无使用该功能权限
+						
+						{{$t('pop.content7')}}
 					</view>
 		
 					<view class="pop_foot">
-						<view class="pop_ft_btn1"  @tap="pop_notice=false">关闭</view>
-						<view class="pop_ft_btn2" @tap="pop_ok()" >去升级</view>
+						<view class="pop_ft_btn1"  @tap="pop_notice=false">{{$t('pop.close')}}</view>
+						<view class="pop_ft_btn2" @tap="pop_ok()" >{{$t('pop.up')}}</view>
 						
 					</view>
 				</view>

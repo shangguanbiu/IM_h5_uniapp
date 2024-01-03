@@ -10,7 +10,7 @@ export const useloginStore = defineStore({
 			globalConfig: uni.getStorageSync('globalConfig') ? uni.getStorageSync('globalConfig') : [],
 			appSetting: uni.getStorageSync('appSetting') ? uni.getStorageSync('appSetting') : [],
 			multiport: false,
-			language: uni.getStorageSync('language') ? uni.getStorageSync('language') : 'zh',
+			language: uni.getStorageSync('language') ? uni.getStorageSync('language') : 'zhCN',
 		}
 	},
 	// actions 用来修改 state

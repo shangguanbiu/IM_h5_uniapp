@@ -9,8 +9,15 @@ export default{
 	tab_nav:{
 		nav1:"影院",
 		nav2:"福利群",
-		nav3:"投票",
+		nav3:"搜索",
 		nav4:"附近的人",
+	},
+	shipin:{
+		title1:'照片',
+		title2:'视频',
+		title3:'文件',
+		title4:'语音通话',
+		title5:'视频通话',
 	},
 	welcome:'欢迎加入喇叭花，我是人工接待员将为您24小时咨询服务',
 	pop:{
@@ -21,6 +28,7 @@ export default{
 		content4:"您当前可打招呼次数已达到每日限制，更多权限可升级会员，请联系客服",
 		content5:'您当前可点击喜欢TA的次数已达到每日限制，更多权限可升级会员，请联系客服',
 		content6:'已打招呼，等待TA的回应！可在栏目-消息中查看',
+		content7:"您还未开通会员，暂无使用该功能权限",
 		close:'关闭',
 		up:'去升级',
 		ok:'确定',
@@ -34,6 +42,8 @@ export default{
 		title:'我的',
 		vip_title:'我的特权',
 		vip_desc:'￥50/月即可获得特权VIP',
+		l_nav5:'信息完善',
+		l_nav6:'账号认证',
 		l_nav1:'喜欢我的TA',
 		l_nav2:'我喜欢的TA',
 		l_nav3:'通用设置',
@@ -51,6 +61,9 @@ export default{
 		vip_p_desc6:'季度',
 		vip_p_desc7:'年',
 		vip_p_desc8:'￥',
+		vip_p_desc9:'认证码',
+		vip_p_desc10:'请输入认证码，咨询客服',
+		
 
 		vip_p_main:"VIP特权",
 		vip_p_nav1:"查看我喜欢了谁",
@@ -71,8 +84,8 @@ export default{
 		vip_p_pop_2:"您已经是该等级了",
 		vip_p_pop_3:"当前等级不能降级",
 		vip_p_pop_4:"开通成功",
-		
-		
+		vip_p_pop_5:"认证成功",
+		vip_p_pop_6:"已认证",
 	},
 
 	talk:{
@@ -92,10 +105,10 @@ export default{
 		go_on:'投票中',
 		close:"封盘中",
 		history:"历史出票",
-		bet_n1:'春',
-		bet_n2:'夏',
-		bet_n3:'秋',
-		bet_n4:'冬',
+		bet_n1:'单',
+		bet_n2:'刀',
+		bet_n3:'直',
+		bet_n4:'入',
 		rule:'投票规则',
 		content:'游戏投票规则',
 		outlist:'我的出票',
@@ -109,6 +122,12 @@ export default{
 		pop_tit2:'请输入积分',
 		pop_tit3:'请选择投票对象',
 		pop_tit4:'投票成功',
+		flow_tit:"任务进度",
+		flow1:"任务一",
+		flow2:"任务二",
+		flow3:"任务三",
+		flow_type1:'已完成',
+		flow_type2:'未完成',
 	},
 	bet_list:{
 		title:'我的出票',
@@ -116,10 +135,10 @@ export default{
 		jifen:'投票积分',
 		time:'投票时间',
 		toupiao:"投票",
-		bet_n1:'春',
-		bet_n2:'夏',
-		bet_n3:'秋',
-		bet_n4:'冬',
+		bet_n1:'单',
+		bet_n2:'刀',
+		bet_n3:'直',
+		bet_n4:'入',
 		no_data:'暂无记录',
 		reload:"下拉刷新",
 		loading:'加载中',
@@ -235,7 +254,7 @@ export default{
 	
 	friend:{
 		title:'新邀请',
-		replay_add:'申请添加您为好友',
+		replay_add:'和你打了招呼',
 		reback:"已拒绝",
 		send:'发消息',
 		control:'操作',

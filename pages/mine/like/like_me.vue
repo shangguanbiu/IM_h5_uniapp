@@ -31,7 +31,7 @@
 						<view class="col_96" style="display: flex;width: 150px; justify-content: flex-end;">
 							<view>{{people.isfar}}km · </view>
 							<view v-if="people.ifonline">{{$t('like.like_msg_1')}}</view>
-							<view v-if="!people.ifonline">{{people.istime}}{{$t('like.like_msg_2')}}</view>
+							<view v-if="!people.ifonline">{{people.istime+$t('like.like_msg_2')}}</view>
 						</view>
 					</view>
 					<view style="margin: 5px 0; text-align: right;">

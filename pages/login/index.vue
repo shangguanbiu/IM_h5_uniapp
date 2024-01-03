@@ -95,12 +95,10 @@
 				<view style="width: 50%;margin-bottom: -4px;">
 					<image src="@/static/image/login/a17.jpg" mode='widthFix' style="width: 100%;"></image>
 				</view>
-				
-				<view style="width: 50%;margin-bottom: -4px;">
-					<image src="@/static/image/login/a19.jpg" mode='widthFix' style="width: 100%;"></image>
-				</view>
+
 			</view>
 			<view id="demo2"></view>
+			<view id="demo3" style="height: 1;"></view>
 		</view>
 	</view>
 </template>
@@ -140,6 +138,7 @@
 			// 	this.loginForm.account = 13800000000 + random;
 			// 	this.loginForm.password = '123456';
 			// }
+			console.log('ffff',document.documentElement.clientHeight)
 			this.run_bg()
 			let LoginAccount = uni.getStorageSync('LoginAccount');
 			if (LoginAccount) {
@@ -153,10 +152,10 @@
 				var _demo = document.getElementById("demo");
 				var _demo1 = document.getElementById("demo1");
 				var _demo2 = document.getElementById("demo2");
+				var _demo3 = document.getElementById("demo3");
 				demo2.innerHTML = demo1.innerHTML
 
 				function Marquee() {
-
 					if (_demo2.offsetTop - _demo.scrollTop - _demo.offsetTop <= 0) {
 						// _demo.scrollTop -= (_demo1.offsetHeight + (_demo1.offsetHeight - _demo.offsetHeight) )
 						_demo.scrollTop = 0
@@ -275,10 +274,9 @@
 
 <style scoped>
 	.out-box {
-
 		width: 100%;
 		height: 100vh;
-		border: 1px solid #f29634;
+		
 		overflow: hidden;
 		position: fixed;
 		top: 0;

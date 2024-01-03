@@ -21,7 +21,7 @@
 		{
 			"path": "pages/contacts/index",
 			"style": {
-				"navigationStyle": "default",
+				
 				"navigationBarTitleText": "通讯录"
 			}
 		},
@@ -126,6 +126,16 @@
 			"style": {
 				"navigationBarTitleText": "个人信息"
 			}
+		},{
+			"path": "pages/mine/profile_msg",
+			"style": {
+				"navigationBarTitleText": "个人信息"
+			}
+		},{
+			"path": "pages/mine/renzheng",
+			"style": {
+				"navigationBarTitleText": "账号认证"
+			}
 		},
 		{
 			"path": "pages/mine/secure",
@@ -186,6 +196,7 @@
 			"style": {
 				"navigationBarTitleText": "投票",
 				"enablePullDownRefresh": false
+				
 			}
 
 		},{

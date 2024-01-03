@@ -1,14 +1,14 @@
 
 // const BASE_URL2 = 'https://test.net:9005'
 
-const BASE_URL = 'https://imapi.91biu.top'
+const BASE_URL = ''
 
 // BASE_URL = 'https://'+window.location.host
 export const baseurl=()=>{
 	return BASE_URL
 }
 export const imgurl=()=>{
-	return 'https://imweb.91biu.top'
+	return 'https://imweb.baobaoi.vip'
 }
 export const myRequest = (options) => {
 	return new Promise((resolve, reject) => {

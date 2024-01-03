@@ -55,5 +55,12 @@ third_openApi.get_level_list = (params) => {
 	return postJsonRequest('/enterprise/third/Level_list', params)
 }
 
+/**
+ * @desc 获取用户信息
+ * @param {*} 参数 
+ */
+third_openApi.get_user_info = (params) => {
+	return postJsonRequest('/enterprise/third/user_info', params)
+}
 
 export default third_openApi;

@@ -24,7 +24,7 @@ const messages = {
 const i18n = createI18n({
 	legacy: false,
 	globalInjection:true,
-	locale:uni.getStorageSync('language'),
+	locale:loginStore.language,
 	messages: messages,
 	globalInjection: true,
 });
