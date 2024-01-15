@@ -25,7 +25,7 @@
 					<text class="text-grey text-sm ml-5 cuIcon-write"></text>
 				</view>
 			</view>
-			<view class="cu-item">
+			<!-- <view class="cu-item">
 				<view class="content">
 					<text class="cuIcon-mail text-green"></text>
 					<text>{{$t('contact.emial')}}</text>
@@ -33,7 +33,7 @@
 				<view class="action">
 					<text class="text-grey text-sm">{{detail.email ?? ''}}</text>
 				</view>
-			</view>
+			</view> -->
 			<view class="cu-item">
 				<view class="content">
 					<text class="cuIcon-safe text-green"></text>
@@ -105,7 +105,7 @@
 					<view class="pop_title">{{$t('pop.title')}}</view>
 					<view style="padding: 10px 15px;  line-height: 25px; flex-wrap: wrap; text-align: center;">
 
-						{{$t('pop.content7')}}
+						{{$t('pop.content8')}}
 					</view>
 
 					<view class="pop_foot">
@@ -178,9 +178,20 @@
 			calling(is_video) {
 				let userInfo = JSON.parse(JSON.stringify(userStore.userInfo))
 				
-				if (userInfo.islevel == 0 && userInfo.role !== 1) {
-					this.pop_notice = true
-					return;
+				
+				if(is_video==0){
+					//yuyin
+					if (userInfo.ifvoice == 0 && userInfo.role !== 1) {
+						this.pop_notice = true
+						return;
+					}
+				}
+				if(is_video==1){
+					//yuyin
+					if (userInfo.ifvideo == 0 && userInfo.role !== 1) {
+						this.pop_notice = true
+						return;
+					}
 				}
 				
 				if (msgStore.webrtcLock) {

@@ -1,7 +1,7 @@
 {
-    "name" : "喇叭花",
+    "name" : "BaoBao TV",
     "appid" : "__UNI__FDD4129",
-    "description" : "喇叭花",
+    "description" : "BaoBao TV",
     "versionName" : "3.1.1",
     "versionCode" : 20231021,
     "transformPx" : false,
@@ -20,7 +20,8 @@
         "modules" : {
             "Record" : {},
             "UIWebview" : {},
-            "VideoPlayer" : {}
+            "VideoPlayer" : {},
+            "Push" : {}
         },
         /* 模块配置 */
         "distribute" : {
@@ -40,6 +41,7 @@
                     "<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>",
                     "<uses-permission android:name=\"android.permission.MANAGE_APP_TOKENS\"/>",
                     "<uses-permission android:name=\"android.permission.MANAGE_DOCUMENTS\"/>",
+                    "<uses-permission android:name=\"android.permission.MOUNT_FORMAT_FILESYSTEMS\"/>",
                     "<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
                     "<uses-permission android:name=\"android.permission.READ_EXTERNAL_STORAGE\"/>",
                     "<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
@@ -59,20 +61,9 @@
             },
             /* ios打包配置 */
             "sdkConfigs" : {
-                "ad" : {}
+                "ad" : {},
+                "push" : {}
             },
-            // "push" : {
-            //     "unipush" : {
-            //         "version" : "2",
-            //         "offline" : true,
-            //         "icons" : {
-            //             "small" : {
-            //                 "ldpi" : "unpackage/res/icons/20x20.png",
-            //                 "mdpi" : "unpackage/res/icons/29x29.png"
-            //             }
-            //         }
-            //     }
-            // }
             "icons" : {
                 "android" : {
                     "hdpi" : "unpackage/logo.png",
@@ -146,9 +137,6 @@
         "usingComponents" : true,
         "permission" : {}
     },
-    // "unipush" : {
-    //     "enable" : false
-    // }
     "vueVersion" : "3",
     "h5" : {
         "router" : {
@@ -159,10 +147,7 @@
             "https" : false,
             "port" : ""
         },
-        "title" : "喇叭花",
-        // "unipush" : {
-        //     "enable" : false
-        // },
+        "title" : "BaoBao TV",
         "template" : "index.html"
     },
     "fallbackLocale" : "zh-Hans"

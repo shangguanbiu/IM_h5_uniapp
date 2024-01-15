@@ -1,3 +1,4 @@
+//let host = 'imweb.baobaoi.vip';
 let host = 'imweb.baobaoi.vip';
 // #ifdef  MP-WEIXIN
 let env = wx.getAccountInfoSync()

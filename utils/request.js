@@ -26,6 +26,7 @@ axios.interceptors.response.use(
 	response => {
 		const res = response.data
 		let msg = res.msg
+		
 		if (msg) {
 			if ([400, 401, 402, 403, 404, 405, 502, 500].includes(res.code)) {
 				uni.showToast({
@@ -34,34 +35,36 @@ axios.interceptors.response.use(
 					duration: 2500
 				})
 			} else if (res.code == 0) {
-				let language = localStorage.getItem('language')
-				if (language == 'en') {
-					if (msg == '登录成功！'){
+				
+				let language = uni.getStorageSync('language')
+				
+				if (language == 'en' && language !== '' && language !== undefined) {
+					if (msg == '登录成功！') {
 						uni.showToast({
 							title: 'Login succeeded',
 							icon: "none",
 							duration: 2500
 						})
-					}else if (msg == '退出成功！'){
+					} else if (msg == '退出成功！') {
 						uni.showToast({
 							title: 'Exit successful',
 							icon: "none",
 							duration: 2500
 						})
-					}else if (msg == '注册成功'){
+					} else if (msg == '注册成功') {
 						uni.showToast({
 							title: 'Register successful',
 							icon: "none",
 							duration: 2500
 						})
-					}else{
+					} else {
 						uni.showToast({
 							title: msg,
 							icon: "none",
 							duration: 2500
 						})
 					}
-						
+
 
 				} else {
 					uni.showToast({

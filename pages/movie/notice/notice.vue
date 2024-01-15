@@ -169,7 +169,6 @@
 		},
 		onReachBottom() {
 			this.getmorelists()
-
 		}
 	}
 </script>

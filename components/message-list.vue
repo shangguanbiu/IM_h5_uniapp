@@ -4,7 +4,13 @@
 		<view class="cu-list menu-avatar" :style="{paddingBottom: paddingB+'px'}" v-if="msgsIn.length>0">
 			<view class="cu-item" :class="[modalName=='move-box-'+ index?'move-cur':'',item.is_top==1 ? 'top-contacts' : '',item.is_group==0 ? 'third' : 'second']" v-for="(item, index) in msgsIn"  :key="index"
 			 @touchstart="ListTouchStart" @touchmove="ListTouchMove" @touchend="ListTouchEnd" @tap="openChat(index,item)" :data-target="'move-box-' + index">
-				<view class="cu-avatar lg" :class="appSetting.circleAvatar?'round':'radius'" :style="[{backgroundImage:'url('+ item.avatar +')'}]"></view>
+				<view class="cu-avatar lg icon_vip_are" :class="appSetting.circleAvatar?'round':'radius'" :style="[{backgroundImage:'url('+ item.avatar +')'}]">
+					<view class="icon_vip_l" v-if="item.icon_vip==1">
+						<image src="@/static/image/guan_l.png"  mode='widthFix' style="width: 100%;max-height: 100px;">
+						</image>
+					</view>
+					
+				</view>
 				<view class="content">
 					<view class="c-333">
 						<Tags v-if="item.is_group==1" :text="$t('message.group_title')" size="mini"></Tags>

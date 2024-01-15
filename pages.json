@@ -200,6 +200,14 @@
 			}
 
 		},{
+			"path": "pages/movie/bet/detial",
+			"style": {
+				"navigationBarTitleText": "详情",
+				"enablePullDownRefresh": false
+				
+			}
+
+		},{
 			"path": "pages/movie/bet/list",
 			"style": {
 				"navigationBarTitleText": "我的出票",

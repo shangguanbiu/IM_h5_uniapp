@@ -19,7 +19,7 @@
 				<view class="cu-info"  v-if="item.type=='event'">{{item.content}} <text class="c-primary" v-if="item.is_undo==1 && (getTime() - item.sendTime) < 120000" @tap="reEdit(item.oldContent ?? '')">{{$t('message.reedit')}}</text></view>
 				<template v-else>
 					<view class="cu-item" :class="[item.fromUser.id==user.user_id ? 'im-rows-reverse self im-justify-content-start' : '' ]">
-						<im-user :info="item.fromUser" :profile="isProfile"></im-user>
+						<im-user :info="item.fromUser"   :ifvip="item.fromUser.icon_vip==1 ?true:false " :profile="isProfile" :right="item.fromUser.id==user.user_id ?true:false "></im-user>
 						<view class="main im-wrap" @touchstart="moreOption(item)" @touchend="endTimer" @tap="dblclick(item)">
 							<view class="f-12 c-666" style="width:100%;margin-bottom: 6rpx;" v-if="item.fromUser.id!=user.user_id">{{item.fromUser.realname}}</view>
 							<!-- 文字消息 -->
@@ -27,7 +27,7 @@
 								<mp-html container-style="overflow: hidden;display:inline;white-space: pre-wrap" :content="emojiToHtml(item.content)"/>
 							</view>
 							<!-- 图片消息 -->
-							<image v-else-if="item.type=='image'" :src="item.content" class="radius" mode="widthFix" @tap="showImgs"  :data-img="item.content" ></image>
+							<image v-else-if="item.type=='image'" :src="item.content" class="radius" style="height: 200px; width: 120px;" mode="widthFix" @tap="showImgs"  :data-img="item.content" ></image>
 							<!-- 语音消息 -->
 							<view v-else-if="item.type=='voice'" class="im-voice-msg im-flex im-rows im-nowrap im-align-items-center radius-20" 
 							:class="[index == playIndex ? 'linear-green' : '', item.fromUser.id==user.user_id ? 'im-rows-reverse' : '' , ]" :data-voice="item.content" :data-index='index' @tap='playVoice' 

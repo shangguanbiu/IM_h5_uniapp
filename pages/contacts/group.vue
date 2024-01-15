@@ -4,9 +4,9 @@
 			<template #backText></template>
 			<template #content>{{$t('group_sys.title')}}</template>
 			<template #right>
-				<view class="f-20 ml-10 mr-10" @tap="search()">
+				<!-- <view class="f-20 ml-10 mr-10" @tap="search()">
 					<text class="cuIcon-search"></text>
-				</view>
+				</view> -->
 			</template>
 		</cu-custom>
 		<view class="cu-list menu-avatar no-padding">

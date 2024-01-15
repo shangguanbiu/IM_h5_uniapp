@@ -2,7 +2,7 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-pink" :isBack="true">
 			<template #backText></template>
-			<template #content>封面图设置</template>
+			<template #content>{{$t('fengmian.title')}}</template>
 		</cu-custom>
 		<form>
 			<view class="tab_mline">
@@ -10,73 +10,58 @@
 					@click="tab_change(index_tab)" :class="{'tab_hover':tabs==index_tab}">
 					{{tabsitem.name}}
 				</view>
-			
+
 			</view>
-			<view v-if="tabs==0">
-				<view>
-					<avatar
-					       selWidth="480px" selHeight="800px" @upload="uploadAvatar" :avatarSrc="userInfo.nearby_img"
-					       avatarStyle="width:100%;">
-					   </avatar>
+			<view v-if="tabs==0" style="position: relative; width: 100%; height: 80vh;">
+				<view v-if="userInfo.nearby_img !==null" class="fengmian_are"
+					:style="[{backgroundImage:'url('+ userInfo.nearby_img +')'}]">
 				</view>
-				
+				<view
+					style="position: absolute;top: 31%; font-size: 50px; text-align: center; left: 41%; height: 100px; width: 100px;">
+					<view class="cuIcon-camera" style="margin-bottom: -60px; color: #ec008c;"></view>
+					<avatar selWidth="300px" selHeight="640px" @upload="uploadAvatar"
+						avatarStyle="width:480px; height:1200px" mode="circle">
+					</avatar>
+				</view>
+
 			</view>
-			<view v-else>
-				22
-			</view>
-			
-			
-			<!-- <view class="cu-form-group" style="height:140rpx">
-				<view class="title">头像</view>
-				<view class="im-flex im-align-items-center">
-					<avatar
-					       selWidth="240px" selHeight="480upx" @upload="uploadAvatar" :avatarSrc="userInfo.avatar"
-					       avatarStyle="width: 100rpx; height: 100rpx; border-radius: 100%;">
-					   </avatar>
-					<text class="cuIcon-right ml-10 f-18 text-grey"></text></view>
-			</view>
-			<view class="cu-form-group">
-				<view class="title">账号</view>
-				<view class="text-gray">{{userInfo.account}}</view>
-			</view>
-			<view class="cu-form-group">
-				<view class="title">积分</view>
-				<view class="text-pink">{{balance}}</view>
-			</view>
-			<view class="cu-form-group">
-				<view class="title">{{globalConfig.sysInfo.runMode==1 ? "姓名" : '昵称'}}</view>
-				<view class="text-gray" v-if="globalConfig.sysInfo.runMode==1">{{userInfo.realname}}</view>
-				<input class="uni-input" style="text-align: right;" v-if="globalConfig.sysInfo.runMode==2" v-model="userInfo.realname"  placeholder="请输入昵称" />
-			</view>
-			<view class="cu-form-group">
-				<view class="title">e-mail</view>
-				<input class="uni-input" style="text-align: right;" v-model="userInfo.email"  placeholder="请输入email地址" />
-			</view>
-			<view class="cu-form-group">
-				<view class="title">年纪</view>
-				<input class="uni-input" style="text-align: right;" v-model="userInfo.ages"  placeholder="请输入数字" type="number" />
-			</view>
-			<view class="cu-form-group">
-				<view class="title">性别</view>
-				<view>
-					<radio-group @change="changeSex">
-					<label class="radio mr-10" v-for="x in sexList"><radio name="sex" :value="x.id" :checked="userInfo.sex==x.id" /> {{x.name}}</label>
-					</radio-group>
+			<view v-else class="fengmian_are">
+				<view style="width:100%; margin: 10px 0;" v-for="(imgitem,index) in bannerdata" :key="index">
+					<view
+						style="padding: 10px; border: 1px solid #cccc; border-radius: 6px; display: flex; justify-content: space-between;">
+						<view style="height: 80px; width: 80px;">
+							<image :src="imgitem" style="width: 100%;max-height: 80px;" mode='widthFix'>
+							</image>
+						</view>
+						<view style="line-height: 80px; color: #ec008c;" @tap="del_img(index)">{{$t('fengmian.del')}}</view>
+					</view>
+
+				</view>
+				<view class="padding flex flex-direction">
+					<view style=" height: 88px;overflow: hidden; width: 90%; margin: auto; position: relative;">
+						<view style=" position: absolute;left: 0; top: 0; height: 50px; width: 100%; z-index: 10;">
+							<avatar selWidth="350px" selHeight="380px" @upload="uploadAvatar_detail"
+								avatarStyle="width:480px; height:450px" mode="circle">
+							</avatar>
+						</view>
+						
+						
+						<view class="cu-btn bg-green lg" style="width: 100%;">{{$t('fengmian.sel_img')}}</view>
+					</view>
+					<button class="cu-btn bg-pink lg" :style="saved ? 'border: solid 1px #dbdada;' : ''"
+						:disabled="saved" @tap="saveInfo()">{{$t('fengmian.save')}}</button>
 				</view>
 			</view>
-			<view class="cu-form-group align-start">
-				<view class="title">个性签名</view>
-				<textarea maxlength="-1" v-model="userInfo.motto" placeholder="请输入个性签名"></textarea>
-			</view> -->
+
 		</form>
-		<view class="padding flex flex-direction">
-			<button class="cu-btn bg-green lg" :style="saved ? 'border: solid 1px #dbdada;' : ''" :disabled="saved" @tap="saveInfo()" >保存</button>
-		</view>
+
 	</view>
 </template>
 
 <script>
-	import { useloginStore } from '@/store/login'
+	import {
+		useloginStore
+	} from '@/store/login'
 	import pinia from '@/store/index'
 	import avatar from "@/components/yq-avatar/yq-avatar2.vue";
 	const loginStore = useloginStore(pinia)
@@ -86,46 +71,57 @@
 		},
 		data() {
 			return {
-				loginStore:loginStore,
-				globalConfig:loginStore.globalConfig,
-				userInfo:{},
-				sexList:[
-					{
-						id:'2',
-						name:'未知'
+				loginStore: loginStore,
+				globalConfig: loginStore.globalConfig,
+				userInfo: {},
+				sexList: [{
+						id: '2',
+						name: '未知'
 					},
 					{
-						id:'1',
-						name:'男'
+						id: '1',
+						name: '男'
 					},
 					{
-						id:'0',
-						name:'女'
+						id: '0',
+						name: '女'
 					},
 				],
-				saved:false,
-				balance:'0.00',
+				saved: false,
+				balance: '0.00',
 				tabs_arr: [{
 					id: 1,
-					name: '封面图',
+					name: this.$t('fengmian.tab1'),
 					ifshow: false
-				},{
+				}, {
 					id: 2,
-					name: '详细图',
+					name: this.$t('fengmian.tab2'),
 					ifshow: false
-				},],
+				}, ],
 				tabs: 0,
+				indicatorDots: true,
+				autoplay: true,
+				interval: 3000,
+				duration: 500,
+				bannerdata: [],
+				indicatorColor: "#292b40",
+				indicatorActiveColor: "#ffffff",
 			}
 		},
 		mounted() {
 			this.get_userInfo()
-			this.userInfo=JSON.parse(JSON.stringify(loginStore.userInfo));
-			console.log('ffffff',this.userInfo)
-		}, 
+			this.userInfo = JSON.parse(JSON.stringify(loginStore.userInfo));
+
+
+			this.bannerdata = this.userInfo.nearby_arr.split(',')
+		},
 		methods: {
+			del_img(index) {
+				this.bannerdata.splice(index, 1);
+			},
 			tab_change(index) {
 				this.tabs = index
-				
+
 			},
 			async get_userInfo() {
 				var _this = this
@@ -134,68 +130,59 @@
 					method: "POST",
 				})
 				if (res.code == 200) {
-					
-					this.balance=res.data.balance
+
+					this.balance = res.data.balance
 				}
 			},
-			logout(){
-				let client_id=uni.getStorageSync('client_id');
-				this.$api.LoginApi.logout({client_id:client_id}).then(res => {
+			logout() {
+				let client_id = uni.getStorageSync('client_id');
+				this.$api.LoginApi.logout({
+					client_id: client_id
+				}).then(res => {
 					if (res.code == 0) {
 						loginStore.logout()
 					}
 				})
-				
+
 			},
 			textareaBInput(e) {
 				this.userInfo.motto = e.detail.value
 			},
-			changeSex(evt){
-				this.userInfo.sex=parseInt(evt.detail.value);
+			changeSex(evt) {
+				this.userInfo.sex = parseInt(evt.detail.value);
 			},
-			saveInfo(){
-				if(this.userInfo.realname == ''){
-					uni.showToast({
-						title:'请输入昵称',
-						icon:'none'
-					})
-					return false
-				  }
-				  // 防止无限次点击
-				  this.saved=true;
-				  let params={
-					realname:this.userInfo.realname,
-					email:this.userInfo.email,
-					sex:this.userInfo.sex,
-					motto:this.userInfo.motto,
-					ages:this.userInfo.ages,
-				  }
-				  this.$api.msgApi.updateUserInfo(params).then(res=>{
-					if(res.code == 0){
-					  uni.showToast({
-					  	title:'保存成功',
-					  	icon:'none'
-					  })
-					  let data=JSON.parse(JSON.stringify(this.userInfo))
-					  loginStore.login(data)
+			saveInfo() {
+				this.saved = true;
+				let params = {
+					nearby_arr: this.bannerdata.toString()
+				}
+				this.$api.msgApi.updateUserInfo_imgarr(params).then(res => {
+					if (res.code == 0) {
+						uni.showToast({
+							title: this.$t('fengmian.sucess'),//'保存成功',
+							icon: 'none'
+						})
+						this.userInfo.nearby_arr = JSON.stringify(this.bannerdata)
+						let data = JSON.parse(JSON.stringify(this.userInfo))
+						loginStore.login(data)
 					}
-				  })
-				  // 8秒后可以重新保存
-				  setTimeout(()=>{
-				  	this.saved=false;
-				  },8000)
+				})
+				// 8秒后可以重新保存
+				setTimeout(() => {
+					this.saved = false;
+				}, 8000)
 			},
-			setAvatar(){
+			setAvatar() {
 				uni.navigateTo({
-					url:"/pages/mine/avatar"
+					url: "/pages/mine/avatar"
 				})
 			},
-			uploadAvatar(res){
+			uploadAvatar(res) {
 				uni.showLoading({
-					title:'上传中...'
+					title: this.$t('fengmian.upload')//'上传中...'
 				})
 				uni.uploadFile({
-					url: this.$api.msgApi.uploadAvatar,
+					url: this.$api.msgApi.uploadAvatar_fengmian,
 					filePath: res.path,
 					name: 'file',
 					header: {
@@ -206,14 +193,14 @@
 					},
 					success: (e) => {
 						uni.hideLoading();
-						let res=JSON.parse(e.data);
-						if(res.code==0){
+						let res = JSON.parse(e.data);
+						if (res.code == 0) {
 							uni.showToast({
-								title:res.msg,
-								icon:'none'
+								title: res.msg,
+								icon: 'none'
 							})
-							this.userInfo.avatar=res.data
-							let data=JSON.parse(JSON.stringify(this.userInfo));
+							this.userInfo.nearby_img = res.data
+							let data = JSON.parse(JSON.stringify(this.userInfo));
 							loginStore.login(data);
 						}
 					},
@@ -221,19 +208,61 @@
 						uni.hideLoading();
 					}
 				})
-			}
+			},
+			uploadAvatar_detail(res) {
+				uni.showLoading({
+					title: this.$t('fengmian.upload')//'上传中...'
+				})
+				uni.uploadFile({
+					url: this.$api.msgApi.uploadAvatar_detail,
+					filePath: res.path,
+					name: 'file',
+					header: {
+						'Authorization': uni.getStorageSync('authToken'),
+					},
+					formData: {
+						ext: 'png'
+					},
+					success: (e) => {
+						uni.hideLoading();
+
+						let res = JSON.parse(e.data);
+						if (res.code == 0) {
+							this.bannerdata.push(res.data)
+							// uni.showToast({
+							// 	title: res.msg,
+							// 	icon: 'none'
+							// })
+							// this.userInfo.nearby_img = res.data
+							// let data = JSON.parse(JSON.stringify(this.userInfo));
+							// loginStore.login(data);
+						}
+					},
+					fail: (res) => {
+						uni.hideLoading();
+					}
+				})
+			},
 		}
 	}
 </script>
 
 <style scoped>
-.tab_mline {
+	.tab_mline {
 		display: flex;
 		justify-content: center;
 		padding: 20px 0;
 
 	}
 
+	.fengmian_are {
+		width: 96%;
+		margin: auto;
+		height: 83vh;
+		background-size: 100% 100%;
+		background-position: top center;
+
+	}
 
 	.tab_mline_zi {
 

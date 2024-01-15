@@ -28,7 +28,20 @@ third_openApi.like_me_index = (params) => {
 	return postJsonRequest('/enterprise/third/like_me_index', params)
 }
 
-
+/**
+ * @desc 添加打招呼列表
+ * @param {*} 参数 
+ */
+third_openApi.add_talk = (params) => {
+	return postJsonRequest('/enterprise/third/add_talk', params)
+}
+/**
+ * @desc 商品列表
+ * @param {*} 参数 
+ */
+third_openApi.shop_list = (params) => {
+	return postJsonRequest('/enterprise/third/shop_list', params)
+}
 
 /**
  * @desc 公开的群列表

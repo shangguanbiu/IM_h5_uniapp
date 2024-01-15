@@ -9,7 +9,7 @@
 
 				</view>
 			</view>
-			<view class="im-flex im-rows im-justify-content-center">{{globalConfig.sysInfo.name ?? packData.name}}
+			<view class="im-flex im-rows im-justify-content-center" style="color: #e03997;">{{globalConfig.sysInfo.name ?? packData.name}}
 			</view>
 			<form>
 				<view class="cu-form-group margin-top">
@@ -47,57 +47,193 @@
 		<view id="demo" class="out-box">
 			<view id="demo1" style="display: flex; flex-wrap: wrap;">
 				<view style="width: 50%; margin-bottom: -4px;">
-					<image src="@/static/image/login/a1.jpg" mode='widthFix' style="width: 100%;"></image>
+					<image src="@/static/image/login2/a1.jpg" mode='widthFix' style="width: 100%;"></image>
 				</view>
 				<view style="width: 50%;margin-bottom: -4px;">
-					<image src="@/static/image/login/a2.jpg" mode='widthFix' style="width: 100%;"></image>
+					<image src="@/static/image/login2/a2.jpg" mode='widthFix' style="width: 100%;"></image>
 				</view>
 				<view style="width: 50%;margin-bottom: -4px;">
-					<image src="@/static/image/login/a3.jpg" mode='widthFix' style="width: 100%;"></image>
+					<image src="@/static/image/login2/a3.jpg" mode='widthFix' style="width: 100%;"></image>
 				</view>
 				<view style="width: 50%;margin-bottom: -4px;">
-					<image src="@/static/image/login/a4.jpg" mode='widthFix' style="width: 100%;"></image>
+					<image src="@/static/image/login2/a4.jpg" mode='widthFix' style="width: 100%;"></image>
 				</view>
 				<view style="width: 50%;margin-bottom: -4px;">
-					<image src="@/static/image/login/a5.jpg" mode='widthFix' style="width: 100%;"></image>
+					<image src="@/static/image/login2/a5.jpg" mode='widthFix' style="width: 100%;"></image>
 				</view>
 				<view style="width: 50%;margin-bottom: -4px;">
-					<image src="@/static/image/login/a6.jpg" mode='widthFix' style="width: 100%;"></image>
+					<image src="@/static/image/login2/a6.jpg" mode='widthFix' style="width: 100%;"></image>
 				</view>
 				<view style="width: 50%;margin-bottom: -4px;">
-					<image src="@/static/image/login/a7.jpg" mode='widthFix' style="width: 100%;"></image>
+					<image src="@/static/image/login2/a7.jpg" mode='widthFix' style="width: 100%;"></image>
 				</view>
 				<view style="width: 50%;margin-bottom: -4px;">
-					<image src="@/static/image/login/a8.jpg" mode='widthFix' style="width: 100%;"></image>
+					<image src="@/static/image/login2/a8.jpg" mode='widthFix' style="width: 100%;"></image>
 				</view>
 				<view style="width: 50%;margin-bottom: -4px;">
-					<image src="@/static/image/login/a9.jpg" mode='widthFix' style="width: 100%;"></image>
+					<image src="@/static/image/login2/a9.jpg" mode='widthFix' style="width: 100%;"></image>
 				</view>
 				<view style="width: 50%;margin-bottom: -4px;">
-					<image src="@/static/image/login/a10.jpg" mode='widthFix' style="width: 100%;"></image>
+					<image src="@/static/image/login2/a10.jpg" mode='widthFix' style="width: 100%;"></image>
 				</view>
 				<view style="width: 50%;margin-bottom: -4px;">
-					<image src="@/static/image/login/a11.jpg" mode='widthFix' style="width: 100%;"></image>
+					<image src="@/static/image/login2/a11.jpg" mode='widthFix' style="width: 100%;"></image>
 				</view>
 				<view style="width: 50%;margin-bottom: -4px;">
-					<image src="@/static/image/login/a12.jpg" mode='widthFix' style="width: 100%;"></image>
+					<image src="@/static/image/login2/a12.jpg" mode='widthFix' style="width: 100%;"></image>
 				</view>
 				<view style="width: 50%;margin-bottom: -4px;">
-					<image src="@/static/image/login/a13.jpg" mode='widthFix' style="width: 100%;"></image>
+					<image src="@/static/image/login2/a13.jpg" mode='widthFix' style="width: 100%;"></image>
 				</view>
 				
 				<view style="width: 50%;margin-bottom: -4px;">
-					<image src="@/static/image/login/a15.jpg" mode='widthFix' style="width: 100%;"></image>
+					<image src="@/static/image/login2/a14.jpg" mode='widthFix' style="width: 100%;"></image>
 				</view>
 				<view style="width: 50%;margin-bottom: -4px;">
-					<image src="@/static/image/login/a16.jpg" mode='widthFix' style="width: 100%;"></image>
+					<image src="@/static/image/login2/a15.jpg" mode='widthFix' style="width: 100%;"></image>
 				</view>
 				<view style="width: 50%;margin-bottom: -4px;">
-					<image src="@/static/image/login/a17.jpg" mode='widthFix' style="width: 100%;"></image>
+					<image src="@/static/image/login2/a16.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				<view style="width: 50%;margin-bottom: -4px;">
+					<image src="@/static/image/login2/a17.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				<view style="width: 50%;margin-bottom: -4px;">
+					<image src="@/static/image/login2/a18.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				<view style="width: 50%;margin-bottom: -4px;">
+					<image src="@/static/image/login2/a19.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				<view style="width: 50%;margin-bottom: -4px;">
+					<image src="@/static/image/login2/a20.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				<view style="width: 50%; margin-bottom: -4px;">
+					<image src="@/static/image/login2/a1.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				<view style="width: 50%;margin-bottom: -4px;">
+					<image src="@/static/image/login2/a2.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				<view style="width: 50%;margin-bottom: -4px;">
+					<image src="@/static/image/login2/a3.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				<view style="width: 50%;margin-bottom: -4px;">
+					<image src="@/static/image/login2/a4.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				<view style="width: 50%;margin-bottom: -4px;">
+					<image src="@/static/image/login2/a5.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				<view style="width: 50%;margin-bottom: -4px;">
+					<image src="@/static/image/login2/a6.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				<view style="width: 50%;margin-bottom: -4px;">
+					<image src="@/static/image/login2/a7.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				<view style="width: 50%;margin-bottom: -4px;">
+					<image src="@/static/image/login2/a8.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				<view style="width: 50%;margin-bottom: -4px;">
+					<image src="@/static/image/login2/a9.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				<view style="width: 50%;margin-bottom: -4px;">
+					<image src="@/static/image/login2/a10.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				<view style="width: 50%;margin-bottom: -4px;">
+					<image src="@/static/image/login2/a11.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				<view style="width: 50%;margin-bottom: -4px;">
+					<image src="@/static/image/login2/a12.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				<view style="width: 50%;margin-bottom: -4px;">
+					<image src="@/static/image/login2/a13.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				
+				<view style="width: 50%;margin-bottom: -4px;">
+					<image src="@/static/image/login2/a14.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				<view style="width: 50%;margin-bottom: -4px;">
+					<image src="@/static/image/login2/a15.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				<view style="width: 50%;margin-bottom: -4px;">
+					<image src="@/static/image/login2/a16.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				<view style="width: 50%;margin-bottom: -4px;">
+					<image src="@/static/image/login2/a17.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				<view style="width: 50%;margin-bottom: -4px;">
+					<image src="@/static/image/login2/a18.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				<view style="width: 50%;margin-bottom: -4px;">
+					<image src="@/static/image/login2/a19.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				<view style="width: 50%;margin-bottom: -4px;">
+					<image src="@/static/image/login2/a20.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				<view style="width: 50%; margin-bottom: -4px;">
+					<image src="@/static/image/login2/a1.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				<view style="width: 50%;margin-bottom: -4px;">
+					<image src="@/static/image/login2/a2.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				<view style="width: 50%;margin-bottom: -4px;">
+					<image src="@/static/image/login2/a3.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				<view style="width: 50%;margin-bottom: -4px;">
+					<image src="@/static/image/login2/a4.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				<view style="width: 50%;margin-bottom: -4px;">
+					<image src="@/static/image/login2/a5.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				<view style="width: 50%;margin-bottom: -4px;">
+					<image src="@/static/image/login2/a6.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				<view style="width: 50%;margin-bottom: -4px;">
+					<image src="@/static/image/login2/a7.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				<view style="width: 50%;margin-bottom: -4px;">
+					<image src="@/static/image/login2/a8.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				<view style="width: 50%;margin-bottom: -4px;">
+					<image src="@/static/image/login2/a9.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				<view style="width: 50%;margin-bottom: -4px;">
+					<image src="@/static/image/login2/a10.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				<view style="width: 50%;margin-bottom: -4px;">
+					<image src="@/static/image/login2/a11.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				<view style="width: 50%;margin-bottom: -4px;">
+					<image src="@/static/image/login2/a12.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				<view style="width: 50%;margin-bottom: -4px;">
+					<image src="@/static/image/login2/a13.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				
+				<view style="width: 50%;margin-bottom: -4px;">
+					<image src="@/static/image/login2/a14.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				<view style="width: 50%;margin-bottom: -4px;">
+					<image src="@/static/image/login2/a15.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				<view style="width: 50%;margin-bottom: -4px;">
+					<image src="@/static/image/login2/a16.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				<view style="width: 50%;margin-bottom: -4px;">
+					<image src="@/static/image/login2/a17.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				<view style="width: 50%;margin-bottom: -4px;">
+					<image src="@/static/image/login2/a18.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				<view style="width: 50%;margin-bottom: -4px;">
+					<image src="@/static/image/login2/a19.jpg" mode='widthFix' style="width: 100%;"></image>
+				</view>
+				<view style="width: 50%;margin-bottom: -4px;">
+					<image src="@/static/image/login2/a20.jpg" mode='widthFix' style="width: 100%;"></image>
 				</view>
 
 			</view>
-			<view id="demo2"></view>
+			<view id="demo2">
+				
+			</view>
 			<view id="demo3" style="height: 1;"></view>
 		</view>
 	</view>
@@ -138,7 +274,7 @@
 			// 	this.loginForm.account = 13800000000 + random;
 			// 	this.loginForm.password = '123456';
 			// }
-			console.log('ffff',document.documentElement.clientHeight)
+			
 			this.run_bg()
 			let LoginAccount = uni.getStorageSync('LoginAccount');
 			if (LoginAccount) {
@@ -148,7 +284,7 @@
 		methods: {
 			run_bg() {
 				
-				var speed = 15
+				var speed = 35
 				var _demo = document.getElementById("demo");
 				var _demo1 = document.getElementById("demo1");
 				var _demo2 = document.getElementById("demo2");
@@ -159,7 +295,7 @@
 					if (_demo2.offsetTop - _demo.scrollTop - _demo.offsetTop <= 0) {
 						// _demo.scrollTop -= (_demo1.offsetHeight + (_demo1.offsetHeight - _demo.offsetHeight) )
 						_demo.scrollTop = 0
-						console.log('<0:' + _demo.scrollTop);
+						
 					} else {
 						_demo.scrollTop++
 						// console.log('>0:'+ _demo.scrollTop);
@@ -216,27 +352,32 @@
 						title: this.$t('login.pop_tit1'), //'请输入账号！',
 						icon: "none"
 					});
-					return false;
+					return;
 				}
 				if (this.loginForm.password == "") {
 					uni.showToast({
 						title: this.$t('login.pop_tit2'), //'请输入密码！',
 						icon: "none"
 					});
-					return false;
+					return;
 				}
 				let client_id = uni.getStorageSync('client_id');
 				if (client_id) {
 					this.loginForm.client_id = client_id;
 				}
+				// uni.showToast({
+				// 	title: '进来了',
+				// 	icon: "none",
+				// 	duration: 1500
+				// })
+				
 				this.$api.LoginApi.login(this.loginForm).then(res => {
+					
 					if (res.code == 0) {
+						
 						uni.setStorageSync('authToken', res.data.authToken)
-
 						let userInfo = res.data.userInfo;
-
-
-						this.check_login(userInfo.account)
+						
 						// 登录成功后绑定wss
 						this.socketIo.send({
 							type: "bindUid",
@@ -245,7 +386,12 @@
 						});
 
 						loginStore.login(userInfo);
-
+						
+						// uni.reLaunch({
+						// 	url: "/pages/index/index"
+						// })
+						
+						this.check_login(userInfo.account)
 
 					}
 				})
@@ -261,11 +407,15 @@
 						password: ''
 					},
 				})
+				
 				if (res.code == 200) {
+					
 					uni.setStorageSync('ifLogin', res.data.token)
+					
 					uni.reLaunch({
-						url: '/pages/index/index'
+						url: "/pages/index/index"
 					})
+					
 				}
 			},
 		}

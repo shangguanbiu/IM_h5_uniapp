@@ -4,7 +4,7 @@
 			<template #backText></template>
 			<template #content>影院</template>
 		</cu-custom> -->
-		<view class="index_topline">
+		<view class="index_topline" style="display: none;">
 			<view class="index_top_l" style="width: 47px;" @click="to_notice">
 				<!-- <view id="backBtn" style="padding-top: 5px; color: #EAC477; padding-left: 10px; line-height: 32px;">聊天室
 				</view> -->
@@ -25,7 +25,8 @@
 			<view style="position: relative;">
 				<swiper :indicator-dots="indicatorDots" :indicator-color="indicatorColor"
 					:indicator-active-color="indicatorActiveColor" :autoplay="autoplay" :interval="interval"
-					:duration="duration" style="width: 100%; height: 210px;" v-if="bannerdata.length !==0">
+					:duration="duration" style="width: 100%; height: 210px;">
+					<!-- v-if="bannerdata.length !==0" -->
 					<swiper-item v-for="(banner,indexbn) in bannerdata" :key="indexbn">
 						<image :src="banner.img" mode='widthFix' style="width: 100%;"></image>
 					</swiper-item>
@@ -43,8 +44,9 @@
 				</view>
 			</view>
 			<view class="main_i">
-				
-				<view class="title_line">{{$t('index.part_1')}}<view class="type_more" @tap="to_more">{{$t('index.more')}}</view>
+
+				<view class="title_line">{{$t('index.part_1')}}
+					<view class="type_more" @tap="to_more">{{$t('index.more')}}</view>
 				</view>
 				<view class="index_lanmu">
 					<view class="index_lm_zi" @click="on_func_notice(roomitem)" v-for="(roomitem,index) in room"
@@ -58,7 +60,8 @@
 						</view>
 					</view>
 				</view>
-				<view class="title_line">{{$t('index.part_2')}}<view class="type_more" @tap="to_more">{{$t('index.more')}}</view>
+				<view class="title_line">{{$t('index.part_2')}}
+					<view class="type_more" @tap="to_more">{{$t('index.more')}}</view>
 				</view>
 				<view style="padding-bottom: 55px;">
 					<view class="user_line" v-for="(people,t_index) in hot_list" :key="t_index"
@@ -72,7 +75,7 @@
 							<view style=" max-height: 90px;">
 								<view class="item_desc">{{people.desc}}</view>
 								<view>
-									<view :class="'item_'+ta_index"
+									<view :class="'item_'+ta_index" v-if="people.hot_tags !==null"
 										v-for="(tagitem,ta_index) in people.hot_tags.split(',')" :key="ta_index"
 										v-show="ta_index<3">
 										{{tagitem}}
@@ -161,7 +164,7 @@
 				run_txt: [],
 				run_text_string: '',
 				userinfo: {},
-				back:false,
+				back: false,
 
 			}
 		},
@@ -169,13 +172,13 @@
 		watch: {
 			$route(val) {
 				if (val.fullPath == '/') {
-					
-					//this.get_banner(1);待确定
-					this.back=true
+
+					//this.get_banner(1)//待确定
+					this.back = true
 					this.get_notice(2);
 					this.getList(1, 6, 1);
 					this.getList(2, 10, 2);
-					
+
 				}
 			}
 		},
@@ -208,7 +211,25 @@
 
 				}
 			},
-
+			
+			shuffleArray(data) {
+				let array = Array.from(data); // 复制原始数组
+				const length = data.length;
+				if (length === 0) {
+					return [];
+				} else {
+					for (let i = array.length - 1; i > 0; i--) {
+						const j = Math.floor(Math.random() * (i + 1));
+					
+						// 交换位置
+						[array[i], array[j]] = [array[j], array[i]];
+					}
+				
+					return array
+				}
+				
+				//this.shuffledArray = array; // 更新打乱后的数组
+			},
 			on_func_notice(data) {
 
 				if (this.userinfo.isview == 0 && this.userinfo.role == 0) {
@@ -289,17 +310,15 @@
 				})
 				if (res.code == 200) {
 					if (type == 1) {
-						this.room = res.data.list
+						this.room =this.shuffleArray(res.data.list) 
 					} else {
-						this.hot_list = res.data.list
+						this.hot_list = this.shuffleArray(res.data.list) 
 					}
 					//this.list = res.data.list
 				}
 			},
 			async get_banner(type_id) {
-				
-	
-				this.bannerdata = []
+
 				window.scrollTo({
 					top: 0,
 					behavior: 'smooth'
@@ -328,11 +347,11 @@
 					},
 				})
 				if (res.code == 200) {
-					
-					if(!this.back){
+
+					if (!this.back) {
 						this.get_banner(1);
 					}
-					
+
 					_this.run_txt = res.data.list
 					if (_this.run_txt.length !== 0) {
 						_this.run_txt.forEach((item) => {
@@ -403,9 +422,9 @@
 		},
 		// 在使用到的页面 添加如下代码
 		mounted() {
-		
+
 			var token = uni.getStorageSync('ifLogin')
-			
+
 		},
 
 	}

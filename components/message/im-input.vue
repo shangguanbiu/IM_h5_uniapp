@@ -51,23 +51,23 @@
 				</view>
 				<view class="im-flex im-columns im-align-items-center mt-10 im-app-item" @tap="chooseVideo">
 					<view class="bg-white cuIcon-video f-24 radius-10 im-app-item-icon"></view>
-					<view class="mt-5">{{$t('shipin.title1')}}</view>
+					<view class="mt-5">{{$t('shipin.title2')}}</view>
 				</view>
 				<view class="im-flex im-columns im-align-items-center mt-10 im-app-item" @tap="chooseFile">
 					<view class="bg-white cuIcon-file f-24 radius-10 im-app-item-icon"></view>
-					<view class="mt-5">{{$t('shipin.title2')}}</view>
+					<view class="mt-5">{{$t('shipin.title3')}}</view>
 				</view>
 				<view class="im-flex im-columns im-align-items-center mt-10 im-app-item"
 					v-if='!contact.is_group && (isH5 || isApp) &&  parseInt(globalConfig.chatInfo.webrtc)'
 					@tap="calling(0)">
 					<view class="bg-white cuIcon-dianhua f-24 radius-10 im-app-item-icon"></view>
-					<view class="mt-5">{{$t('shipin.title3')}}</view>
+					<view class="mt-5">{{$t('shipin.title4')}}</view>
 				</view>
 				<view class="im-flex im-columns im-align-items-center mt-10 im-app-item"
 					v-if='!contact.is_group && (isH5 || isApp) && parseInt(globalConfig.chatInfo.webrtc)'
 					@tap="calling(1)">
 					<view class="bg-white cuIcon-record f-24 radius-10 im-app-item-icon"></view>
-					<view class="mt-5">{{$t('shipin.title4')}}</view>
+					<view class="mt-5">{{$t('shipin.title5')}}</view>
 				</view>
 
 			</view>
@@ -92,7 +92,7 @@
 					<view class="pop_title">{{$t('pop.title')}}</view>
 					<view style="padding: 10px 15px;  line-height: 25px; flex-wrap: wrap; text-align: center;">
 						
-						{{$t('pop.content7')}}
+						{{$t('pop.content8')}}
 					</view>
 		
 					<view class="pop_foot">
@@ -485,10 +485,21 @@
 			calling(is_video) {
 				 let userInfo = JSON.parse(JSON.stringify(userStore.userInfo))
 				 
-				 if(userInfo.islevel==0&&userInfo.role !==1){
-					 this.pop_notice=true
-					 return;
+				 if(is_video==0){
+				 	//yuyin
+				 	if (userInfo.ifvoice == 0 && userInfo.role !== 1) {
+				 		this.pop_notice = true
+				 		return;
+				 	}
 				 }
+				 if(is_video==1){
+				 	//yuyin
+				 	if (userInfo.ifvideo == 0 && userInfo.role !== 1) {
+				 		this.pop_notice = true
+				 		return;
+				 	}
+				 }
+				 
 				// #ifdef MP
 				return uni.showToast({
 					title: '小程序暂不支持',

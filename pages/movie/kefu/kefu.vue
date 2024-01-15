@@ -75,10 +75,10 @@
 			},
 		},
 		onLoad() {
-
+				this.get_kefu_url()
 		},
 		onShow() {
-			this.get_kefu_url()
+			
 		}
 	}
 </script>

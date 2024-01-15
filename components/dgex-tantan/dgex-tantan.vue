@@ -41,7 +41,7 @@
 					<template v-if="currentIndex + visible >= index && currentIndex <= index">
 						<view class="tantan-slide-direction" :animation="currentIndex === index ? animationData : ''">
 							<image class="tantan-slide-img" mode="aspectFill" :src="item.nearby_img"></image>
-							<view class="tantan-slide-box-item-bg">
+							<view :class="if_see==true?'tantan-slide-box-item-bg2':'tantan-slide-box-item-bg'">
 								<view class="tantan-slide-box-info">
 									<view class="title" v-if="item.realname" v-text="item.realname"></view>
 									<view class="desc" @tap="see_more">
@@ -61,7 +61,7 @@
 											<view style="font-weight: normal; font-size: 13px;">{{item.ages}}</view>
 										</view>
 
-										<view>{{item.isfar+'km·'+$t('nearby.actie_times')+item.istime+$t('nearby.actie_time')}}</view>
+										<view style="font-size: 14px; line-height: 24px;">{{item.isfar+'km·'+$t('nearby.actie_times')+item.istime+$t('nearby.actie_time')}}</view>
 										<view class="about_more">{{$t('nearby.detail')}} <view class="cuIcon-unfold"></view>
 										</view>
 									</view>
@@ -141,9 +141,11 @@
 				ifover: false,
 				have_num: 3,
 				fromUser: '',
+				if_see:false
 			}
 		},
 		mounted() {
+			this.if_see=false
 			const res = uni.getSystemInfoSync()
 			this.winWidth = res.windowWidth
 			this.winHeigh = res.windowHeight - 110
@@ -156,6 +158,7 @@
 				this.$emit('see_more', {
 					currentItem: this.list[this.currentIndex],
 				})
+				this.if_see=true
 
 			},
 			cardTransform(item, index) {
@@ -198,22 +201,29 @@
 				if (this.slideing) return
 				// 滑动状态/最后一个就不滑动
 				if (this.list.length == index + 1) {
+					this.$emit('onChange', {
+						currentIndex: this.currentIndex,
+						currentItem: [],
+						type: 'reset'
+					})
 					return;
 				}
+				
 				this.x.move = e.touches[0].pageX;
 				this.y.move = e.touches[0].pageY;
-
+				
 				this.list[index].x = this.x.move - this.x.start
 				this.list[index].y = this.y.move - this.y.start
 				if (Number.parseInt(this.list[index].x) > 0) {
 					this.love = Number.parseInt(this.list[index].x) / (100 * 2)
 					this.if_like = true
-
+				
 				} else {
 					this.dislike = Math.abs(Number.parseInt(this.list[index].x) / (100 * 2))
 					this.if_like = false
-
+				
 				}
+				
 			},
 			async get_userinfo() {
 				let userInfo = JSON.parse(JSON.stringify(loginStore.userInfo))
@@ -253,12 +263,13 @@
 			touchEnd(index) {
 
 				if (this.if_like == true) {
-					if (this.fromUser.iszan == 0) {
-						this.ifover = true
-						this.$emit('openpop')
-						return;
-					}
-					this.count_number('iszan')
+					//注销浏览限制
+					// if (this.fromUser.iszan == 0) {
+					// 	this.ifover = true
+					// 	this.$emit('openpop')
+					// 	return;
+					// }
+					// this.count_number('iszan')
 					this.$emit('bet_like', this.list[index])
 				}
 
@@ -318,12 +329,25 @@
 				})
 			},
 			footerBtnClick(type) {
+				
 				if (this.btnClickType) {
 					return
 				}
 				this.btnClickType = true
 				let w = 0
 				if (type === 'love') {
+					//1111111
+					if (this.if_like == true) {
+						if (this.fromUser.iszan == 0) {
+							this.ifover = true
+							this.$emit('openpop')
+							return;
+						}
+						this.count_number('iszan')
+						this.$emit('bet_like', this.list[index])
+					}
+					
+					
 					w = this.winWidth * 1.5
 					this.love = 1
 				} else if (type === 'dislike') {
@@ -365,7 +389,7 @@
 <style>
 	.about_more {
 		display: flex;
-		font-size: 13px;
+		font-size: 15px;
 		background: rgb(160 157 157 / 31%);
 		padding: 3px 5px;
 		border-radius: 5px;
@@ -417,6 +441,18 @@
 		left: 0;
 		right: 0;
 		bottom: 10%;
+		margin: auto;
+		z-index: 1;
+		border-bottom-right-radius: 40rpx;
+		border-bottom-left-radius: 40rpx;
+	}
+	.tantan-slide-box-item-bg2 {
+		height: 420rpx;
+		background-image: linear-gradient(to bottom, transparent, #000000 65%);
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0%;
 		margin: auto;
 		z-index: 1;
 		border-bottom-right-radius: 40rpx;

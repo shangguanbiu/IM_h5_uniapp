@@ -19,7 +19,7 @@ export default{
 		title4:'语音通话',
 		title5:'视频通话',
 	},
-	welcome:'欢迎加入喇叭花，我是人工接待员将为您24小时咨询服务',
+	welcome:'欢迎加入抱抱，我是人工接待员将为您24小时咨询服务',
 	pop:{
 		title:"提示",
 		content1:'您当前为普通用户暂无权限查看喜欢我的TA，查看更多可开通会员，请联系客服',
@@ -29,9 +29,14 @@ export default{
 		content5:'您当前可点击喜欢TA的次数已达到每日限制，更多权限可升级会员，请联系客服',
 		content6:'已打招呼，等待TA的回应！可在栏目-消息中查看',
 		content7:"您还未开通会员，暂无使用该功能权限",
+		content8:"您暂无使用该功能权限,请联系客服",
+		content9:"请联系客服下单",
+		content10:"请完善个人信息-性别,年龄",
 		close:'关闭',
 		up:'去升级',
 		ok:'确定',
+		ok2:'联系客服',
+		set:'去完善',
 	},
 	index:{
 		part_1:'今日推荐',
@@ -80,7 +85,7 @@ export default{
 		vip_p_nav5:"会员身份标识 ",
 		vip_p_nav1_5:" 获得红字昵称 ",
 		
-		vip_p_pop_1:"积分不足",
+		vip_p_pop_1:"积分不足,请联系客服",
 		vip_p_pop_2:"您已经是该等级了",
 		vip_p_pop_3:"当前等级不能降级",
 		vip_p_pop_4:"开通成功",
@@ -102,21 +107,21 @@ export default{
 	},
 	bet:{
 		now:'当前期数',
-		go_on:'投票中',
-		close:"封盘中",
-		history:"历史出票",
+		go_on:'进行中',
+		close:"认证中",
+		history:"历史认证",
 		bet_n1:'单',
 		bet_n2:'刀',
 		bet_n3:'直',
 		bet_n4:'入',
-		rule:'投票规则',
-		content:'游戏投票规则',
-		outlist:'我的出票',
-		bet_tit:'快捷投票',
+		rule:'认证规则',
+		content:'认证规则',
+		outlist:'我的认证',
+		bet_tit:'快捷认证',
 		balance:"可用积分",
-		bet_tit_1:"投票积分",
+		bet_tit_1:"认证积分",
 		reset:'重置',
-		set_ok:"投票",
+		set_ok:"确认认证",
 		close:'关闭',
 		pop_tit1:'积分不足',
 		pop_tit2:'请输入积分',
@@ -128,6 +133,10 @@ export default{
 		flow3:"任务三",
 		flow_type1:'已完成',
 		flow_type2:'未完成',
+		tab1:'投票',
+		tab2:'情趣用品',
+		tab3:'酒店订单',
+		
 	},
 	bet_list:{
 		title:'我的出票',
@@ -146,7 +155,7 @@ export default{
 	},
 	nearby:{
 		title:'附近的人',
-		detail:'查看详情',
+		detail:'发起聊天',
 		actie_time:'分钟前活跃',
 		actie_time2:'分钟前活跃',
 		actie_times:'',
@@ -416,7 +425,20 @@ export default{
 		view:'浏览量',
 		jianjie:'简介',
 		belike:"猜你喜欢",
+		price:'金额',
+		buynow:"立即购买",
+		bianhao:'编号'
 	},
+	fengmian:{
+		title:'封面图设置',
+		del:'删除',
+		sel_img:'选择图片',
+		save:'保存',
+		tab1:'封面图',
+		tab2:'详细图',
+		sucess:'保存成功',
+		upload:'上传中...'
+	}
 	
 	
 }

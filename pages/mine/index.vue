@@ -6,8 +6,23 @@
 		</cu-custom>
 		<view class="padding flex im-space-between im-align-items-center bg-white mb-10">
 			<view class="flex justify-start bg-white" @tap="editInfo()">
-				<view class='cu-avatar lg mr-15' :class="appSetting.circleAvatar?'round':'radius'"
+				<view v-if="loginStore.userInfo.avatar !==null" class='cu-avatar lg mr-15' :class="appSetting.circleAvatar?'round':'radius'"
 					:style="[{backgroundImage:'url('+loginStore.userInfo.avatar+')'}]">
+				</view>
+				<view v-if="loginStore.userInfo.avatar ==null&&loginStore.userInfo.sex ==0" class='cu-avatar lg mr-15' :class="appSetting.circleAvatar?'round':'radius'"
+					>
+					<image src="@/static/image/women.png" mode='widthFix' style="width: 100%;max-height: 100px;">
+					</image>
+				</view>
+				<view v-if="loginStore.userInfo.avatar ==null&&loginStore.userInfo.sex ==1" class='cu-avatar lg mr-15' :class="appSetting.circleAvatar?'round':'radius'"
+					>
+					<image src="@/static/image/men.png" mode='widthFix' style="width: 100%;max-height: 100px;">
+					</image>
+				</view>
+				<view v-if="loginStore.userInfo.avatar ==null&&loginStore.userInfo.sex ==2" class='cu-avatar lg mr-15' :class="appSetting.circleAvatar?'round':'radius'"
+					>
+					<image src="@/static/image/men2.png" mode='widthFix' style="width: 100%;max-height: 100px;">
+					</image>
 				</view>
 				<view class='im-flex im-justify-content-start im-columns'>
 					<view class="mb-5 f-18 mb-10 im-flex im-align-items-center">
@@ -15,9 +30,9 @@
 						<!-- <view class='cu-tag ml-10  round light' :class="loginStore.userInfo.is_auth ? 'bg-orange' : 'bg-grey'">{{loginStore.userInfo.is_auth ? '已认证' : '未认证'}}</view>
 					 -->
 					</view>
-					<view  class="mb-10" style="text-decoration: none; display: flex; align-items: center;">
+					<view class="mb-10" style="text-decoration: none; display: flex; align-items: center;">
 						<view class="text-gray"></view>{{loginStore.userInfo.account}}
-					<view class="text-pink"  style="padding-left: 10px;">{{$t('mine.jifen')}}：{{balance}}</view>
+						<view class="text-pink" style="padding-left: 10px;">{{$t('mine.jifen')}}：{{balance}}</view>
 					</view>
 				</view>
 			</view>
@@ -60,9 +75,11 @@
 				</view>
 			</view>
 			<view class="cu-item" @tap="to_like(1)">
-				<view class="content">
+				<view class="content" style="position: relative;">
 					<text class="cuIcon-likefill text-red"></text>
 					<text>{{$t('usercenter.l_nav1')}}</text>
+
+					<view class="pop_num" v-if="like_me_num !==0">{{like_me_num}}</view>
 				</view>
 				<view class="action">
 					<text class="text-grey cuIcon-right"></text>
@@ -72,6 +89,7 @@
 				<view class="content">
 					<text class="cuIcon-emojiflashfill text-pink"></text>
 					<text>{{$t('usercenter.l_nav2')}}</text>
+
 				</view>
 				<view class="action">
 					<text class="text-grey cuIcon-right"></text>
@@ -168,8 +186,15 @@
 				appSetting: loginStore.appSetting,
 				PageCur: 'mine',
 				navList: [],
-				balance:'0.00',
-				flow_data:{}
+				balance: '0.00',
+				flow_data: {},
+				like_me_num:0,
+				params: {
+					page: 1,
+					limit: 10,
+					is_mine: 0,
+					agent_id:'',
+				},
 			}
 		},
 		onShow() {
@@ -215,11 +240,12 @@
 			if (backbutton) backbutton.style.display = 'none';
 
 			this.get_userinfo()
-			 
+			
+
 
 		},
 		methods: {
-			
+
 			async get_balance() {
 				var _this = this
 				const res = await this.$myRuquest({
@@ -227,11 +253,11 @@
 					method: "POST",
 				})
 				if (res.code == 200) {
-					this.flow_data=res.data
-					this.balance=res.data.balance
+					this.flow_data = res.data
+					this.balance = res.data.balance
 				}
 			},
-			
+
 			async get_userinfo() {
 				let userInfo = JSON.parse(JSON.stringify(loginStore.userInfo))
 				const res = await this.$myRuquest({
@@ -242,11 +268,14 @@
 					},
 				})
 				if (res.code == 200) {
-					
+
 					let data = JSON.parse(JSON.stringify(res.data))
-					
+					if(data.role !==1){
+						this.params.agent_id=data.agent_id
+					}
 					loginStore.login(data)
 					this.get_balance()
+					this.getList_like()
 
 				}
 			},
@@ -350,15 +379,15 @@
 				})
 			},
 			edit_renzheng() {
-				
-				if(this.flow_data.agent_account !==null){
+
+				if (this.flow_data.agent_account !== null) {
 					uni.showToast({
 						title: this.$t('usercenter.vip_p_pop_6'),
 						icon: "none"
 					})
 					return
 				}
-				
+
 				uni.navigateTo({
 					url: "/pages/mine/renzheng"
 				})
@@ -376,6 +405,21 @@
 					url: "/pages/mine/vip/vip"
 				})
 			},
+			getList_like() {
+				 
+				this.$api.third_openApi.like_me_index(this.params).then((res) => {
+					if (res.code == 0) {
+						let list_arr = res.data.data;
+						
+						this.like_me_num=list_arr.length
+			
+			
+			
+					}
+				})
+			
+			
+			},
 
 
 		}
@@ -383,6 +427,21 @@
 </script>
 
 <style scoped>
+	.pop_num {
+		position: absolute;
+		top: -7px;
+		left: 122px;
+		height: 20px;
+		width: 20px;
+		line-height: 25px;
+		background: #e54d42;
+		border-radius: 50%;
+		text-align: center;
+		line-height: 20px;
+		font-size: 12px;
+		color: #fff;
+	}
+
 	.vip_are_P {
 		padding: 10px;
 		max-height: 100px;

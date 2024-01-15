@@ -16,10 +16,10 @@
 					style="height: 30px; width: 30px; border-radius: 50%; margin-right: 5px;">
 				</image>
 
-				<view v-if="userinfo.islevel==0">{{$t('usercenter.vip_p_desc1')}}</view>
-				<view v-if="userinfo.islevel==21">{{$t('usercenter.vip_p_desc2')}}</view>
-				<view v-if="userinfo.islevel==22">{{$t('usercenter.vip_p_desc3')}}</view>
-				<view v-if="userinfo.islevel==23">{{$t('usercenter.vip_p_desc4')}}</view>
+				<view v-if="userinfo.islevel==0" style="font-size: 15px; font-weight: bold;">{{$t('usercenter.vip_p_desc1')}}</view>
+				<view v-if="userinfo.islevel==21" style="font-size: 15px; font-weight: bold;">{{$t('usercenter.vip_p_desc2')}}</view>
+				<view v-if="userinfo.islevel==22" style="font-size: 15px; font-weight: bold;">{{$t('usercenter.vip_p_desc3')}}</view>
+				<view v-if="userinfo.islevel==23" style="font-size: 15px; font-weight: bold;">{{$t('usercenter.vip_p_desc4')}}</view>
 			</view>
 		</view>
 		<view class="tab_line">
@@ -456,9 +456,9 @@
 		display: inline-block;
 		border-radius: 0.33333rem;
 		margin-right: 0.33333rem;
-		font-size: 12PX;
-		padding: 0.33333rem 1rem;
-		margin-bottom: 0.33333rem;
+		font-size: 14PX;
+		padding: 0.7rem 1rem;
+		margin-bottom: 0.33333rem; font-weight: bold;
 
 	}
 </style>

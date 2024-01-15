@@ -14,10 +14,11 @@
 					   </avatar>
 					<text class="cuIcon-right ml-10 f-18 text-grey"></text></view>
 			</view> -->
-			<!-- <view class="cu-form-group" @tap="to_fengmian">
-				<view class="title">封面图</view>
+			<!--  -->
+			<view class="cu-form-group" @tap="to_fengmian">
+				<view class="title">{{$t('fengmian.tab1')}}</view>
 				<view class="text-gray"><text class="cuIcon-right ml-10 f-18 text-grey"></text></view>
-			</view> -->
+			</view>
 			<view class="cu-form-group">
 				<view class="title">{{$t('mine.account')}}</view>
 				<view class="text-gray">{{userInfo.account}}</view>
@@ -31,10 +32,10 @@
 				<view class="text-gray" v-if="globalConfig.sysInfo.runMode==1">{{userInfo.realname}}</view>
 				<input class="uni-input" style="text-align: right;" v-if="globalConfig.sysInfo.runMode==2" v-model="userInfo.realname"  placeholder="请输入昵称" />
 			</view>
-			<view class="cu-form-group">
+			<!-- <view class="cu-form-group">
 				<view class="title">e-mail</view>
 				<input class="uni-input" style="text-align: right;" v-model="userInfo.email"  :placeholder="$t('mine.emial')" />
-			</view>
+			</view> -->
 			<view class="cu-form-group">
 				<view class="title">{{$t('mine.age')}}</view>
 				<input class="uni-input" style="text-align: right;" v-model="userInfo.ages"  :placeholder="$t('mine.age_num')" type="number" />

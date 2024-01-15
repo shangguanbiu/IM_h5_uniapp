@@ -3,9 +3,9 @@
 		<cu-custom bgColor="bg-gradual-pink">
 			<template #backText>
 				
-				<view v-if="PageCur=='message' || PageCur=='contacts'" class="f-20 ml-10 mr-10" @tap="search()">
+				<!-- <view v-if="PageCur=='message' || PageCur=='contacts'" class="f-20 ml-10 mr-10" @tap="search()">
 					<text class="cuIcon-search" style="margin-left: -10px;"></text>
-				</view>
+				</view> -->
 				
 			</template>
 			<template #content>{{PageName}}</template>

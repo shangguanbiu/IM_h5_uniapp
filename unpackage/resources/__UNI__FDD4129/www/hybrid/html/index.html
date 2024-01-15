@@ -94,6 +94,14 @@
 		    height:40px;
 		    margin-bottom: 10px;
 		}
+		.com_bg{height: 100vh; width: 100vw; position: fixed;z-index: 1025; background: rgb(0 0 0 / 49%); display: block; left:0; top: 0;}
+		.com_main{height: 100vh; width: 100vw; position: fixed;z-index: 1026; display: block; left:0; top: 0; display: flex; align-items: center;}
+		.pop_mian{width:85%; background: #fff; margin: auto; border-radius: 8px;}
+		.pop_title{text-align: center; padding: 15px 0;  font-size: 15px; color: #333}
+		.pop_foot{display: flex; justify-content: center;padding: 15px 0;}
+		.pop_ft_btn1{color: #999; font-size: 13px; width: 50%; text-align: center; position: relative;}
+		.pop_ft_btn1::after{ content: ''; height: 25px; width: 1px; background: #ccc; position: absolute; bottom: -3px; right: 0;}
+		.pop_ft_btn2{color: #190D30; font-size: 13px;width: 50%; text-align: center;}
 		
 	</style>
 	</head>
@@ -146,9 +154,25 @@
 			      </div>
 			    </div>
 			  </div>
+			  <div v-show="pop_notice">
+			  	<div class="com_bg"></div>
+			  	<div class="com_main">
+			  		<div class="pop_mian">
+			  			<div class="pop_title">提示</div>
+			  			<div style="padding: 10px 15px;  line-height: 25px; flex-wrap: wrap; text-align: center;">
+			  				您还未开通会员，暂无使用该功能权限
+			  			</div>
+			  
+			  			<div class="pop_foot">
+			  				<div class="pop_ft_btn2"  @click="pop_notice=false">关闭</div>
+			  			</div>
+			  		</div>
+			  	</div>
+			  </div>
 		</div>
 	</body>
 	<script type="text/javascript" src='./js/vue.js'></script>
+	
 	<script>
 		const params=parseUrl(window.location.href);
 		const opt=JSON.parse(decodeURIComponent(params.stun));
@@ -168,6 +192,7 @@
 			data() {
 				return {
 					displayBtn:true,
+					pop_notice:false,
 					platform:params.platform,
 					status: 0,          //状态0，默认，1：拨号中，2通话中，3来电中，4忙线
 					pc: null,         //pc实力化
@@ -193,11 +218,15 @@
 					contact:{
 						id:params.target_id,
 						displayName:params.name,
-						avatar:params.avatar
-					}
+						avatar:params.avatar,
+						islevel:params.islevel,
+						role:params.role,
+					},
+					userinfo:"",
 				};
 			},
 			mounted() {
+				
 				this.pc = new RTCPeerConnection(config);
 				this.pc.ontrack = (event) => {
 					console.log(event,'接收视频流');
@@ -335,6 +364,11 @@
 			    },
 			    // 接听电话
 			    answer() {
+
+					if(this.contact.islevel==0&&this.contact.role==1){
+						this.pop_notice=true
+						return
+					}
 					this.status = 2;
 			        this.initLocalStream(false, this.is_video);
 			        this.playMusicCall('close');

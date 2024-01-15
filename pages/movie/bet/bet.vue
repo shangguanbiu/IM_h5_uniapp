@@ -4,105 +4,170 @@
 			<template #backText></template>
 			<template #content>投票</template>
 		</cu-custom> -->
-		<view class="bet_top">
-			<view style="padding: 10px  15px">
-				<view class="bet_line bet_ge">
-					<view>{{$t('bet.now')}}</view>
-				</view>
-				<view style="display: flex; align-items: center;" class="bet_ge">
-					<view style="font-weight: bold; font-size: 16px; margin-right: 3px;text-decoration: none;">{{qishu}}</view>
-					<view v-if="ifrun">{{$t('bet.go_on')}}</view>
-					<view v-if="!ifrun">{{$t('bet.close')}}</view>
-				</view>
-				<view class="time">{{time2+':'+time3}}</view>
-				<view class="bet_line bet_ge">
-					<view style="display: flex;" v-for="(item,narr_k) in Number_laster.slice(0,1)" :key="narr_k">
-						<view style="margin-right: 10px;text-decoration: none;">{{item.open_no}}</view>
-						
-						<view class="color_n2" v-if="item.number>5||item.number==5">{{$t('bet.bet_n1')}}</view>
-						<view class="color_n1" v-if="item.number<4 ||item.number==4">{{$t('bet.bet_n2')}}</view>
-						<view class="color_n1" v-if="item.number % 2 === 1">{{$t('bet.bet_n3')}}</view>
-						<view class="color_n2" v-if="item.number% 2 === 0">{{$t('bet.bet_n4')}}</view>
+		<view class="bet_tab">
+			<view class="bet_tab_zi" :class="{'bet_tab_haver':tab_index==0}" @click="change_tab(0)">{{$t('bet.tab1')}}</view>
+			<view class="bet_tab_zi" :class="{'bet_tab_haver':tab_index==1}" @click="change_tab(1)">{{$t('bet.tab2')}}</view>
+			<view class="bet_tab_zi" :class="{'bet_tab_haver':tab_index==2}" @click="change_tab(2)">{{$t('bet.tab3')}}</view>
+		</view>
+		<view v-show="tab_index==0">
+			<view class="bet_top">
+				<view style="padding: 10px  15px">
+					<view class="bet_line bet_ge">
+						<view>{{$t('bet.now')}}</view>
 					</view>
-					<view @click="ifhistory=!ifhistory" style="display: flex;">{{$t('bet.history')}}
-
-						<view class="cuIcon-unfold" style="line-height: 19px;margin-left: 2px;" v-if="!ifhistory">
+					<view style="display: flex; align-items: center;" class="bet_ge">
+						<view style="font-weight: bold; font-size: 16px; margin-right: 3px;text-decoration: none;">{{qishu}}
 						</view>
-						<view class="cuIcon-fold" style="line-height: 19px;margin-left: 2px;" v-if="ifhistory"></view>
+						<view v-if="ifrun">{{$t('bet.go_on')}}</view>
+						<view v-if="!ifrun">{{$t('bet.close')}}</view>
 					</view>
-					<view class="history_are" v-show="ifhistory" @tap="ifhistory=false">
-						<view style="padding: 0px 15px" v-if="Number_laster.length !==0">
-							<view style="display: flex; padding: 5px 0;" v-for="(item,narr_k) in Number_laster"
-								:key="narr_k">
-								<view style="margin-right: 10px;">{{item.open_no}}</view>
-								
-								<view class="color_n2" v-if="item.number>5||item.number==5">{{$t('bet.bet_n1')}}</view>
-								<view class="color_n1" v-if="item.number<4 ||item.number==4">{{$t('bet.bet_n2')}}</view>
-								<view class="color_n1" v-if="item.number % 2 === 1">{{$t('bet.bet_n3')}}</view>
-								<view class="color_n2" v-if="item.number% 2 === 0">{{$t('bet.bet_n4')}}</view>
-
+					<view class="time">{{time2+':'+time3}}</view>
+					<view class="bet_line bet_ge" v-if="false">
+						<view style="display: flex;" v-for="(item,narr_k) in Number_laster.slice(0,1)" :key="narr_k">
+							<view style="margin-right: 10px;text-decoration: none;">{{item.open_no}}</view>
+			
+							<view class="color_n2" v-if="item.number>5||item.number==5">{{$t('bet.bet_n1')}}</view>
+							<view class="color_n1" v-if="item.number<4 ||item.number==4">{{$t('bet.bet_n2')}}</view>
+							<view class="color_n1" v-if="item.number % 2 === 1">{{$t('bet.bet_n3')}}</view>
+							<view class="color_n2" v-if="item.number% 2 === 0">{{$t('bet.bet_n4')}}</view>
+						</view>
+						<view @click="ifhistory=!ifhistory" style="display: flex;">{{$t('bet.history')}}
+			
+							<view class="cuIcon-unfold" style="line-height: 19px;margin-left: 2px;" v-if="!ifhistory">
+							</view>
+							<view class="cuIcon-fold" style="line-height: 19px;margin-left: 2px;" v-if="ifhistory"></view>
+						</view>
+						<view class="history_are" v-show="ifhistory" @tap="ifhistory=false">
+							<view style="padding: 0px 15px" v-if="Number_laster.length !==0">
+								<view style="display: flex; padding: 5px 0;" v-for="(item,narr_k) in Number_laster"
+									:key="narr_k">
+									<view style="margin-right: 10px;">{{item.open_no}}</view>
+			
+									<view class="color_n2" v-if="item.number>5||item.number==5">{{$t('bet.bet_n1')}}</view>
+									<view class="color_n1" v-if="item.number<4 ||item.number==4">{{$t('bet.bet_n2')}}</view>
+									<view class="color_n1" v-if="item.number % 2 === 1">{{$t('bet.bet_n3')}}</view>
+									<view class="color_n2" v-if="item.number% 2 === 0">{{$t('bet.bet_n4')}}</view>
+			
+								</view>
+							</view>
+			
+						</view>
+					</view>
+			
+			
+				</view>
+			
+			</view>
+			<view class="bet_top_ft">
+				<view class="bet_t_ft_m" @tap="pop_notice=true">{{$t('bet.rule')}}</view>
+				<view class="bet_t_ft_m" @click="see_list" style="display: flex; justify-content: center; color:#e6557f ;">
+					{{$t('bet.outlist')}}
+					<view class="cuIcon-right" style="line-height: 40px; margin-left: 2px;"></view>
+				</view>
+			
+			</view>
+			<view class="bet_main">
+				<view class="bet_mainzi" v-for="(nitem,narr_i) in Number_arr" :key="narr_i">
+					<view class="bet_zi" :class="{'bet_zi_get':nitem.ifhad}" @click="get_bet_num(nitem,narr_i)">
+						{{nitem.name}}
+					</view>
+				</view>
+			</view>
+		</view>
+		<view v-show="tab_index==1">
+			<view class="list_are" v-if="shop_list.length !==0">
+				<!-- <view style="height: calc(100vh - 10px);"></view> -->
+				<view class="list_item" v-for="(item,index_girl) in shop_list" :key="index_girl" @click="see_detail(item)">
+					<view class="list_zi">
+						<view class="list_img_are">
+							<image :src="item.logo" class="list_zi_img" mode='widthFix'>
+							</image>
+						</view>
+						<view class="list_foot">
+							<view class="m_title">
+								<!-- <van-icon name="video-o" class="l_ft_l"/> -->
+								{{item.title}}
+							</view>
+							<view style="display: flex;align-items: center;">
+								<view class="cuIcon-moneybag l_ft_r" style="font-size: 14px;"></view>
+								<view class="l_ft_r">{{item.price}}</view>
 							</view>
 						</view>
-
 					</view>
 				</view>
-
-
+			
 			</view>
-
+			<Empty v-else :noDatatext="$t('list.no_data')" textcolor="#999" />
+			
 		</view>
-		<view class="bet_top_ft">
-			<view class="bet_t_ft_m" @tap="pop_notice=true">{{$t('bet.rule')}}</view>
-			<view class="bet_t_ft_m" @click="see_list" style="display: flex; justify-content: center; color:#e6557f ;">
-				{{$t('bet.outlist')}}
-				<view class="cuIcon-right" style="line-height: 40px; margin-left: 2px;"></view>
-			</view>
-
-		</view>
-		<view class="bet_main">
-			<view class="bet_mainzi" v-for="(nitem,narr_i) in Number_arr" :key="narr_i">
-				<view class="bet_zi" :class="{'bet_zi_get':nitem.ifhad}" @click="get_bet_num(nitem,narr_i)">
-					{{nitem.name}}
+		<view v-show="tab_index==2">
+			<view class="list_are" v-if="shop_list.length !==0">
+				<!-- <view style="height: calc(100vh - 10px);"></view> -->
+				<view class="list_item" v-for="(item,index_girl) in shop_list" :key="index_girl" @click="see_detail(item)">
+					<view class="list_zi">
+						<view class="list_img_are">
+							<image :src="item.logo" class="list_zi_img" mode='widthFix'>
+							</image>
+						</view>
+						<view class="list_foot">
+							<view class="m_title">
+								<!-- <van-icon name="video-o" class="l_ft_l"/> -->
+								{{item.title}}
+							</view>
+							<view style="display: flex; align-items: center;">
+								<view class="cuIcon-moneybag l_ft_r" style="font-size: 14px;"></view>
+								<view class="l_ft_r">{{item.price}}</view>
+							</view>
+						</view>
+					</view>
 				</view>
+			
 			</view>
+			<Empty v-else :noDatatext="$t('list.no_data')" textcolor="#999" />
+		</view>
 		
+		
+		<view style="padding-left: 15px; color: #e6557f; font-size: 16px; font-weight: bold; margin: 15px 0;">
+			{{$t('bet.flow_tit')}}</view>
+		<view style="padding-left: 10%; padding-bottom: 45px;">
+			<view class="flow_line">
+				<view style="width: 40%;">
+					<view style=" margin-left: -10px;" class="color1">{{$t('bet.flow1')}}</view>
+					<view class="flow_m">
+						<view class="cuIcon-title color1" v-if="flow_data.flow1==1"></view>
+						<view class="cuIcon-title color2" v-if="flow_data.flow1==0"></view>
+						<view class="flow_l color2_bg" :class="{'color1_bg':flow_data.flow1==1}" style="flex: 1;">
+						</view>
+					</view>
+					<view style=" margin-left: -10px;" class="color1" v-if="flow_data.flow1==1">{{$t('bet.flow_type1')}}
+					</view>
+					<view style=" margin-left: -10px;" class="color2" v-else>{{$t('bet.flow_type2')}}</view>
+				</view>
+				<view style="width: 40%;">
+					<view style="margin-left: -10px;" class="color1">{{$t('bet.flow2')}}</view>
+					<view class="flow_m">
+						<view class="cuIcon-roundcheckfill color1" v-if="flow_data.flow2==1"></view>
+						<view class="cuIcon-title color2" v-if="flow_data.flow2==0"></view>
+						<view class="flow_l color2_bg" :class="{'color1_bg':flow_data.flow2==1}" style="flex: 1;">
+						</view>
 
-		</view>
-		<view style="padding-left: 15px; color: #e6557f; font-size: 16px; font-weight: bold; margin: 15px 0;">{{$t('bet.flow_tit')}}</view>
-		<view style="padding-left: 10%;">
-		<view class="flow_line">
-			<view style="width: 40%;">
-				<view style=" margin-left: -10px;" class="color1">{{$t('bet.flow1')}}</view>
-				<view class="flow_m">
-					<view class="cuIcon-title color1" v-if="flow_data.flow1==1"></view>
-					<view class="cuIcon-title color2" v-if="flow_data.flow1==0"></view>
-					<view class="flow_l color2_bg" :class="{'color1_bg':flow_data.flow1==1}" style="flex: 1;" ></view>
+					</view>
+					<view style=" margin-left: -10px;" class="color1" v-if="flow_data.flow2==1">{{$t('bet.flow_type1')}}
+					</view>
+					<view style=" margin-left: -10px;" class="color2" v-else>{{$t('bet.flow_type2')}}</view>
 				</view>
-				<view style=" margin-left: -10px;" class="color1" v-if="flow_data.flow1==1">{{$t('bet.flow_type1')}}</view>
-				<view style=" margin-left: -10px;" class="color2" v-else>{{$t('bet.flow_type2')}}</view>
-			</view>
-			<view style="width: 40%;">
-				<view style="margin-left: -10px;" class="color1">{{$t('bet.flow2')}}</view>
-				<view class="flow_m">
-					<view class="cuIcon-roundcheckfill color1" v-if="flow_data.flow2==1"></view>
-					<view class="cuIcon-title color2" v-if="flow_data.flow2==0"></view>
-					<view class="flow_l color2_bg" :class="{'color1_bg':flow_data.flow2==1}" style="flex: 1;" ></view>
-					 
+				<view style="width: 20%;">
+					<view style="margin-left: -10px;" class="color1">{{$t('bet.flow3')}}</view>
+					<view class="flow_m">
+						<view class="cuIcon-roundcheckfill color1" v-if="flow_data.flow3==1"></view>
+						<view class="cuIcon-title color2" v-if="flow_data.flow3==0"></view>
+
+					</view>
+					<view style=" margin-left: -10px;" class="color1" v-if="flow_data.flow3==1">{{$t('bet.flow_type1')}}
+					</view>
+					<view style=" margin-left: -10px;" class="color2" v-else>{{$t('bet.flow_type2')}}</view>
 				</view>
-				<view style=" margin-left: -10px;" class="color1" v-if="flow_data.flow2==1">{{$t('bet.flow_type1')}}</view>
-				<view style=" margin-left: -10px;" class="color2" v-else>{{$t('bet.flow_type2')}}</view>
 			</view>
-			<view style="width: 20%;">
-				<view style="margin-left: -10px;" class="color1">{{$t('bet.flow3')}}</view>
-				<view class="flow_m">
-					<view class="cuIcon-roundcheckfill color1" v-if="flow_data.flow3==1"></view>
-					<view class="cuIcon-title color2" v-if="flow_data.flow3==0"></view>
-					
-				</view>
-				<view style=" margin-left: -10px;" class="color1" v-if="flow_data.flow3==1">{{$t('bet.flow_type1')}}</view>
-				<view style=" margin-left: -10px;" class="color2" v-else>{{$t('bet.flow_type2')}}</view>
-			</view>
-		</view>
 		</view>
 		<view class="bet_foot" v-show="pop_bet">
 			<view class="bet_f_m">
@@ -123,7 +188,8 @@
 					</view>
 					<view><button type="default" class="reset_btn" @click="reset">{{$t('bet.reset')}}</button></view>
 				</view>
-				<button type="default" v-if="ifrun" class="ok_btn" @tap="submit_bet">{{$t('bet.set_ok')}}</button>
+				<button type="default" v-if="ifrun" class="ok_btn" :disabled="!ifrun"
+					@tap="submit_bet">{{$t('bet.set_ok')}}</button>
 				<button type="default" v-if="!ifrun" class="ok_btn2">{{$t('bet.close')}}</button>
 			</view>
 
@@ -136,7 +202,7 @@
 					<view
 						style="padding: 10px 15px; display:flex; justify-content: flex-start; line-height: 25px; flex-wrap: wrap;">
 						{{$t('bet.content')}}
-						
+
 					</view>
 
 					<view class="pop_foot">
@@ -150,14 +216,17 @@
 </template>
 
 <script>
-	import { useloginStore } from '@/store/login'
+	import {
+		useloginStore
+	} from '@/store/login'
 	import pinia from '@/store/index'
 	const loginStore = useloginStore(pinia)
-	
+
 	export default {
 		data() {
 			return {
-				loginStore:loginStore,
+				tab_index:0,
+				loginStore: loginStore,
 				pop_notice: false,
 				scroll_ft: false,
 				pop_bet: false,
@@ -186,15 +255,15 @@
 				time_build: null,
 				if_over: false,
 				pageHeight: 0,
-				flow_data:{},
+				flow_data: {},
+				shop_list:[],
 
 			}
 		},
 		watch: {
 			watch: {
 				$route(val) {
-					if (val.fullPath == '/') {
-					}
+					if (val.fullPath == '/') {}
 				}
 			},
 			bet_num(val) {
@@ -227,9 +296,9 @@
 
 				}
 				if (val < 0 || val == NaN || val == 'NaN') {
-					// this.time1 = 0
-					// this.time2 = 0
-					// this.time3 = 0
+					 this.time1 = 0
+					 this.time2 = 0
+					 this.time3 = 0
 					this.ifrun = false
 					clearInterval(this.time_build);
 					this.time_build = null;
@@ -241,20 +310,50 @@
 			},
 		},
 		methods: {
+			change_tab(index){
+				this.tab_index=index
+				this.pop_bet=false
+				if(index==1){
+					this.get_shop_list(1)
+				}else if(index==2){
+					this.get_shop_list(2)
+				}
+			},
 			get_sys_userinfo() {
 				let userInfo = JSON.parse(JSON.stringify(loginStore.userInfo))
-				var params={
-					user_id:userInfo.user_id
+				var params = {
+					user_id: userInfo.user_id
 				}
 				this.$api.third_openApi.get_user_info(params).then((res) => {
 					if (res.code == 0) {
-						console.log('ssssssssss',res)
-						let row=res.data.data
-						this.flow_data=row[0]
-						console.log('dddddddddd',this.flow_data.flow1)
-			
+
+						let row = res.data.data
+						this.flow_data = row[0]
+
 					}
 				})
+			},
+			get_shop_list(type){
+				var params = {
+					type_id: type
+				}
+				this.$api.third_openApi.shop_list(params).then((res) => {
+					if (res.code == 0) {
+				
+						this.shop_list = res.data.data
+						
+				
+					}
+				})
+			},
+			see_detail(data) {
+				
+							
+				uni.setStorageSync('shop_info', data)
+				uni.navigateTo({
+					url: '/pages/movie/bet/detial?id='+data.id,
+				});
+			
 			},
 			change_num(val) {
 
@@ -394,8 +493,8 @@
 			},
 			async submit_bet() {
 				var _this = this
-				
-				
+
+
 				if (Number(this.bet_num) > Number(this.max_num)) {
 					uni.showToast({
 						title: this.$t('bet.pop_tit1'),
@@ -405,7 +504,7 @@
 				}
 				if (Number(this.bet_num) < 0 || Number(this.bet_num) == 0) {
 					uni.showToast({
-						title:this.$t('bet.pop_tit2'),
+						title: this.$t('bet.pop_tit2'),
 						icon: "none"
 					});
 					return
@@ -417,7 +516,7 @@
 					}
 
 				})
-				if(ids.length==0){
+				if (ids.length == 0) {
 					uni.showToast({
 						title: this.$t('bet.pop_tit3'),
 						icon: "none"
@@ -439,7 +538,7 @@
 						title: this.$t('bet.pop_tit4'),
 						icon: "success"
 					});
-					this.bet_num=''
+					this.bet_num = ''
 					this.Number_arr.forEach((item) => {
 						item.ifhad = false
 
@@ -452,23 +551,23 @@
 				this.get_userInfo()
 				this.getOpenData()
 				this.getHistoryOpenData()
-				this.Number_arr=[{
-						name: this.$t('bet.bet_n1'),//'春',
-						value: 1,
-						ifhad: false
-					}, {
-						name: this.$t('bet.bet_n2'),//'夏',
-						value: 2,
-						ifhad: false
-					}, {
-						name: this.$t('bet.bet_n3'),//'秋',
-						value: 3,
-						ifhad: false
-					}, {
-						name: this.$t('bet.bet_n4'),//'冬',
-						value: 4,
-						ifhad: false
-					}]
+				this.Number_arr = [{
+					name: this.$t('bet.bet_n1'), //'春',
+					value: 1,
+					ifhad: false
+				}, {
+					name: this.$t('bet.bet_n2'), //'夏',
+					value: 2,
+					ifhad: false
+				}, {
+					name: this.$t('bet.bet_n3'), //'秋',
+					value: 3,
+					ifhad: false
+				}, {
+					name: this.$t('bet.bet_n4'), //'冬',
+					value: 4,
+					ifhad: false
+				}]
 			}
 		},
 		onLoad() {
@@ -476,7 +575,7 @@
 
 			var backbutton = document.getElementsByClassName('uni-page-head-hd')[0]
 			if (backbutton) backbutton.style.display = 'none';
-			
+
 
 		},
 		mounted() {
@@ -485,7 +584,7 @@
 
 		},
 		onShow() {
-			
+
 		}
 	}
 </script>
@@ -495,13 +594,40 @@
 		background: #969696;
 
 	}
-.flow_line{display: flex; justify-content: space-between; width: 85%; margin:20px auto;}
-.flow_l{height: 1px;}
-.flow_m{display: flex;align-items: center; margin: 10px 0;}
-.color2{color: #969799;}
-.color2_bg{background: #969799;}
-.color1{color: #e6557f;}
-.color1_bg{background: #e6557f;}
+
+	.flow_line {
+		display: flex;
+		justify-content: space-between;
+		width: 85%;
+		margin: 20px auto;
+	}
+
+	.flow_l {
+		height: 1px;
+	}
+
+	.flow_m {
+		display: flex;
+		align-items: center;
+		margin: 10px 0;
+	}
+
+	.color2 {
+		color: #969799;
+	}
+
+	.color2_bg {
+		background: #969799;
+	}
+
+	.color1 {
+		color: #e6557f;
+	}
+
+	.color1_bg {
+		background: #e6557f;
+	}
+
 	.bet_top {
 		height: auto;
 		width: 94%;
@@ -511,6 +637,9 @@
 		background: #e6557f;
 		position: relative;
 	}
+	.bet_tab{ display: flex;width: 90%; margin: auto;}
+	.bet_tab_zi{ width: 33%; background: #251c487a; color: #fff; text-align: center; line-height: 40px;}
+	.bet_tab_haver{background: #e6557f;}
 
 	.bet_top_ft {
 		height: auto;
@@ -696,4 +825,74 @@
 	.scroll_ft {
 		padding-bottom: 300px;
 	}
+	
+	
+	.list_are {
+		padding: 10px 5px;
+		padding-top: 0;
+	
+		display: flex;
+		flex-wrap: wrap;
+		justify-content:flex-start;
+		overflow-y: scroll;
+		padding-bottom: 10px;
+	}
+	
+	.list_item {
+		width: 50%;
+	
+	}
+	
+	.list_zi {
+		padding: 10px 5px;
+	}
+	
+	.m_title {
+		width: 50%;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		line-height: 26px;
+	}
+	
+	.list_img_are {
+		position: relative;
+		display: block;
+	}
+	
+	.list_zi_img {
+		width: 100%;
+		max-height: 110px;
+		
+	
+	}
+	
+	.list_zi_meng {
+		height: 40px;
+		width: 100%;
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		background: rgba(0, 0, 0, .4);
+		display: flex;
+		justify-content: space-between;
+		color: #fff;
+		font-size: 12px;
+		text-align: center;
+	}
+	
+	.tag_line {
+		font-size: 13px;
+		padding: 5px;
+		color: #999;
+		display: flex;
+	}
+	
+	.list_foot {
+		display: flex;
+		font-size: 13px;
+		color: #999;
+		justify-content: space-between;
+	}
+	
 </style>

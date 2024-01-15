@@ -20,7 +20,7 @@
 							<!-- <van-icon name="video-o" class="l_ft_l"/> -->
 							{{item.name}}
 						</view>
-						<view style="display: flex;">
+						<view style="display: flex;align-items: center;">
 							<view class="cuIcon-cardboardfill l_ft_r" style="font-size: 14px;"></view>
 							<view class="l_ft_r">{{item.view_count}}</view>
 						</view>

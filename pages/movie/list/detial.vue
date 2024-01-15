@@ -105,6 +105,22 @@
 					url: '/pages/movie/kefu/kefu'
 				});
 			},
+			randomArray(data) {
+			      let array = Array.from(data); // 复制原始数组
+			      const length = data.length;
+			      if (length === 0) {
+			      	return [];
+			      } else {
+			      	for (let i = array.length - 1; i > 0; i--) {
+			      		const j = Math.floor(Math.random() * (i + 1));
+			      	
+			      		// 交换位置
+			      		[array[i], array[j]] = [array[j], array[i]];
+			      	}
+			      
+			      	return array
+			      }
+			    },
 			async getList(id) {
 				this.list = []
 				// this.State
@@ -122,7 +138,7 @@
 				})
 				if (res.code == 200) {
 					
-					this.guess_arr=res.data.list
+					this.guess_arr=this.randomArray(res.data.list) 
 				}
 			},
 			

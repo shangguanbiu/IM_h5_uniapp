@@ -490,4 +490,7 @@
 	.p_type3{ background: #ccc;}
 	.p_type3{ background: #f37b1d;}
 	.sex_ico{width: 13px; margin-right:2px;}
+	.icon_vip_are{ position: relative;}
+	.icon_vip_l{ height: 30px; width: 30px; position: absolute;top: -14px; left: -14px; }
+	.icon_vip_r{ height: 30px; width: 30px; position: absolute;top: -14px; right: -14px; }
 </style>

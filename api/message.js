@@ -9,6 +9,13 @@ let msgApi = {}
 msgApi.uploadUrl=apiUrl+'/common/upload/uploadFile';
 // 上传头像
 msgApi.uploadAvatar=apiUrl+'/common/upload/uploadAvatar';
+
+// 上传封面
+msgApi.uploadAvatar_fengmian=apiUrl+'/common/upload/uploadAvatar_fengmian';
+// 上传封面过度图
+msgApi.uploadAvatar_detail=apiUrl+'/common/upload/uploadAvatar_detail';
+
+
 /**
  * @desc 普通消息列表（小程序）
  * @param {*} 参数 
@@ -237,7 +244,10 @@ msgApi.searchUser= (params)  =>{
 msgApi.updateUserInfo= (params)  =>{
 	return postJsonRequest('enterprise/im/updateUserInfo', params)
 }
-
+// 修改用户信息-详情图
+msgApi.updateUserInfo_imgarr= (params)  =>{
+	return postJsonRequest('enterprise/im/updateUserInfo_imgarr', params)
+}
 // 修改账号
 msgApi.editAccount= (params)  =>{
 	return postJsonRequest('enterprise/im/editAccount', params)

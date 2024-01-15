@@ -1,25 +1,25 @@
 export default{
 	nav:{
 		home:"首頁",
-		message:'消息',
+		message:'信息',
 		serve:'客服',
 		contacts:'通訊錄',
 		mine:"我的"
 	},
 	tab_nav:{
-		nav1:"影院",
+		nav1:"電影",
 		nav2:"福利群",
-		nav3:"搜查",
+		nav3:"搜索",
 		nav4:"附近的人",
 	},
 	shipin:{
 		title1:'照片',
-		title2:'视频',
+		title2:'視頻',
 		title3:'文件',
-		title4:'语音通话',
-		title5:'视频通话',
+		title4:'語音通話',
+		title5:'視頻通話',
 	},
-	welcome:'歡迎加入喇叭花，我是人工接待員將為您24小時諮詢服務',
+	welcome:'歡迎加入抱抱，我是人工接待員將為您24小時諮詢服務',
 	pop:{
 		title:"提示",
 		content1:'您當前為普通用戶暫無許可權查看喜歡我的TA，查看更多可開通會員，請聯系客服',
@@ -29,9 +29,14 @@ export default{
 		content5:'您當前可點擊喜歡TA的次數已達到每日限制，更多許可權可升級會員，請聯系客服',
 		content6:'已打招呼，等待TA的回應！ 可在欄目-消息中查看',
 		content7:"您還未開通會員，暫無使用該功能許可權",
+		content8:"您暫無使用該功能許可權，請聯系客服",
+		content9:"請聯系客服下單",
+		content10:"請完善個人資訊-性別，年齡",
 		close:'關閉',
 		up:'去陞級',
 		ok:'確定',
+		ok2:'聯系客服',
+		set:'去完善',
 	},
 	index:{
 		part_1:'今日推薦',
@@ -101,21 +106,21 @@ export default{
 	},
 	bet:{
 		now:'當前期數',
-		go_on:'投票中',
-		close:"封盤中",
-		history:"歷史出票",
+		go_on:'進行中',
+		close:"認證中",
+		history:"歷史認證",
 		bet_n1:'單',
 		bet_n2:'刀',
 		bet_n3:'直',
 		bet_n4:'入',
-		rule:'投票規則',
-		content:'遊戲投票規則',
-		outlist:'我的出票',
-		bet_tit:'快捷投票',
+		rule:'認證規則',
+		content:'認證規則',
+		outlist:'我的認證',
+		bet_tit:'快捷認證',
 		balance:"可用積分",
-		bet_tit_1:"投票積分",
+		bet_tit_1:"認證積分",
 		reset:'重置',
-		set_ok:"投票",
+		set_ok:"確認認證",
 		close:'關閉',
 		pop_tit1:'積分不足',
 		pop_tit2:'請輸入積分',
@@ -127,6 +132,9 @@ export default{
 		flow3:"任務三",
 		flow_type1:'已完成',
 		flow_type2:'未完成',
+		tab1:'投票',
+		tab2:'情趣用品',
+		tab3:'酒店訂單',
 	},
 	bet_list:{
 		title:'我的出票',
@@ -145,7 +153,7 @@ export default{
 	},
 	nearby:{
 		title:'附近的人',
-		detail:'查看詳情',
+		detail:'發起聊天',
 		actie_time:'分鐘前活躍',
 		actie_time2:'分鐘前活躍',
 		actie_times:'',
@@ -415,7 +423,19 @@ export default{
 		view:'流覽量',
 		jianjie:'簡介',
 		belike:"猜你喜歡",
+		price:'Price',
+		buynow:"立即購買",
+		bianhao:'編號'
 	},
-	
+	fengmian:{
+		title:'封面圖設定',
+		del:'删除',
+		sel_img:'選擇圖片',
+		save:'保存',
+		tab1:'封面圖',
+		tab2:'詳細圖',
+		sucess:'保存成功',
+		upload:'上傳中...'
+	}
 	
 }

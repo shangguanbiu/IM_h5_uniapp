@@ -91,7 +91,23 @@
 				</view>
 			</view>
 		</view>
-
+		<view v-show="pop_notice">
+			<view class="com_bg"></view>
+			<view class="com_main">
+				<view class="pop_mian">
+					<view class="pop_title">{{$t('pop.title')}}</view>
+					<view
+						style="padding: 10px 15px;  text-align: center; line-height: 25px; flex-wrap: wrap;">
+						{{$t('pop.content8')}}
+					</view>
+		
+					<view class="pop_foot">
+						<view class="pop_ft_btn1" @tap="pop_notice=false">{{$t('pop.close')}}</view>
+						<view class="pop_ft_btn2" @tap="pop_ok()">{{$t('pop.ok2')}}</view>
+					</view>
+				</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -173,7 +189,7 @@
 			}
 			// navList.push(mine);
 			return {
-
+				pop_notice:false,
 				globalConfig: loginStore.globalConfig,
 				PageCur: 'home',
 				PageName: this.$t('nav.home'),
@@ -267,6 +283,11 @@
 
 		},
 		methods: {
+			pop_ok() {
+				uni.navigateTo({
+					url: '/pages/movie/kefu/kefu'
+				});
+			},
 			to_bottom() {
 
 				setTimeout(() => {
@@ -353,6 +374,15 @@
 				})
 			},
 			tab_change(index) {
+				if (index == 2) {
+					let userInfo = JSON.parse(JSON.stringify(loginStore.userInfo))
+					if(userInfo.ifsearch==1){
+						this.pop_notice=true
+						return
+					}
+					
+					this.$refs.bet_action.run_fun();
+				}
 				this.tabs = index
 				this.PageName = this.tabs_arr[index].name
 				this.run_fun = false
@@ -360,9 +390,7 @@
 					this.run_fun = true
 					this.$refs.child_action.get_userinfo();
 				}
-				if (index == 2) {
-					this.$refs.bet_action.run_fun();
-				}
+				
 			},
 		}
 	}

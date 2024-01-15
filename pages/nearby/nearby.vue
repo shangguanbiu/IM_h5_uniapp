@@ -1,14 +1,14 @@
 <template>
 	<view class="scroll">
-		<view v-if='!if_more'>
+		<view v-show='!if_more'>
 			<!-- <cu-custom bgColor="bg-gradual-pink" :isBack="false">
 				<template #backText></template>
 				<template #content>附近的人</template>
-			</cu-custom> -->
-			<tantan v-if="list.length > 0" :list="list" @="change" @Image="clickImage" @see_more="show_detail"
-				@openpop="open_pop" @bet_like="bet_like"></tantan>
+			</cu-custom>v-if="list.length > 0" -->
+			<tantan :list="list" @onChange="change" @Image="clickImage" @see_more="show_detail" @openpop="open_pop"
+				@bet_like="bet_like"></tantan>
 		</view>
-		<view v-else>
+		<view v-show='if_more'>
 			<view>
 				<view class="page-section swiper">
 					<view class="cuIcon-back back" @tap="if_more=false"></view>
@@ -55,12 +55,11 @@
 
 					</view>
 					<view class="main_title" style="margin-top: 10px;color: #2a1468;">{{$t('nearby.about_me')}}</view>
-					<view style="padding-bottom: 55px;">
+					<view style="padding-bottom: 90px;">
 						<view class="dangan" style="color: #a09d9d;;">
 							{{detail_data.motto}}
 						</view>
-						<view style="display: flex;padding: 10px 0;flex-wrap:wrap"
-							v-if="detail_data.tags">
+						<view style="display: flex;padding: 10px 0;flex-wrap:wrap" v-if="detail_data.tags">
 							<view :class="'item_'+t_index" v-for="(tagitem,t_index) in detail_data.tags.split(',')"
 								:key="t_index">
 								{{tagitem}}
@@ -70,13 +69,14 @@
 					<view class="ft_zhaohu_line">
 						<view style="margin-right: 5px;" @tap="bet_talk()">
 							<view class="ft_zh_zi" style="color:rgb(248, 186, 53)">
-								<view class="cuIcon-commandfill" style=" margin-right: 5px; font-size: 17px;"></view>{{$t('nearby.talk')}}
+								<view class="cuIcon-commandfill" style=" margin-right: 5px; font-size: 17px;"></view>
+								{{$t('nearby.talk')}}
 							</view>
 						</view>
 						<view style="margin-left: 5px;" v-show="iflike ==true">
 							<view class="ft_zh_zi" style="color:rgb(250, 84, 124) ;">
 								<view class="cuIcon-likefill" style=" margin-right: 5px; font-size: 17px;"></view>
-{{$t('nearby.like')}}
+								{{$t('nearby.like')}}
 							</view>
 						</view>
 						<view style="margin-left: 5px;" v-show="iflike ==false" @tap="bet_like()">
@@ -103,9 +103,14 @@
 					</view>
 
 					<view class="pop_foot">
-						<view class="pop_ft_btn1" v-if="notice_type==1" @tap="pop_notice=false">{{$t('pop.close')}}</view>
-						<view class="pop_ft_btn2" @tap="pop_ok()" v-if="notice_type==1">{{$t('pop.up')}}</view>
-						<view class="pop_ft_btn2" @tap="pop_notice=false" v-if="notice_type==2">{{$t('pop.ok')}}</view>
+						<view class="pop_ft_btn1" v-if="notice_type==1" @tap="pop_notice=false">{{$t('pop.close')}}
+						</view>
+
+						<view class="pop_ft_btn2" @tap="pop_ok()" v-if="notice_type==1&&ifno_msg==false">
+							{{$t('pop.up')}}</view>
+						<view class="pop_ft_btn2" @tap="pop_notice=false" v-if="notice_type==2&&ifno_msg==false">
+							{{$t('pop.ok')}}</view>
+						<view class="pop_ft_btn2" @tap="to_set()" v-if="ifno_msg==true">{{$t('pop.set')}}</view>
 					</view>
 				</view>
 			</view>
@@ -116,10 +121,18 @@
 				<view style="width:90%; margin: auto;">
 					<view class="talk_ico">
 
+
+
 						<image :src="talk_data.avatar" v-if="talk_data.avatar !==null"
-							style="width: 100%;border-radius: 50%;" mode='widthFix'></image>
-						<image src="@/static/image/common.png" v-else style="width: 100%;border-radius: 50%; "
-							mode='widthFix'></image>
+							style="width: 100%;border-radius: 50%; height: 80px;" mode='widthFix'></image>
+						<image src="@/static/image/women.png" v-if="talk_data.avatar ==null&&talk_data.sex==0"
+							sstyle="width: 100%;border-radius: 50%; height: 80px;" mode='widthFix'></image>
+						<image src="@/static/image/men.png" v-if="talk_data.avatar ==null&&talk_data.sex==1"
+							style="width: 100%;border-radius: 50%; height: 80px;" mode='widthFix'></image>
+						<image src="@/static/image/men2.png" v-if="talk_data.avatar ==null&&talk_data.sex==2"
+							style="width: 100%;border-radius: 50%; height: 80px;" mode='widthFix'></image>
+
+
 					</view>
 					<view class="talk_name">{{talk_data.realname}}</view>
 					<view class="talk_desc">
@@ -147,19 +160,20 @@
 								{{talk_data.ages}}
 							</view>
 						</view>
-						<view class="talk_sex p_type3" style="height: 20px;">
+						<view class="talk_sex p_type3" style="height: 20px;" v-if="talk_data.islevel !==0">
 							<view style=" font-weight: normal;" v-if="talk_data.islevel ==21">VIP</view>
-							<view style=" font-weight: normal;" v-if="talk_data.islevel ==22">SVIP</view>
-							<view style=" font-weight: normal;" v-if="talk_data.islevel ==23">BVIP</view>
+							<view style=" font-weight: normal;" v-if="talk_data.islevel ==22">Super VIP</view>
+							<view style=" font-weight: normal;" v-if="talk_data.islevel ==23">MVP VIP</view>
 						</view>
 					</view>
 					<view class="talk_form">
 						<view style="padding-left: 10px;">
-							<input placeholder="随意打个招呼吧" style="height: 32px; font-size: 14px;" maxlength="32"
-								name="input" v-model="send_content" />
+							<input :placeholder="$t('like.talk_desc_1')" style="height: 32px; font-size: 14px;"
+								maxlength="32" name="input" v-model="send_content" />
 						</view>
 						<view>
-							<button class='cu-btn bg-blue shadow' @tap="check_if_friend(talk_data.user_id)">发送</button>
+							<button class='cu-btn bg-blue shadow'
+								@tap="check_if_friend(talk_data.user_id)">{{$t('like.send')}}</button>
 						</view>
 					</view>
 				</view>
@@ -186,7 +200,7 @@
 				if_more: false,
 				pop_notice: false,
 				notice_type: 1,
-				notice_content: this.$t('pop.content3'),//"您当前可观看浏览附近的人已达到每日限制，观看更多可开通会员，请联系客服",
+				notice_content: this.$t('pop.content3'), //"您当前可观看浏览附近的人已达到每日限制，观看更多可开通会员，请联系客服",
 				send_content: '',
 				fromUser: '',
 				detail_data: '',
@@ -194,10 +208,10 @@
 				paddingB: 0,
 				total: 0,
 				params: {
+					agent_id: null,
 					page: 1,
 					limit: 10,
 				},
-				list: [],
 				iflike: false,
 				had_likes: [],
 				scrollW: 0,
@@ -209,14 +223,17 @@
 				bannerdata: [],
 				indicatorColor: "#292b40",
 				indicatorActiveColor: "#ffffff",
-				tag: []
+				tag: [],
+				ifno_msg: false
+
 			}
 		},
 		mounted() {
 
 
-			this.getList()
+
 			this.get_userinfo()
+			this.getList()
 			return
 			this.if_more = false
 			// const arr = []
@@ -252,14 +269,30 @@
 				})
 				if (res.code == 200) {
 					this.fromUser = res.data
+
 					let data = JSON.parse(JSON.stringify(res.data))
 					loginStore.login(data)
 
+					if (this.fromUser.ages == null || this.fromUser.sex == 2) {
+						this.ifno_msg = true
+						this.pop_notice = true
+						this.notice_content = this.$t('pop.content10') //'请完善个人信息-性别,年龄' 
+
+					} else {
+						this.ifno_msg = false
+					}
+
 				}
+			},
+			to_set() {
+				this.pop_notice = false
+				uni.navigateTo({
+					url: '/pages/mine/profile_msg'
+				});
 			},
 			open_pop() {
 				this.pop_notice = !this.pop_notice
-				this.notice_content =this.$t('pop.content3')// '您当前浏览附近的人已达到喜欢的每日限制，观看更多可开通会员，请联系客服'
+				this.notice_content = this.$t('pop.content3') // '您当前浏览附近的人已达到喜欢的每日限制，观看更多可开通会员，请联系客服'
 			},
 			bet_talk() {
 
@@ -281,26 +314,27 @@
 			},
 			change(data) {
 				// 判断倒数
-				if (data.currentIndex > this.list.length - 5) {
+				//console.log('ffff',data)
+				if (data.currentIndex == this.list.length - 2) {
 
-					// 模拟一下最加数据
-					const tu = [
-						'https://nimg.ws.126.net/?url=http%3A%2F%2Fdingyue.ws.126.net%2F2021%2F0704%2Fc7a27a1ej00qvpu700019c000hs00vlc.jpg&thumbnail=660x2147483647&quality=80&type=jpg',
-						'https://nimg.ws.126.net/?url=http%3A%2F%2Fdingyue.ws.126.net%2F2021%2F0704%2F9f81e6aaj00qvpu70001xc000hs00vmc.jpg&thumbnail=660x2147483647&quality=80&type=jpg',
-						'https://nimg.ws.126.net/?url=http%3A%2F%2Fdingyue.ws.126.net%2F2021%2F0704%2F55bf2cb3j00qvpu70002cc000hs012jc.jpg&thumbnail=660x2147483647&quality=80&type=jpg',
-						'https://nimg.ws.126.net/?url=http%3A%2F%2Fdingyue.ws.126.net%2F2021%2F0704%2F2017725bj00qvpu70001jc000hs00zxc.jpg&thumbnail=660x2147483647&quality=80&type=jpg'
-					]
-					let arr = []
-					for (let index = 0; index < 15; index++) {
-						const n = Math.floor(Math.random() * (tu.length - 1))
-						let newdata = {
-							nearby_img: tu[n],
-							name: '你好',
-							desc: n + 500 + 'm ' + '30分钟前活跃',
-							tags: ['射手座']
-						}
-						arr.push(newdata)
-					}
+					// const tu = [
+					// 	'https://nimg.ws.126.net/?url=http%3A%2F%2Fdingyue.ws.126.net%2F2021%2F0704%2Fc7a27a1ej00qvpu700019c000hs00vlc.jpg&thumbnail=660x2147483647&quality=80&type=jpg',
+					// 	'https://nimg.ws.126.net/?url=http%3A%2F%2Fdingyue.ws.126.net%2F2021%2F0704%2F9f81e6aaj00qvpu70001xc000hs00vmc.jpg&thumbnail=660x2147483647&quality=80&type=jpg',
+					// 	'https://nimg.ws.126.net/?url=http%3A%2F%2Fdingyue.ws.126.net%2F2021%2F0704%2F55bf2cb3j00qvpu70002cc000hs012jc.jpg&thumbnail=660x2147483647&quality=80&type=jpg',
+					// 	'https://nimg.ws.126.net/?url=http%3A%2F%2Fdingyue.ws.126.net%2F2021%2F0704%2F2017725bj00qvpu70001jc000hs00zxc.jpg&thumbnail=660x2147483647&quality=80&type=jpg'
+					// ]
+					// let arr = []
+					// for (let index = 0; index < 15; index++) {
+					// 	const n = Math.floor(Math.random() * (tu.length - 1))
+					// 	let newdata = {
+					// 		nearby_img: tu[n],
+					// 		name: '你好',
+					// 		desc: n + 500 + 'm ' + '30分钟前活跃',
+					// 		tags: ['射手座']
+					// 	}
+					// 	arr.push(newdata)
+					// }
+					//console.log('里面',)
 					this.params.page++
 					this.getList()
 					// 情况一 如果是追加数据，合并数组即可
@@ -315,11 +349,17 @@
 					// 	})
 					// })
 				}
+				if (data.type == 'reset') {
+					//console.log('reset',)
+					this.params.page = 1
+
+					this.getList()
+				}
 			},
 			clickImage(data) {
 				console.log(data);
 			},
-			
+
 			show_detail(data) {
 
 
@@ -348,14 +388,47 @@
 
 
 			},
+			randomArray(data) {
+				let array = Array.from(data); // 复制原始数组
+				const length = data.length;
+				if (length === 0) {
+					return [];
+				} else {
+					for (let i = array.length - 1; i > 0; i--) {
+						const j = Math.floor(Math.random() * (i + 1));
+
+						// 交换位置
+						[array[i], array[j]] = [array[j], array[i]];
+					}
+
+					return array
+				}
+			},
 			getList() {
+				let userInfo = JSON.parse(JSON.stringify(loginStore.userInfo))
+				this.params.agent_id = userInfo.agent_id
+
 				this.$api.third_openApi.near_user_List(this.params).then((res) => {
 					if (res.code == 0) {
+						let get_data = res.data.data
+
+
 						if (this.list.length == 0) {
-							this.list = res.data.data;
+
+							this.list = this.randomArray(res.data.data);
 						} else {
+
 							this.list = this.list.concat(res.data.data)
 						}
+
+						// if(get_data.length==0){
+						// 	console.log('最后了')
+						// 	this.list = this.list.concat(res.data.data)
+
+						// }else{
+
+						// }
+
 
 
 						this.list.forEach((item) => {
@@ -400,7 +473,7 @@
 				if (this.fromUser.iszan == 0 && this.fromUser.role == 0) {
 					this.notice_type = 1
 					this.pop_notice = true
-					this.notice_content =this.$t('pop.content5')// '您当前可点击喜欢TA的次数已达到每日限制，更多权限可升级会员，请联系客服'
+					this.notice_content = this.$t('pop.content5') // '您当前可点击喜欢TA的次数已达到每日限制，更多权限可升级会员，请联系客服'
 					return;
 				}
 				var _this = this
@@ -479,11 +552,12 @@
 							// 	icon: "success"
 							// })
 							this.show_talk = false
-							this.notice_content =this.$t('pop.content6')// '已打招呼，等待TA的回应！可在栏目-消息中查看'
+							this.notice_content = this.$t('pop.content6') // '已打招呼，等待TA的回应！可在栏目-消息中查看'
 							this.pop_notice = true
 							this.notice_type = 2
 
 							this.count_number('istalk')
+							this.add_talk()
 
 						} else {
 							uni.showToast({
@@ -495,7 +569,28 @@
 					.catch((error) => {
 
 					});
-			}
+			},
+			add_talk() {
+				//提前判断每日剩余打招呼的次数
+
+				let msg = {
+					agent_id: this.fromUser.agent_id,
+					remark: "玩家:" + this.fromUser.account + ',向附近的人：' + this.talk_data.account + '打招呼了'
+				}
+
+				this.$api.third_openApi.add_talk(msg)
+					.then((res) => {
+						if (res.code == 0) {
+
+
+						} else {
+
+						}
+					})
+					.catch((error) => {
+
+					});
+			},
 			// 
 		}
 	}

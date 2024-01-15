@@ -1,7 +1,9 @@
 
 // const BASE_URL2 = 'https://test.net:9005'
 
-const BASE_URL = ''
+const BASE_URL = 'https://baobaoi.vip'
+
+
 
 // BASE_URL = 'https://'+window.location.host
 export const baseurl=()=>{
@@ -15,6 +17,7 @@ export const myRequest = (options) => {
 		if (options.type == undefined) {
 			let token = uni.getStorageSync('ifLogin')
 			let sid = uni.getStorageSync('sid')
+
 			uni.request({
 				url: BASE_URL + options.url,
 				method: options.method || 'GET',
@@ -42,9 +45,13 @@ export const myRequest = (options) => {
 					resolve(res.data)
 				},
 				fail: (err) => {
+					// uni.showToast({
+					// 	title: BASE_URL
+					// })
 					uni.showToast({
-						title: '請求接口失敗'
+						title: 'Error'
 					})
+					
 					reject(err)
 				}
 			})
@@ -56,14 +63,14 @@ export const myRequest = (options) => {
 				success: (res) => {
 					if (res.data.code !== 200) {
 						return uni.showToast({
-							title: '获取数据失败'
+							title: 'Error'
 						})
 					}
 					resolve(res.data)
 				},
 				fail: (err) => {
 					uni.showToast({
-						title: '请求接口失败'
+						title: 'Error'
 					})
 					reject(err)
 				}
